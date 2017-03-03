@@ -1,0 +1,47 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：estate -> detail -> neighbor-section.less (新房详情周边楼盘部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#neighbor-section {    
+    .panel-body {
+        padding-bottom : 1rem ;
+        dl {
+            .clearfix() ;
+            margin : 1rem 0 ;
+            &>dt {
+                float : left ;
+                width : 10rem ;
+                img {
+                    height : 87px ;
+                }
+            }
+            &>dd {
+                margin-left : 10.5rem ;
+            }
+            .estate-name {
+                font-size : 1.6rem ;
+            }
+            .area, .location {
+                color : #7c7c7c ;
+                font-size : 1.1rem ;
+            }
+            .price {
+                color : @red-font-color ;
+                font-size : 1.6rem ;
+                float : right ;
+            }
+            .tags {
+                margin-top : .5rem ;
+                span {
+                    background-color : @assistant-color ;
+                    .border-radius(2px) ;
+                    color : #7c7c7c ;
+                    font-size : 1.0rem ;
+                    margin-right : .3rem ;
+                    padding : .3rem .4rem ;
+                }
+            }
+        }
+    }
+}

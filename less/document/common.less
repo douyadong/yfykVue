@@ -1,27 +1,29 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
  1. 项目名称：有房有客M站
- 2. 文件名称：document -> document.less (文档模块公共样式)
+ 2. 文件名称：document -> document.less (解释性文字页面模块公共样式)
  3. 作者：zhaohuagang@lifang.com
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @import "../variables.less" ;
 @import "../mixins.less" ;
 body {
+    background-color : @default-color ;
     padding : 1.5rem ;
 }
-h1 {
-    .font (@default-font-color, "normal", "normal", 400, 2.2rem, 3.2rem) ;
+h1 {   
+    font-weight : 400 ;
+    font-size : 2.2rem ;
+    line-height : 3.2rem ;
     margin-bottom : .5rem ;
     text-align : center ;
 }
-h2 {
-    .font (@default-font-color, "normal", "normal", 400, 1.8rem, 2.8rem) ;     
+h2 {   
+    font-weight : 600 ;
+    font-size : 1.6rem ;
+    line-height : 2.8rem ;    
 }
-p {
-    .font (@light-font-color, "normal", "normal", 400, 1.2rem, 1.8rem) ;
-    text-indent : 2.0rem ;
-}
-li {
-    .font (@light-font-color, "normal", "normal", 400, 1.2rem, 1.8rem) ;
+p,li {
+    font-size : 1.4rem ;
+    line-height : 1.8rem ;
 }
 .son {
     margin-left : 2.0rem ;

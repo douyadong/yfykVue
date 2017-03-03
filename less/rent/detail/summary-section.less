@@ -1,0 +1,71 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：rent -> detail -> summary-section.less (租房详情概要部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#summary-section {
+    .panel-header {
+        .clearfix() ;
+        h1 {
+            float : left ;
+            font-weight : 600 ;
+            font-size : 1.6rem ;
+        }
+        .money {
+            color : @red-font-color ;
+            float : right ;
+            font-size : 1.6rem ;
+            margin-right : 1.5rem ;
+        }
+    }
+    .panel-body {
+        padding-bottom : 1.5rem ;
+        .column-3 {
+            .clearfix() ;
+            padding-top : 1rem ;
+            li {
+                border-right : 1px solid @lighter-line-gray-color ;
+                float : left ;
+                padding-left : 1rem ;
+                width : 33.3% ;
+                &:last-child {
+                    border : none ;
+                }
+                dl {
+                    dt {
+                        color : @light-font-color ;
+                        font-size : 1.2rem ;
+                    }
+                    dd {
+                        color : @red-font-color ;
+                        font-size : 1.6rem ;
+                        line-height : 2.5rem ;
+                    }
+                }
+            }
+        }
+        .outline, .subway-school {
+            dl {
+                .clearfix() ;
+                dt, dd {
+                    font-size : 1.6rem ;
+                    line-height : 2.2rem ;
+                }
+                dt {
+                    color : @light-font-color ;
+                    float : left ;
+                    width : 4rem ;
+                }
+                dd {
+                    margin-left : 4rem ;
+                }
+            }
+        }
+        .outline {
+            .clearfix() ;
+            li {
+                float : left ;
+            }
+        }
+    }
+}

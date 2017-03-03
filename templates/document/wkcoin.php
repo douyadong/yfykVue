@@ -12,6 +12,6 @@ $confs = array(
 ) ;
 ?>
 <?php require_once("../components/head.php") ; ?>            
-<h1>悟空币说明</h1>
+<!--<h1>悟空币说明</h1>-->
 <p>悟空币是流通于有房有客APP中的一种货币，可用于该APP软件中的所有消耗点，它的价值等同于RMB，可在充值渠道通过RMB对自己的账号进行充值，兑换比例为1:1，即1元RMB=1个悟空币。</p>
 <?php require_once("../components/footer.php") ; ?>
