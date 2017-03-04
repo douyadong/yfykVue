@@ -1,0 +1,80 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：esf -> detail -> summary-section.less (二手房详情概要部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#summary-section {
+    h1 {
+        font-size : 2.0rem ;
+        font-weight : 400 ;
+        padding : 2rem 1.5rem ;
+    }
+    .panel-body {
+        padding-bottom : 1.5rem ;
+        .column-3 {
+            .clearfix() ;            
+            li {
+                border-right : 1px solid @lighter-line-gray-color ;
+                float : left ;
+                padding-left : 1rem ;
+                width : 33.3% ;
+                &:last-child {
+                    border : none ;
+                }
+                dl {
+                    dt {
+                        color : @light-font-color ;
+                        font-size : 1.2rem ;
+                    }
+                    dd {
+                        color : @red-font-color ;
+                        font-size : 1.6rem ;
+                        line-height : 2.5rem ;
+                    }
+                }
+            }
+        }
+        .esf-tags {
+            .clearfix() ;
+            margin-top : 1rem ;
+            li {
+                float : left ;
+                margin-right : .5rem ;
+            }
+        }
+        .outline, .subway-school {
+            dl {
+                .clearfix() ;
+                dt, dd {
+                    font-size : 1.6rem ;
+                    line-height : 2.2rem ;
+                }
+                dt {
+                    color : @light-font-color ;
+                    float : left ;
+                    width : 4rem ;
+                }
+                dd {
+                    margin-left : 4rem ;
+                }
+            }
+        }
+        .outline {
+            .clearfix() ;
+            li {
+                float : left ;
+                width : 50% ;                
+            }
+            .jisuanqi {
+                background-color : @assistant-color ;
+                .border-radius(3px) ; 
+                float : right ;
+                .iconfont {
+                    color : #92A7C3 ;
+                    font-size : 2.4rem ;
+                } 
+            }
+        }
+       
+    }
+}
