@@ -9,5 +9,9 @@ $confs = array(
 ) ;
 ?>
 <?php require_once("../components/head.php") ; ?>            
-
+<?php require_once("./index/summary-section.php") ; ?>
+<?php require_once("./index/rate-section.php") ; ?>
+<?php require_once("./index/house-section.php") ; ?>
+<?php require_once("./index/drift-tools.php") ; ?>
+<div id="nomatch-section">没有合适的房源？告诉我您的需求立即匹配房源 ></div>
 <?php require_once("../components/footer.php") ; ?>
