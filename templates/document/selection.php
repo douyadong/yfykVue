@@ -12,7 +12,6 @@ $confs = array(
 ) ;
 ?>
 <?php require_once("../components/head.php") ; ?>            
-<!--<h1>抢房源攻略</h1>-->
 <h2>精选房源标准</h2>
 <ul>
     <li>有实景照片7张以上<small>系统要求的是室内6张+户型图1张</small></li>    
