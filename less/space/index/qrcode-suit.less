@@ -1,0 +1,49 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：space -> index -> qrcode-suit.less (经纪人个人店铺首页二维码dialog部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#qrcode-suit {
+    background-color : rgba(0, 0, 0, .5) ;
+    display : none ;
+    height : 100% ;
+    left : 0 ;    
+    position : fixed ;
+    top : 0 ;
+    width : 100% ;
+    z-index : 10001 ;
+    #qrcode-dialog {
+        background-color : @default-color ;
+        .center-block() ;
+        height : 60% ;
+        left : 10% ;
+        padding : 1.5rem ;
+        position : absolute ;
+        top : 20% ;
+        width : 80% ; 
+        dl {
+            .clearfix() ;
+            dt {
+                float : left ;
+                width : 60px ;
+            }
+            dd {
+                color : @light-font-color ;
+                font-size : 1.2rem ;
+                line-height : 2.2rem ;
+                margin-left : 65px ;
+                &.agent-name {
+                    color : @default-font-color ;
+                    font-size : 1.4rem ;
+                }
+            }
+        }
+        .qrcode {
+            margin : 1rem 0 ;
+        }
+        p {
+            font-size : 1.2rem ;
+            text-align : center ;
+        }
+    }
+}

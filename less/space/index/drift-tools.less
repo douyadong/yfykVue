@@ -13,20 +13,19 @@
     position : fixed ;
     width : 100% ;
     z-index : 10000 ;
-    &>a {
-        color : #f86975 ;
-        display : block ;
+    &>li {
+        border-left : 1px solid @light-line-gray-color ;
         float : left ;
-        font-size : 1.4rem ;
-        line-height : 50px ;
-        text-align : center ;
-        width : 50% ;
-        &:first-child {
-            border-right : 1px solid @light-line-gray-color ;
+        height : 50px ;
+        padding-top : 5px ;            
+        width : 33.3% ;
+        a, span {
+            color : #f86975 ;
+            display : block ;
+            text-align : center ;
         }
         .iconfont {
-            font-size : 2.0rem ;
-            margin-right : .5rem ;
-        }        
+            font-size : 1.8rem ;            
+        }
     }
 }

@@ -22,13 +22,13 @@ function Controller() {
         var env = "dev";
         var domain = document.domain ;
         switch (domain) {
-            case 'yun2.test.wkzf' :
+            case 'myfyk.test.wkzf' :
                 env = 'test' ;
                 break ;
-            case 'yun2.sim.wkzf' :
+            case 'myfyk.sim.wkzf' :
                 env = 'sim' ;
                 break ;
-            case 'yun2.wkzf.com' :
+            case 'm.yfyk365.com' :
                 env = 'prod' ;
                 break ;
             default :
