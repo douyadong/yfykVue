@@ -24,31 +24,27 @@ $confs = array(
 </ul>
 <dl>
     <dt>客厅</dt>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/parlour1.jpg" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/parlour2.jpg" class="img-responsive"></dd>
 </dl>
 <dl>
     <dt>卧室</dt>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/bedroom1.jpg" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/bedroom2.jpg" class="img-responsive"></dd>
 </dl>
 <dl>
     <dt>厨房</dt>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/kitchen1.jpg" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/kitchen2.jpg" class="img-responsive"></dd>
 </dl>
 <p>卫生间因为空间小，所以拍照时要把相机拿高，进行俯拍。</p>
 <dl>
     <dt>卫生间</dt>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/toilet1.jpg" class="img-responsive"></dd>
+    <dd><img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/toilet2.jpg" class="img-responsive"></dd>
 </dl>
 <dl>
-    <dt>户型图</dt>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
-    <dd><img src="https://placeholdit.imgix.net/~text?txtsize=24&txt=350%C3%97150&w=168&h=128" class="img-responsive"></dd>
+    <dt>户型图<img src="<?php echo STATIC_DOMAIN."/".MODULE_NAME ; ?>/images/layout.jpg" class="img-responsive"></dt>    
 </dl>
 <h2>卖点</h2>
 <ul>
