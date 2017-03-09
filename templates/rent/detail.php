@@ -8,7 +8,8 @@ $confs = array(
     "match_javascript" => true  //是否需要匹配路由的脚本        
 ) ;
 ?>
-<?php require_once("../components/head.php") ; ?>            
+<?php require_once("../components/head.php") ; ?>
+<?php require_once("../components/download.php") ; ?>
 <?php require_once("../components/album.php") ; ?>
 <?php require_once("./detail/summary-section.php") ; ?>
 <?php require_once("./detail/support-section.php") ; ?>
