@@ -14,12 +14,12 @@
     width : 100% ;
     z-index : 10000 ;
     &>li {
-        float : left ;        
-        width : 22% ;
+        float : left ;
+        height : 50px ;
+        text-align : center ; 
+        width : 33.3% ;
         &.portait {
-            background-color : @assistant-color ;
-            text-align : center ;
-            width : 34% ;
+            background-color : @assistant-color ;                  
             dl {
                 .clearfix() ;
                 display : inline-block ;
@@ -47,8 +47,7 @@
             
         }
         &.tools {
-            border-left : 1px solid @light-line-gray-color ;
-            height : 50px ;
+            border-left : 1px solid @light-line-gray-color ;            
             padding-top : 5px ;
         }
         a, span {

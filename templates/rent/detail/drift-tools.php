@@ -5,11 +5,7 @@
             <dd class="agent-name">王小五</dd>
             <dd class="agent-tel">13817663458</dd>
         </dl>
-    </li>
-    <li class="tools">
-        <span><i class="iconfont icon-dianpu"></i></span>
-        <span>加入到店铺</span>
-    </li>
+    </li>    
     <li class="tools">
         <a href="#">
             <span><i class="iconfont icon-kefurexian"></i></span>
@@ -17,7 +13,9 @@
         </a>
     </li>
     <li class="tools">
-        <span><i class="iconfont icon-kefushouyecebian"></i></span>
-        <span>微聊</span>
+        <a href="#">
+            <span><i class="iconfont icon-weixinkefu"></i></span>
+            <span>添加微信</span>
+        </a>
     </li>
 </ul>
