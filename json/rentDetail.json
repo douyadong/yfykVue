@@ -1,0 +1,51 @@
+{
+    "status" : 1 ,
+    "message" : "" ,
+    "data" : {
+        "simpleHouseRentDetailInfo" : {
+            "subEstateName" : "嘉信花园" ,
+            "rentPrice" : "5000" ,
+            "payType" : "付三押一" ,
+            "houseTypeStr" : "两室一厅" ,
+            "spaceArea" : "130" ,
+            "houseChildTypeStr" : "住宅" ,
+            "renovationStr" : "精装" ,
+            "floor" : 5 ,
+            "totalfloor" : 20 ,
+            "orientationStr" : "南北" ,
+            "subEstateInitName" : "长宁区天山西路99弄" ,
+            "subwayStr" : "10 号线" ,
+            "schoolStr" : "上海市徐汇区汇师小学" ,
+            "longitude" : "121.683756" ,
+            "latitude" : "31.265" ,
+            "sellPoint" : "对应交大小学，徐家汇地段，周边商城，宜山路地铁站 房型正气，采光好无遮挡，精装修，保养的非常好" ,
+            "ownerMotivation" : "业主很诚意，看房提前预约，到价签字" ,
+            "houseSupporting" : {
+                "hasBad" : 1 ,
+                "hasWardrobe" : 1 ,
+                "hasBalcony" : 1 , 
+                "hasHeating" : 1 ,
+                "hasGas" : 0 ,
+                "hasWashMachine" : 0 ,
+                "hasFridge" : 1 ,
+                "hasMicrowave" : 1 ,
+                "hasWaterHeater" : 1 ,
+                "hasAirConditioning" : 1 ,
+                "hasTV" : 1 ,
+                "hasInternet" : 1
+            } ,
+            "imageListForM" : [
+                { "isVideo" : true , "src" : "http://v.wkzf.com/e7db1fabf5aa4099938e0c2b6d958e6cWV.mp4" } ,
+                { "isVideo" : false , "src" : "http://img.wkzf.com/a0c1d9158a6043a8b92ad4ffd1527c10.DL" } ,
+                { "isVideo" : false , "src" : "http://img.wkzf.com/507b9a88b8eb46c58d88c046d8b5b09d.DL" } ,
+                { "isVideo" : false , "src" : "http://img.wkzf.com/d4c8dd8abf3348788eb46de67607576b.DL" }
+            ]
+        } ,
+        "simpleAgentModel" : {
+            "agentName" : "王小五" ,
+            "agentMobile" : "13817691088" ,
+            "agentHeadImgUrl" : "http://imgwater.oss.aliyuncs.com/e16c31a42e41452d9bd22806509308ec" ,
+            "agentWChartQRImgUrl" : "http://imgwater.oss.aliyuncs.com/e16c31a42e41452d9bd22806509308ec"
+        }
+    }
+}
