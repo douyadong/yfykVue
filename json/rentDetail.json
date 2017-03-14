@@ -45,7 +45,8 @@
             "agentName" : "王小五" ,
             "agentMobile" : "13817691088" ,
             "agentHeadImgUrl" : "http://imgwater.oss.aliyuncs.com/e16c31a42e41452d9bd22806509308ec" ,
-            "agentWChartQRImgUrl" : "http://imgwater.oss.aliyuncs.com/e16c31a42e41452d9bd22806509308ec"
+            "agentWChartQRImgUrl" : "http://imgwater.oss.aliyuncs.com/e16c31a42e41452d9bd22806509308ec" ,
+            "agentWChatId" : "huagang_zhao"
         }
     }
 }
