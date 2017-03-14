@@ -5,7 +5,7 @@
         "simpleHouseRentDetailInfo" : {
             "subEstateName" : "嘉信花园" ,
             "rentPrice" : "5000" ,
-            "payType" : "付三押一" ,
+            "payTypeStr" : "付三押一" ,
             "houseTypeStr" : "两室一厅" ,
             "spaceArea" : "130" ,
             "houseChildTypeStr" : "住宅" ,
@@ -34,11 +34,11 @@
                 "hasTV" : 1 ,
                 "hasInternet" : 1
             } ,
-            "imageListForM" : [
-                { "isVideo" : true , "src" : "http://v.wkzf.com/e7db1fabf5aa4099938e0c2b6d958e6cWV.mp4" } ,
-                { "isVideo" : false , "src" : "http://img.wkzf.com/a0c1d9158a6043a8b92ad4ffd1527c10.DL" } ,
-                { "isVideo" : false , "src" : "http://img.wkzf.com/507b9a88b8eb46c58d88c046d8b5b09d.DL" } ,
-                { "isVideo" : false , "src" : "http://img.wkzf.com/d4c8dd8abf3348788eb46de67607576b.DL" }
+            "houseImageAndVideoList" : [
+                { "isVideo" : true , "imageSrc" : "http://img.wkzf.com/f367ea39cf9643eaa7f32d6f174e9e7b.DL" , "videoSrc" :  "http://v.wkzf.com/e7db1fabf5aa4099938e0c2b6d958e6cWV.mp4"} ,
+                { "isVideo" : false , "imageSrc" : "http://img.wkzf.com/a0c1d9158a6043a8b92ad4ffd1527c10.DL" } ,
+                { "isVideo" : false , "imageSrc" : "http://img.wkzf.com/507b9a88b8eb46c58d88c046d8b5b09d.DL" } ,
+                { "isVideo" : false , "imageSrc" : "http://img.wkzf.com/d4c8dd8abf3348788eb46de67607576b.DL" }
             ]
         } ,
         "simpleAgentModel" : {
