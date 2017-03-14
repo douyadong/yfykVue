@@ -10,7 +10,12 @@ $confs = array(
 ?>
 <?php require_once("../components/head.php") ; ?>            
 <!--<h1>卖点范文</h1>-->
-<div style="background-color : #fff ;">
+<style>
+    body {
+        background-color : #fff ;
+    }
+</style>
+<div>
     <img src="<?php echo STATIC_DOMAIN . '/' . MODULE_NAME; ?>/images/modelEssay1.png" class="img-responsive">
     <img src="<?php echo STATIC_DOMAIN . '/' . MODULE_NAME; ?>/images/modelEssay2.png" class="img-responsive">
 </div>
