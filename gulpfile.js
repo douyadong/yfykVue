@@ -16,6 +16,7 @@ var plumber = require('gulp-plumber');
 var compileLessPath = [
     "less/app.less" ,
     "less/*/*.less" ,
+    "!less/*/*/*.less" ,
     "!less/components/*.less" ,
     "!less/mixins/*.less" ,
     "!less/variables/*.less"
