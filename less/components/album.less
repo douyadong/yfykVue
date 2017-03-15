@@ -1,0 +1,40 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：estate -> detail -> album-section.less (新房|租房|二手房详情相册部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#album-section {
+    height : 210px ;
+    position : relative ;
+    .swiper-slide {
+        position : relative ;
+        img {
+            height : 210px ;            
+        }
+        /*
+        .icon-4040 {            
+            .center-block() ;
+            height : 40px ;
+            left : 0 ;
+            position : absolute ;
+            right : 0 ;
+            top : 45% ;
+            width : 40px ;
+            z-index : 100 ;
+        }
+        */
+    }
+    .pagination {
+        .border-radius(100px) ;
+        background-color : rgba(0, 0, 0, .7) ;
+        bottom : 15px ;
+        color : @white-font-color ;
+        font-size : 1.1rem ;
+        height : 24px ;
+        line-height : 24px ;
+        padding : 0 1rem ;
+        position : absolute ;
+        right : 15px ;
+        z-index : 2000 ;
+    }
+}

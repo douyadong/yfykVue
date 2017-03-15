@@ -1,0 +1,50 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：estate -> detail -> location-section.less (新房详情位置及周边部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#location-section {
+    .location-container {
+        position : relative ;
+        img {
+            height : 250px ;
+        }
+        .mark {            
+            .center-block() ;
+            height : 30px ;
+            left : 0 ;
+            position : absolute ;
+            right : 0 ;
+            top : 45% ;
+            width : 30px ;
+            z-index : 100 ;
+            .iconfont {
+                font-size : 3.0rem ;
+            }
+        }
+        .location {
+            background-color : #fff ;
+            .border-radius(7px) ;
+            bottom : 5% ;
+            .center-block() ;
+            font-size : 1.4rem ;
+            left : 0 ;
+            right : 0 ;
+            padding : .5rem ;
+            position : absolute ;
+            width : 90% ;
+            p {
+                margin : .2rem 0 ;
+            }
+            .iconfont {
+                margin-right : .5rem ;
+            }
+        }
+        .icon-dingwei {
+            color : @red-font-color ;
+        }
+        .icon-ditie {
+            color : @blue-font-color ;
+        }
+    }
+}

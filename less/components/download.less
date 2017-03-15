@@ -1,0 +1,36 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：less -> components -> downloadl.less (app下载部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#app-download {
+    background-color : @default-color ;
+    border-bottom : 1px solid @lighter-line-gray-color ;
+    height : 50px ;
+    padding : 8px ;
+    dl {
+        .clearfix() ;
+        dt {
+            float : left ;
+            width : 32px ;
+            .iconfont {
+                color : @blue-font-color ;
+                font-size : 3.2rem ;
+            }
+        }
+        dd {
+            font-size : 1rem ;
+            margin-left : 42px ;
+        }
+    }
+    span {
+        .border-radius(3px) ;
+        border : 1px solid @blue-font-color ;
+        color : @blue-font-color ;
+        display : block ;
+        float : right ;
+        line-height : 27px ;
+        margin : 4px 0 ;
+        padding : 0 11px ;
+    }
+}

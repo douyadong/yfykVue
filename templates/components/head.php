@@ -21,4 +21,4 @@
         <link rel="stylesheet" href="<?php echo STATIC_DOMAIN . '/' . MODULE_NAME; ?>/css/<?php echo $router["controller"] ; ?>/<?php echo $router["method"] ; ?>.min.css">
         <?php } ?>
     </head>
-    <body>
+    <body ontouchstart="">

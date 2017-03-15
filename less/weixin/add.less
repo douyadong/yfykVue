@@ -1,0 +1,33 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：weixin -> add.less (扫码加微信页面)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+dl {
+    background-color : @default-color ;
+    .border-radius(8px) ;    
+    height : 240px ;
+    left : 50% ;
+    margin-left : -135px ;
+    margin-top : -120px ;
+    position : absolute ;
+    top : 50% ;
+    width : 270px ;
+    dt, dd {
+        text-align : center ;
+    }
+    dt {
+        padding : 41px 0 7px 0 ;
+        img {
+            height : 123px ;
+            width : 123px ;
+        }
+    }
+    dd {
+        color : @light-font-color ;
+        font-size : 1.2rem ;
+        line-height : 17px ;
+    }
+}

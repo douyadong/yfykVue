@@ -1,0 +1,43 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：estate -> detail -> layout-section.less (新房详情在售户型部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#layout-section {
+    .panel-body {
+        overflow-x : auto ;
+        height : 170px ;
+        ul {
+            width : 800px ;
+            &>li {
+                float : left ;
+                margin-right : 2.5rem ;
+                dl {
+                    dt {
+                        margin-bottom : .5rem ;
+                        img {
+                            height : 92px ;
+                            width : 125px ;
+                        }
+                    }
+                    dd {
+                        line-height : 1.5rem ;
+                        .layout-nickname, .price {
+                            font-size : 1.3rem ;
+                        }
+                        .price, .area {
+                            float : right ;
+                        }
+                        .layout, .area {
+                            font-size : 1.2rem ;
+                        }
+                        .price {
+                            color : @red-font-color ;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+}

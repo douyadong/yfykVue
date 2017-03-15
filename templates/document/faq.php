@@ -12,7 +12,7 @@ $confs = array(
 ) ;
 ?>
 <?php require_once("../components/head.php") ; ?>            
-<h1>常见问题</h1>
+<!--<h1>常见问题</h1>-->
 <ul>
     <li>
         <h2>1、悟空币如何获取？</h2>

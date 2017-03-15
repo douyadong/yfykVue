@@ -1,0 +1,33 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：less -> components -> header.less (组件 -> header部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+header {
+    background-color : @default-color ;
+    border-bottom : 1px solid @lighter-line-gray-color ;    
+    .clearfix() ;   
+    div, h2 {
+        height : 44px ;
+        line-height : 44px ;
+        .iconfont {
+            display : inline-block ;
+        }
+    }
+    .left-tools {        
+        float : left ;
+        margin-left : 1.5rem ;
+        width : 4.0rem ;
+    }
+    .right-tools {
+        float : right ;
+        margin-right : 1.5rem ;
+        width : 4.0rem ;
+    }
+    h2 {        
+        font-size : 1.8rem ;
+        font-weight : 400 ;        
+        margin : 0 5.5rem ;
+        text-align : center ;
+    }
+}

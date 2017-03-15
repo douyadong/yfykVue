@@ -1,0 +1,60 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：有房有客M站
+ 2. 文件名称：space -> index -> rate-section.less (经纪人个人店铺首页用户评价部分)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+#rate-section {
+    .iconfont {
+        color : #fcd300 ;
+        font-size : 1.2rem ;
+    }
+    .panel-header {
+        .clearfix() ;
+        .arrow {
+            float : right ;            
+            margin-right : 1.5rem ;
+        }
+    }
+    .panel-body {
+        .outline {
+            dt {
+                font-size : 1.4rem ;                
+                .score {
+                    font-size : 2.0rem ;
+                }
+            }
+        }
+        .agent-tags {
+            margin : 1rem 0 ;
+            .tag {
+                .border-radius(3px) ;
+                display : inline-block ;
+                font-size : 1.4rem ;
+                margin : 0 .5rem .8rem 0 ;
+                padding : 3px 8px ;
+                text-align : center ;
+                &.good {
+                    background-color : #E0F0FF ;
+                }
+                &.bad {
+                    background-color : @assistant-color ; 
+                }
+            }            
+        }
+        .rate-list {
+            dl {
+                dt, dd {
+                    line-height : 2.0rem ;
+                }
+                dd {
+                    color : @light-font-color ;
+                    font-size : 1.2rem ;                    
+                    &.rate-detail {
+                        color : @default-font-color ;
+                        font-size : 1.4rem ;
+                    }
+                }
+            }
+        }
+    }
+}
