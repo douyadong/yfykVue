@@ -23,13 +23,20 @@
             .clearfix() ;            
             li {
                 border-right : 1px solid @lighter-line-gray-color ;
-                float : left ;
-                padding-left : 1rem ;
+                float : left ;                
+                text-align : center ;
                 width : 33.3% ;
+                &:first-child {
+                    text-align : left ;
+                }
                 &:last-child {
                     border : none ;
                 }
                 dl {
+                    display : inline-block ;
+                    dt, dd {
+                        text-align : left ;
+                    }
                     dt {
                         color : @light-font-color ;
                         font-size : 1.2rem ;
