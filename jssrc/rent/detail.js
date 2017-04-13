@@ -41,6 +41,7 @@ DetailController.prototype.wakeUpApp = function() {
 DetailController.prototype.wechatShare = function() {
     new WechatShare({
         "title" : $("#wechatShareTitle").val() ,
+        "timelineTitle" : $("#wechatShareTimelineTitle").val() ,
         "content" : $("#wechatShareContent").val() ,
         "imgUrl" : $("#wechatShareImgUrl").val() ,
         "environment" : this.environment
