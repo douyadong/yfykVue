@@ -71,12 +71,16 @@ function Controller() {
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     接口的地址，把整个应用的所有接口地址写在这里，方便统一维护    
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    this.apiPrefix = (this.environment === "dev") ? "//10.0.18.192:8133/bzsm/" : "/" ;   //api接口地址前缀
+    this.apiPrefix = "" ;   //api接口地址前缀
+    if (this.environment === "dev") this.apiPrefix = "http://10.0.18.78:8107" ;
+    else if (this.environment === "test") this.apiPrefix = "http://10.0.18.79:8107" ;
+    else if (this.environment === "sim") this.apiPrefix = "http://m.sim.wkzf" ;
+    else if (this.environment === "prod") this.apiPrefix = "https://m.wkzf.com" ; 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     系统各个模块API地址
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     this.apiUrl = {
-        
+        "bigData" : "/buriedPoint/sendData.rest"
     } ;    
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     发送Ajax请求的方法：
@@ -93,6 +97,7 @@ function Controller() {
         var process = (params === null || params.process === null || params.process === undefined) ? null : params.process ;
         var beforeSend = (params === null || params.beforeSend === null || params.beforeSend === undefined) ? null : params.beforeSend ;
         var onExceptionInterface = (params === null || params.onExceptionInterface === null || params.onExceptionInterface === undefined) ? null : params.onExceptionInterface ;
+        var onComplete = (params === null || params.onComplete === null || params.onComplete === undefined) ? null : params.onComplete ;
         var options = {
             url : apiUrl ,
             type : type ,
@@ -101,10 +106,12 @@ function Controller() {
                 $.showLoading("正在加载...") ;
             },
             error : function(e) {
+                alert("error") ;
                 $.hideLoading() ;
                 $.alert("调用数据接口失败！请测试您的数据接口！", "警告") ;
             },
             success: function(data) {
+                alert("success") ;
                 $.hideLoading() ;
                 if (data.status.toString() === "1") {
                     if (process) process(data) ; //一切没有问题，就处理数据
@@ -113,9 +120,13 @@ function Controller() {
                     if (onExceptionInterface) onExceptionInterface(data.status, data.message) ;
                 }
             } ,
+            complete : function() {
+                alert("complete") ;
+                if(onComplete) onComplete() ;
+            } ,
             timeout : 10000
         } ;
-        try {
+        try {            
             $.ajax(options) ;
         } catch (e) {
             $.alert("错误名称：" + e.name + "\n错误描述：" + e.message, "警告") ;
@@ -146,7 +157,7 @@ function Controller() {
                 $("#album-section .pagination").text((swiper.activeIndex + 1) + " / " + swiper.slides.length) ;  
             }
         }) ;
-    } ;    
+    } ;               
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     页面加载的时候执行的公共逻辑
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -154,7 +165,7 @@ function Controller() {
         /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         图片延迟加载
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        this.lazyload() ;        
+        this.lazyload() ;
     } ;
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     整个基类逻辑结束
