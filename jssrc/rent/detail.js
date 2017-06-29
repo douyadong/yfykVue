@@ -61,10 +61,12 @@ DetailController.prototype.sendBigData = function() {
         var sHref = $(this).attr('data-href') ; 
         $.ajax( classSelf.apiPrefix + classSelf.apiUrl.bigData , {
             "data" : data ,
-            "success" : function() {                
+            "success" : function() {
+                alert("success" + sHref) ;
                 sHref && ( window.location.href = sHref ) ;
             } ,
             "error" : function() {
+                alert("error" + sHref) ;
                 sHref && ( window.location.href = sHref ) ;
             }
         }) ;             
