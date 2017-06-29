@@ -7,9 +7,9 @@
 </template>
 
 <script>
-    import downloadApp from "@/components/downloadApp" ;
-    import assistant from "@/components/assistant" ;
-    import albums from "@/components/albums" ;
+    import downloadApp from "@/components/common/downloadApp" ;
+    import assistant from "@/components/common/assistant" ;
+    import albums from "@/components/common/albums" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     export default {
       name : "rentDetailHybrid" ,

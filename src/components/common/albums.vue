@@ -27,5 +27,5 @@
     }
 </script>
 <style lang="less" scoped>
-    @import "../../src/less/components/albums.less" ;   
+    @import "../../../src/less/components/albums.less" ;   
 </style>

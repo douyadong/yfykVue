@@ -18,5 +18,5 @@
     }
 </script>
 <style lang="less" scoped>
-    @import "../../src/less/components/downloadApp.less" ;   
+    @import "../../../src/less/components/downloadApp.less" ;   
 </style>

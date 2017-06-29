@@ -60,5 +60,5 @@
     }
 </script>
 <style lang="less" scoped>
-    @import "../../src/less/components/assistant.less" ;   
+    @import "../../../src/less/components/assistant.less" ;   
 </style>

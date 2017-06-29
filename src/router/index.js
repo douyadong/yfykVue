@@ -9,13 +9,13 @@ import Router from "vue-router" ;
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 加载路由用到的组件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-import learnDetailHybrid from "@/views/learn/detail/hybrid" ;
-import learnDetailShare from "@/views/learn/detail/share" ;
-import rentDetailHybrid from "@/views/rent/detail/hybrid" ;
-import rentDetailShare from "@/views/rent/detail/share" ;
-import spaceDetailHybrid from "@/views/space/detail/hybrid" ;
-import spaceDetailShare from "@/views/space/detail/share" ;
-import weixinAdd from "@/views/weixin/add" ;
+import learnDetailHybrid from "@/components/learn/detail/hybrid" ;
+import learnDetailShare from "@/components/learn/detail/share" ;
+import rentDetailHybrid from "@/components/rent/detail/hybrid" ;
+import rentDetailShare from "@/components/rent/detail/share" ;
+import spaceDetailHybrid from "@/components/space/detail/hybrid" ;
+import spaceDetailShare from "@/components/space/detail/share" ;
+import weixinAdd from "@/components/weixin/add" ;
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
