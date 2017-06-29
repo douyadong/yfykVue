@@ -1,0 +1,79 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> assistant.less (助手条，包括经纪人头像，电话咨询，添加微信等功能)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ .assistant {
+     background-color : #fff ;
+     box-shadow : 0 -2px 6px 0 rgba( 0 , 0 , 0 , .1 ) ;
+     bottom : 0 ;
+     .clearfix() ;
+     height : 50px ;
+     left : 0 ;    
+     position : fixed ;
+     width : 100% ;
+     z-index : 10000 ;
+     &>li {
+         border-right : 1px solid @light-line-gray-color ;
+         float : left ;
+         height : 50px ;
+         text-align : center ;
+         width : 33.3% ;
+         &:last-child {
+             border : none ;
+         }
+     }
+     .portait {
+         background-color : @light-gay-background-color ;
+         dl {
+             .clearfix() ;
+             display : inline-block ;
+             padding : 4px 0 ;
+             dt {
+                 .border-radius(100px) ;
+                 float : left ;
+                 height : 34px ;
+                 margin : 4px 0 ;          
+                 overflow : hidden ;
+                 width : 34px ;
+            }
+            dd {
+                line-height : 21px ;
+                margin-left : 40px ;                
+                text-align : left ;
+                &.agent-name {
+                    font-size : 1.4rem ;
+                }
+                &.agent-tel {
+                    color : @light-font-color ;
+                    font-size : 1.1rem ;
+                }
+            }
+         }
+         
+     }
+     .tools {
+         a {
+             color : @primary-color ;
+             display : block ;             
+             margin-top : 8px ;
+             span {
+                display : block ;
+                text-align : center ;
+            }
+         }
+     }
+     &.no-weixin {
+         .tools {
+             width : 66.6% ;
+             a {
+                 line-height : 34px ;
+                 span {
+                     display : inline-block ;
+                 }         
+             }
+         }
+     }
+ }
