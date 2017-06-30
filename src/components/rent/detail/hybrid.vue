@@ -1,16 +1,16 @@
 <template>
     <div>
-        <assistant :agent="simpleAgentModel" :houseId="simpleHouseRentDetailInfo.houseId" :eventName="assistantTelEventName"></assistant>
+        <assistant :agent="simpleAgentModel" :houseId="simpleHouseRentDetailInfo.houseId" :eventName="assistantTelEventName" />
        <download-app />
-       <albums :items="simpleHouseRentDetailInfo.houseImageAndVideoList" :houseId="simpleHouseRentDetailInfo.houseId" :eventName="albumsEventName"></albums>
+       <albums :items="simpleHouseRentDetailInfo.houseImageAndVideoList" :houseId="simpleHouseRentDetailInfo.houseId" :eventName="albumsEventName" />
     </div>    
 </template>
 
 <script>
-    import downloadApp from "@/components/downloadApp" ;
-    import assistant from "@/components/assistant" ;
-    import albums from "@/components/albums" ;
-    import ApiDataFilter from "@/libraries/apiDataFilter" ;
+    import downloadApp from "@/components/common/downloadApp" ;
+    import assistant from "@/components/common/assistant" ;
+    import albums from "@/components/common/albums" ;
+    import apiDataFilter from "@/libraries/apiDataFilter" ;
     export default {
       name : "rentDetailHybrid" ,
       data () {
@@ -22,13 +22,13 @@
               albumsEventName : 2057001  //相册图片埋点参数值
           }
       } ,
-      created() {
+      created() {          
           let houseId = this.$route.params.houseId ;
-          let agentId = this.$route.params.agentId ;
-          let adf = new ApiDataFilter(this.$http) ;
-          adf.request({
+          let agentId = this.$route.params.agentId ;         
+          apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
+              method : "jsonp" ,
               successCallback : res => {                 
                   Object.assign(this.$data , res.body.data) ;                                    
               }
