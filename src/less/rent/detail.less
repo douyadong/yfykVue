@@ -1,0 +1,158 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less ->rent -> detail.less (租房详情)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ #rentDetailHybrid {
+     padding-bottom : 50px ;
+ }
+.summary {
+    .panel-header {
+        .clearfix() ;
+        h1 {
+            float : left ;
+            font-weight : 600 ;
+            font-size : 1.6rem ;
+        }
+        .money {
+            color : @danger-color ;
+            float : right ;
+            font-size : 1.6rem ;       
+            margin-right : 1.5rem ;     
+        }
+    }
+    .panel-body {        
+        .column-3 {
+            .clearfix() ;            
+            li {
+                border-right : 1px solid @lighter-line-gray-color ;
+                float : left ;                
+                text-align : center ;
+                width : 33.3% ;
+                &:first-child {
+                    text-align : left ;
+                }
+                &:last-child {
+                    border : none ;
+                }
+                dl {
+                    display : inline-block ;
+                    dt, dd {
+                        text-align : left ;
+                    }
+                    dt {
+                        color : @light-font-color ;
+                        font-size : 1.2rem ;
+                    }
+                    dd {
+                        color : @danger-color ;
+                        font-size : 1.6rem ;
+                        line-height : 2.5rem ;
+                    }
+                }
+            }
+        }
+        .outline, .subway-school {
+            dl {
+                .clearfix() ;
+                dt, dd {
+                    font-size : 1.6rem ;
+                    line-height : 2.2rem ;
+                }
+                dt {
+                    color : @light-font-color ;
+                    float : left ;
+                    width : 4rem ;
+                }
+                dd {
+                    margin-left : 4rem ;
+                }
+            }
+        }
+        .outline {
+            .clearfix() ;
+            li {
+                float : left ;
+            }
+        }
+    }
+}
+
+.support {    
+    .panel-body {
+        .clearfix() ;
+        li {
+            float : left ;
+            font-size : 1.6rem ;
+            line-height : 2.5rem ;
+            width : 25% ;
+            &.no {
+                color : @light-font-color ;
+                text-decoration : line-through ;
+            }
+        }
+    }
+}
+
+.description {
+    .panel-body {
+        dl {            
+            dt, dd {
+                font-size : 1.6rem ;
+                line-height : 2.0rem ;
+            }
+            dt {
+                color : @light-font-color ;
+                line-height : 2.5rem ;
+            }
+        }
+    }
+}
+
+.location {
+    .location-container {
+        position : relative ;
+        img {
+            height : 250px ;
+        }
+        .mark {            
+            .center-block() ;
+            height : 30px ;
+            left : 0 ;
+            position : absolute ;
+            right : 0 ;
+            top : 45% ;
+            width : 30px ;
+            z-index : 100 ;
+            .iconfont {
+                font-size : 3.0rem ;
+            }
+        }
+        .cover {
+            background-color : #fff ;
+            .border-radius(7px) ;
+            bottom : 5% ;
+            .center-block() ;
+            font-size : 1.4rem ;
+            left : 0 ;
+            right : 0 ;
+            padding : .5rem ;
+            position : absolute ;
+            width : 90% ;
+            p {
+                margin : .2rem 0 ;
+            }
+            .iconfont {
+                margin-right : .5rem ;
+            }
+        }
+        .icon-dingwei {
+            color : @danger-color ;
+        }
+        .icon-ditie {
+            color : @primary-color ;
+        }
+    }
+}
