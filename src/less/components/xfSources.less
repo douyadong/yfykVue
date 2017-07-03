@@ -1,0 +1,50 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：xfSources.less (新房源)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+.xf-sources {
+    dl {
+        padding : 10px 0 ;
+        dt {
+            img {
+                height : 185px ;  
+                width : 100% ;              
+            }
+        }
+        dd {
+            &.title {
+                font-size : 1.6rem ;
+                line-height : 26px ;
+                margin-top : 5px ;
+                .text-ellipsis() ;
+            }
+            &.summary {
+                .clearfix() ;
+                span {
+                    display : block ;
+                    font-size : 1.4rem ;
+                }
+                .location-area {
+                    float : left ;                    
+                }
+                .price {
+                    float : right ;
+                    color : @danger-color ;                    
+                    font-weight : 600 ;
+                }
+            }
+            &.tags {
+                span {
+                    background-color : @light-gay-background-color ;
+                    .border-radius(3px) ;
+                    display : inline-block ;
+                    margin : 0 2px 2px 0 ;
+                    padding : 2px 5px ;
+                }
+            }            
+        }
+    }
+}

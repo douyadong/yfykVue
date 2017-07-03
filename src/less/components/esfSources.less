@@ -1,0 +1,52 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：esfSources.less (二手房源)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+.esf-sources {
+    dl {
+        border-bottom : 1px dotted @light-line-gray-color ;
+        .clearfix() ;
+        padding : 10px 0 ;
+        &:last-child {
+            border : none ;
+        }
+        dt {
+            float : left ;
+            height : 87px ;            
+            width : 131px ;
+            img {
+                height : 100% ;
+                width : 100% ;
+            }
+        }
+        dd {
+            margin-left : 140px ;
+            .fit-height() ;
+            &.title {
+                font-size : 1.6rem ;
+                line-height : 26px ;
+                .text-ellipsis() ;
+            }
+            &.tags {
+                span {
+                    background-color : @light-gay-background-color ;
+                    .border-radius(3px) ;
+                    display : inline-block ;
+                    margin : 0 2px 2px 0 ;
+                    padding : 2px 5px ;
+                }
+            }
+            .money , .price {
+                float : right ;
+            }
+            .money {
+                color : @danger-color ;
+                font-size : 1.6rem ;
+                font-weight : 600 ;
+            }
+        }
+    }
+}

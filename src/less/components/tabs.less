@@ -6,25 +6,23 @@
 .wk-tabs {   
     .tabs-handle {
         background-color : #fff ;
-        border-bottom : 1px solid @line-gray-color  ;
+        /*border-bottom : 1px solid @line-gray-color  ;*/
          .clearfix() ;
          padding : 0 @gap-dimension  ;
-        &>li {
-            border-bottom : 2px solid transparent ;
-            float : left ;
-            line-height : 22px ;
+        &>li {            
+            float : left ;            
             a {
+                border-bottom : 2px solid transparent ;
                 color : @default-font-color ;
-                display : block ;
-                font-size : 1.6rem ;                
+                display : inline-block ;           
+                font-size : 1.6rem ;
+                line-height : 45px ;         
                 text-align : center ;
-            }
-            &.on {
-                border-bottom-color : @primary-color ;
-                a {
-                    color : @success-color ;
+                &.on {
+                    border-bottom-color : @primary-color ;
+                    color : @primary-color ;               
                 }
-            }
+            }            
         }
     }
     .tabs-frame {
