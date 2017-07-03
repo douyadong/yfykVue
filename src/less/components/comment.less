@@ -1,0 +1,50 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> comment.less (评论)
+ 3. 作者：tangxuyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+@import "../variables.less";
+.comments {
+    margin-left: 2rem;
+    margin-bottom: 20px;
+    .comment {
+        margin-top: 1.5rem;
+        .avatar {
+            width: 3rem;
+            height: 3rem;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px solid @primary-color;
+            float: left;
+            img {
+                width: 100%;
+            }
+        }
+        .detail {
+            padding-right: 1.5rem;
+            color: @default-font-color;
+            margin-left: 4rem;
+            box-sizing: border-box;
+            padding-bottom: 1.5rem;
+            .phone-number {
+                font-size: 1.2rem;
+                line-height: 1.33;
+            }
+            .date {
+                font-size: .9rem;
+                line-height: 1.39;
+                color: @light-line-gray-color;
+            }
+            .content {
+                margin-top: .9rem;
+                font-size: 1.4rem;
+                line-height: 1.78;
+            }
+        }
+    }
+}
+
+.bottom-border {
+    border-bottom: 1px solid @light-line-gray-color;
+}
