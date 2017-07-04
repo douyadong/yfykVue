@@ -1,5 +1,6 @@
 <template>
     <div class="article">
+      <router-link to="/learn/detail/hybrid/1">hybrid</router-link>
       <div class="wk-panel">
         <businessCard photo="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg" name="王小五" companyName="志远地产" storeName="虹桥店" phone="18998769098"/>
       </div>
@@ -37,6 +38,8 @@
       components:{comment,infiniteLoading,businessCard},      
       data () {
           return {
+            articleId:"",
+            agentId:"",
             title:"这是标题",
             modifiedDate:"2014-03-05",
             visitNumber:"2536",
@@ -73,6 +76,33 @@
       created() {
           //接受路由参数示范
           //console.log("文章id为：" + this.$route.params.id) ;
+          this.$wechatShare({
+            "title" : "标题" ,
+            "timelineTitle" : "标题2" ,
+            "content" : "内容" ,
+            "imgUrl" : "" ,
+            "environment" : "prod",
+            "success":function(){
+              console.log('success');
+            },
+            "fail":function(){
+              console.log('success');
+            },
+            "cancel":function(){
+              console.log('success');
+            },
+            "complete":function(){
+              console.log('success');
+            }
+
+          });
+
+          //埋点
+          this.$bigData({
+            page_id:2063,
+            article_id:this.articleId,
+            agent_id:this.agentId
+          });
       },
       methods:{
         onInfinite(){

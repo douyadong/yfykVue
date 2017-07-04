@@ -7,7 +7,7 @@
        </div>
       </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
+          <h1 class="panel-header" data-big-data="111" @click="click2">评论 ({{comments && comments.length}})</h1>
           <comment class="pannel" :items="comments"></comment>
        </div>  
 
@@ -16,17 +16,19 @@
     
 </template>
 
-<script>   
+<script> 
     import Vue from "vue";
     import comment from "@/components/common/comment.vue";
     import infiniteLoading from "vue-infinite-loading"; 
-    import apiDataFilter from "@/libraries/apiDataFilter";   
+    import apiDataFilter from "@/libraries/apiDataFilter";       
 
     export default {
       name : "learnDetailHybrid" ,
       components:{comment,infiniteLoading},      
       data () {
           return { 
+            articleId:"",
+            agentId:"",
             article:{
               title:"",
               articleSource:"",
@@ -45,12 +47,42 @@
       } ,
       created() {
           this.fetchArticle();
+          this.$wechatShare({
+            "title" : "标题" ,
+            "timelineTitle" : "标题2" ,
+            "content" : "内容" ,
+            "imgUrl" : "" ,
+            "environment" : "prod",
+            "success":function(){
+              console.log('success');
+            },
+            "fail":function(){
+              console.log('success');
+            },
+            "cancel":function(){
+              console.log('success');
+            },
+            "complete":function(){
+              console.log('success');
+            }
+
+          });
+
+          //埋点
+          this.$bigData({
+            page_id:2061,
+            article_id:this.articleId,
+            agent_id:this.agentId
+          });
       },
       mounted(){
         console.log("mounted ...");
       },
       methods:{
-
+        click2(e){
+          console.log("ssss");
+          e.preventDefault();
+        },
         onInfinite(){
           if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
             return;
