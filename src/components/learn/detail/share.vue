@@ -1,6 +1,5 @@
 <template>
-    <div class="article">
-      <router-link to="/learn/detail/hybrid/1">hybrid</router-link>
+    <div class="article">      
       <div class="wk-panel">
         <businessCard photo="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg" name="王小五" companyName="志远地产" storeName="虹桥店" phone="18998769098"/>
       </div>
@@ -14,9 +13,9 @@
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
-            <input type="text" style="width:100%;font-size:1.8rem;line-height:2.0"> 
+            <input type="text" v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0"> 
             <div class="operate">
-              <a class="btn">取消</a><a class="btn confirm">评论</a>
+              <button class="btn" @click="cancel">取消</button><button class="btn confirm" @click="commit" :disabled="commentText.length===0">评论</button>
             </div>
           </div>
           <comment class="pannel" :items="comments"></comment>
@@ -32,12 +31,14 @@
     import comment from "@/components/common/comment";
     import infiniteLoading from 'vue-infinite-loading';  
     import businessCard from "@/components/common/businessCard";
+    import apiDataFilter from "@/libraries/apiDataFilter";       
 
     export default {
       name : "learnDetailHybrid" ,
       components:{comment,infiniteLoading,businessCard},      
       data () {
           return {
+            commentText:"",
             articleId:"",
             agentId:"",
             title:"这是标题",
@@ -134,6 +135,17 @@
               content:"这是评论这是评论！！！！"
             }]);
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        },
+        cancel(){
+          this.commentText = "";
+        },
+        commit(){
+          apiDataFilter.request({
+            apiPath:"common.commitComment",
+            successCallback:function(res){
+              
+            }
+          });
         }
       }
     }
@@ -192,12 +204,15 @@
         color: #7C7C7C;
         text-align: right;
         .btn{
-            
+            border:none;
+            background-color:white;
             &.confirm{
-              padding:.3rem 1.2rem;
-            border:1px solid #7C7C7C;            
-            border-radius:.2rem;
-            margin-left: 3rem;
+              padding:.4rem 1.2rem;
+              border:1px solid #7C7C7C; 
+              color:#7C7C7C;           
+              border-radius:.2rem;
+              margin-left: 3rem;
+              background-color:white;
           }
         }
         

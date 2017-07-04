@@ -1,7 +1,7 @@
 <template>
 <div class="comments">
-	<p v-if="!items||!items.length">
-	  没有评论!
+	<p class="no-data" v-if="!items||!items.length">
+	  暂无评论，快来抢沙发吧~
 	</p>
 	<div v-else class="bottom-border">
 		<div class="comment" :key="item.id" v-for="(item,index) in items">
@@ -26,5 +26,5 @@ export default {
 </script>
 
 <style lang="less">
-	@import "../../less/components/comment.less";
+	@import "../../less/components/comment.less";	
 </style>

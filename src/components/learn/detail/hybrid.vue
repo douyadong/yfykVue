@@ -7,13 +7,16 @@
        </div>
       </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header" data-big-data="111" @click="click2">评论 ({{comments && comments.length}})</h1>
-          <comment class="pannel" :items="comments"></comment>
+          <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
+          <comment class="panel" :items="comments"></comment>
        </div>  
 
-       <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading"></infiniteLoading>    
-    </div>   
-    
+       <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
+         <span slot="no-more">
+          
+        </span>
+       </infiniteLoading>    
+    </div>       
 </template>
 
 <script> 
@@ -27,8 +30,9 @@
       components:{comment,infiniteLoading},      
       data () {
           return { 
-            articleId:"",
-            agentId:"",
+            articleId:this.$route.params.id,
+            cityId:this.$route.query.cityId,
+            agentId:this.$route.query.agentId,            
             article:{
               title:"",
               articleSource:"",
@@ -40,12 +44,11 @@
             pageInfo:{
               pageIndex:0,
               pageSize:10,
-              total:null,//把total==null认为是首次加载
-              //loading:false
+              total:null//把total==null认为是首次加载              
             }
           }
       } ,
-      created() {
+      created() {          
           this.fetchArticle();
           this.$wechatShare({
             "title" : "标题" ,
@@ -69,24 +72,23 @@
           });
 
           //埋点
-          this.$bigData({
+          /*this.$bigData({
             page_id:2061,
-            article_id:this.articleId,
-            agent_id:this.agentId
-          });
-      },
-      mounted(){
-        console.log("mounted ...");
+            pageParam:{
+              article_id:this.articleId,
+              agent_id:this.agentId,
+            },            
+            type:1,
+            page_time:Date.now()
+          });*/
       },
       methods:{
-        click2(e){
-          console.log("ssss");
-          e.preventDefault();
-        },
         onInfinite(){
           if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
+            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
             return;
           }
+          console.log('infinite',this.pageInfo);
 
           this.fetchComments();          
         },
@@ -96,39 +98,48 @@
           apiDataFilter.request({
             apiPath:"learn.detail",
               data:{
-                cityId:"",
-                articleId:"",
-                agentId:""
+                cityId:this.cityId,
+                articleId:this.articleId,
+                agentId:this.agentId
               }, 
+              errorCallback:function(){
+
+              },
               successCallback:function(res){
+                let data = res.body;
                 self.article = {
-                  title:res.articleDetailModel.title,
-                  articleSource:res.articleDetailModel.articleSource,
-                  publishTime:res.articleDetailModel.publishTime,
-                  viewNumStr:res.articleDetailModel.viewNumStr,
-                  content:res.articleDetailModel.content
+                  title:data.data.articleDetailModel.title,
+                  articleSource:data.data.articleDetailModel.articleSource,
+                  publishTime:data.data.articleDetailModel.publishTime,
+                  viewNumStr:data.data.articleDetailModel.viewNumStr,
+                  content:data.data.articleDetailModel.content
                 };
 
-                self.comments = res.articleDetailModel.commentList || [];
+                /*self.comments = res.articleDetailModel.commentList || [];
                 self.pageInfo.pageIndex = self.comments.length;
-                self.pageInfo.total = res.articleDetailModel.commentNum;
+                self.pageInfo.total = res.articleDetailModel.commentNum;*/
               }
           });
         },
         fetchComments(){
-            let self = this;
-            //this.loading = true;
+            let self = this;            
+                      
             apiDataFilter.request({
               apiPath:"learn.comments",
               data:{
-                articleId:"",
+                articleId:this.articleId,
                 pageIndex:this.pageInfo.pageIndex,
                 pageSize:this.pageInfo.pageSize,
               }, 
+              /*errorCallback:function(){
+                console.log();
+              },*/
               successCallback:function(res){
-                self.pageInfo.total = res.count;
-                self.pageInfo.pageIndex += (res.data&& res.data.length || 0);
-                self.comments = self.comments.concat(res.data);
+                let data = res.body;                
+                self.pageInfo.total = data.count;
+                self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
+                self.comments = self.comments.concat(data.data);
+                console.log('data',data.data,self.pageInfo);
                 self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
               } 
             });

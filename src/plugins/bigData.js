@@ -14,6 +14,9 @@ export default {
 				data:data,
 				successCallback:function(){
 					console.log(data,"埋点成功！");
+				},
+				errorCallback:function(){
+					
 				}
 			});
 		};
@@ -21,10 +24,9 @@ export default {
 		window.document.body.addEventListener("click",function(event){
 			//判断是否埋点元素
 			let $target = $(event.target);
-			let data = $target.data('big-data');
-			if(data){
-				//console.log($target," 是埋点元素");
-				bigData(data);
+			let data = $target.data('bigdata');
+			if(data){				
+				bigData(JSON.parse(data));
 			}
 		},true);
 

@@ -42,8 +42,7 @@ export default {
 				}
 			}
     	*/
-		Vue.wechatShare = Vue.prototype.$wechatShare = function(options){
-			console.log("wechatSahre......................");
+		Vue.wechatShare = Vue.prototype.$wechatShare = function(options){			
 			$.ajax({
 	        	url : apiUrl ,
 	        	type : "GET" ,
