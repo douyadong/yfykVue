@@ -15,7 +15,7 @@ export default {
     } ,
     "suffix": { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
         "common" : {
-            "bigData":"",
+            "bigData":"/buriedPoint/sendData.rest",
         } ,
         "learn" : {
             "detail" : "yfyk/quJingShareArticleDetail.json",  
