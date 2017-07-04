@@ -48,13 +48,22 @@
             </ul>
             <!--tabs-frame部分-->
             <transition  name="slide-fade">
-                <div class="tabs-frame esf lr-padding" v-show="pageStates.activeTab=='esf'"><esf-sources :items="apiData.esfSources"/></div>
+                <div class="tabs-frame esf lr-padding" v-show="pageStates.activeTab=='esf'">
+                    <esf-sources :items="apiData.esfSources"/>
+                    <!--<infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf"/>-->
+                </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class="tabs-frame xf lr-padding" v-show="pageStates.activeTab=='xf'"><xf-sources :items="apiData.xfSources"/></div>
+                <div class="tabs-frame xf lr-padding" v-show="pageStates.activeTab=='xf'">
+                    <xf-sources :items="apiData.xfSources"/>
+                    <!--<infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf"/>-->
+                </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class="tabs-frame press lr-padding" v-show="pageStates.activeTab=='press'"><xf-sources :items="apiData.presses"/></div>
+                <div class="tabs-frame press lr-padding" v-show="pageStates.activeTab=='press'">
+                    <xf-sources :items="apiData.presses"/>
+                    <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
+                </div>                
             </transition>
         </div>
     </div>    
@@ -65,7 +74,8 @@
     import assistant from "@/components/common/assistant" ;
     import xfSources from "@/components/common/xfSources" ;
     import esfSources from "@/components/common/esfSources" ;
-    import presses from "@/components/common/presses" ;    
+    import presses from "@/components/common/presses" ; 
+    import InfiniteLoading from "vue-infinite-loading" ;
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -74,7 +84,10 @@
                   optionsVisibility : false ,  //熟悉商圈，自我介绍，成交故事这块可选显示区域的显示状态
                   activeTab : "esf" ,  //停留在哪个tab上 ,
                   introduceExtendable : false ,  //自我介绍文本内容是否可展开
-                  storyExtendable : false  //成交故事内容是否可展开
+                  storyExtendable : false ,  //成交故事内容是否可展开 ,
+                  esfPageIndex : 1 , // 二手房源当前页码
+                  xfPageIndex : 1 ,  //新房房源当前页码
+                  pressPageIndex : 1 //房产资讯当前页码
               } ,
               pageConfs : {
                   assistantTelEventName : 201705  //页面底部助手条电话咨询按钮埋点的事件名称
@@ -107,13 +120,28 @@
           //切换二手房 | 新房 | 房产资讯 tabs
           swapToTab : function(tabName) {
               this.pageStates.activeTab = tabName ;
+          } ,
+          /*
+          //无限加载二手房          
+          infiniteLoadingEsf : function() {
+              this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:loaded") ;
+          } ,
+          //无限加载新房
+          infiniteLoadingXf : function() {
+              this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:loaded") ;
+          } ,
+        //无限加载资讯
+          infiniteLoadingPress : function() {
+              this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;
           }
+          */
       } ,
       components : {
           assistant ,
           xfSources ,
           esfSources ,
-          presses
+          presses ,
+          InfiniteLoading
       }
     }
 </script>
