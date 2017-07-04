@@ -1,10 +1,9 @@
 <template>
     <div class="article">
       <div class="wk-panel">
-       <h1 class="article-title">{{title}}</h1>
-       <h2 class="article-description"><span class="source">{{source}}</span><span class="date">{{modifiedDate}}</span><span class="visit-number"><span class="num">{{visitNumber}}</span> <span>次浏览</span></span></h2>
-       <div class="article-content">
-        这是文章内容！！！富文本的eee
+       <h1 class="article-title">{{article.title}}</h1>
+       <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
+       <div class="article-content" v-html="article.content">        
        </div>
       </div>
        <div class="wk-panel article-comments">
@@ -20,80 +19,87 @@
 <script>   
     import Vue from "vue";
     import comment from "@/components/common/comment.vue";
-    import infiniteLoading from 'vue-infinite-loading';    
+    import infiniteLoading from "vue-infinite-loading"; 
+    import apiDataFilter from "@/libraries/apiDataFilter";   
 
     export default {
       name : "learnDetailHybrid" ,
       components:{comment,infiniteLoading},      
       data () {
-          return {
-            title:"这是标题",
-            modifiedDate:"2014-03-05",
-            visitNumber:"2536",
-            source:"悟空找房",
-            //comments:[],
-            comments:[{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            }],
+          return { 
+            article:{
+              title:"",
+              articleSource:"",
+              publishTime:"",
+              viewNumStr:"",
+              content:""
+            },          
+            comments:[],
+            pageInfo:{
+              pageIndex:0,
+              pageSize:10,
+              total:null,//把total==null认为是首次加载
+              //loading:false
+            }
           }
       } ,
       created() {
-          //接受路由参数示范
-          //console.log("文章id为：" + this.$route.params.id) ;
+          this.fetchArticle();
+      },
+      mounted(){
+        console.log("mounted ...");
       },
       methods:{
-        onInfinite(){
 
-          this.comments = this.comments.concat([{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            }]);
-          this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        onInfinite(){
+          if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
+            return;
+          }
+
+          this.fetchComments();          
+        },
+
+        fetchArticle(){
+          let self = this;
+          apiDataFilter.request({
+            apiPath:"learn.detail",
+              data:{
+                cityId:"",
+                articleId:"",
+                agentId:""
+              }, 
+              successCallback:function(res){
+                self.article = {
+                  title:res.articleDetailModel.title,
+                  articleSource:res.articleDetailModel.articleSource,
+                  publishTime:res.articleDetailModel.publishTime,
+                  viewNumStr:res.articleDetailModel.viewNumStr,
+                  content:res.articleDetailModel.content
+                };
+
+                self.comments = res.articleDetailModel.commentList || [];
+                self.pageInfo.pageIndex = self.comments.length;
+                self.pageInfo.total = res.articleDetailModel.commentNum;
+              }
+          });
+        },
+        fetchComments(){
+            let self = this;
+            //this.loading = true;
+            apiDataFilter.request({
+              apiPath:"learn.comments",
+              data:{
+                articleId:"",
+                pageIndex:this.pageInfo.pageIndex,
+                pageSize:this.pageInfo.pageSize,
+              }, 
+              successCallback:function(res){
+                self.pageInfo.total = res.count;
+                self.pageInfo.pageIndex += (res.data&& res.data.length || 0);
+                self.comments = self.comments.concat(res.data);
+                self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+              } 
+            });
         }
       }
     }

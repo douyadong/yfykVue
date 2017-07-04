@@ -18,7 +18,8 @@ export default {
             
         } ,
         "learn" : {
-            "detail" : "reportPandect/getBanner.action"
+            "detail" : "yfyk/quJingShareArticleDetail.json",  
+            "comments": "article/queryArticleCommentList.json",          
         } ,
         "rent" : {
             "detail" : "home.php"
