@@ -1,0 +1,28 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> presses.less (资讯)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ .presses {
+     .wk-panel {
+         dt {
+             font-size : 1.6rem ;
+             font-weight : 600 ;
+         }
+         dd {
+             font-size : 1.4rem ;
+             &.digest {                 
+                 line-height : 22px ;
+             }
+             &.outline {
+                 .clearfix() ;
+                 color : @light-font-color ;
+                 .pv {
+                     color : @default-font-color ;
+                 }
+             }
+         }
+     }
+ }

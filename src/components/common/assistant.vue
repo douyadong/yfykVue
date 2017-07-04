@@ -29,20 +29,8 @@
             return {
                 
             }
-        } ,
-        props : {
-            agent : {
-                type : Object ,
-                required : true
-            } ,
-            houseId : {
-                type : Number
-            } ,
-            eventName : {
-                type : Number ,
-                required : true
-            }
-        } ,
+        } ,        
+        props : [ "agent" , "houseId" , "eventName" ] ,
         computed : {
             headPortraitUrl() {
                 return this.agent.agentHeadImgUrl + "?x-oss-process=image/resize,w_40" ;
