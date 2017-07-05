@@ -62,12 +62,12 @@ export default new Router({
             component : rentDetailShare
         } ,
         {
-            path : "/space/detail/hybrid/:id" ,
+            path : "/space/detail/hybrid/:agentId" ,
             name : "spaceDetailHybrid",
             component : spaceDetailHybrid
         } ,
         {
-            path : "/space/detail/share/:id" ,
+            path : "/space/detail/share/:agentId" ,
             name : "spaceDetailShare",
             component : spaceDetailShare
         } ,

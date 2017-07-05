@@ -1,11 +1,11 @@
 <template>
     <div id="rentDetailHybrid">
-        <assistant :agent="apiData.simpleAgentModel" :houseId="apiData.simpleHouseRentDetailInfo.houseId" :eventName="pageConfs.assistantTelEventName" />
+        <assistant :agent="apiData.simpleAgentModel" :bigDataParams="pageConfs.assistantBigDataParams" />
        <download-app />
        <!--<albums :items="apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :houseId="apiData.simpleHouseRentDetailInfo.houseId" :eventName="pageConfs.albumsEventName" />-->
        <!--相册内容-->
        <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList">
+            <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
                 <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
                 <img :src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
@@ -93,7 +93,7 @@
                   swiperActiveIndex : 1 //相册当前在第几帧
               } ,
               pageConfs : {
-                  assistantTelEventName : 2057002 ,  //电话咨询按钮埋点参数值                 
+                  assistantBigDataParams : "" ,  //电话咨询按钮埋点参数                 
                   swiperOption : {  // 整个相册 swiper插件的选项                     
                       name : "currentSwiper" ,
                       // 所有配置均为可选（同Swiper配置）
@@ -122,8 +122,7 @@
           let agentId = this.$route.params.agentId ;         
           apiDataFilter.request({
               apiPath : "rent.detail" ,
-              data : { "houseId" : houseId , "agentId" : agentId } ,
-              method : "jsonp" ,
+              data : { "houseId" : houseId , "agentId" : agentId } ,              
               successCallback : res => {                 
                   Object.assign(this.$data.apiData , res.body.data) ;                                    
               }
