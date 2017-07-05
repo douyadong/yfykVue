@@ -15,10 +15,12 @@ export default {
     } ,
     "suffix": { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
         "common" : {
-            
+            "bigData":"buriedPoint/sendData.rest",
         } ,
         "learn" : {
-            "detail" : "reportPandect/getBanner.action"
+            "detail" : "yfyk/quJingShareArticleDetail.rest",  
+            "comments": "article/queryArticleCommentList.rest",  
+            "commitComment":"article/commentArticle.rest"        
         } ,
         "rent" : {
             "detail" : "yfyk/getHouseRentDetailInfo.rest"
