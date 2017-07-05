@@ -46,29 +46,37 @@
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');">推荐新房</a></li>
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');">房产资讯</a></li>
             </ul>
-            <!--tabs-frame部分-->
-            <transition  name="slide-fade">
-                <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
-                    <esf-sources :items="apiData.esfSources"/>
-                    <infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf">
-                        <div slot="no-more" class="no-more">没有更多了</div>
-                    </infinite-loading>
-                </div>                
-            </transition>
-            <transition  name="slide-fade">
-                <div class=" wk-panel" v-if="pageStates.activeTab=='xf'">
-                    <xf-sources :items="apiData.xfSources"/>
-                    <infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf">
-                        <div slot="no-more" class="no-more">没有更多了</div>
-                    </infinite-loading>
-                </div>                
-            </transition>
-            <transition  name="slide-fade">
-                <div class="wk-panel" v-if="pageStates.activeTab=='press'">
-                    <xf-sources :items="apiData.presses"/>
-                    <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
-                </div>                
-            </transition>
+            <!--tabs-frame部分-->            
+            <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
+                <transition  name="slide-fade">
+                    <!--为什么这里要多套一层容器，是用上面wk-panel容器显示来改变页面滚动条状态从而来触发切换到的tab的循环加载插件加载-->
+                    <div  v-if="pageStates.activeTabContent=='esf'">
+                        <esf-sources :items="apiData.esfSources"/>
+                        <infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf">
+                            <div slot="no-more" class="no-more">没有更多了！</div>
+                        </infinite-loading>
+                    </div>
+                </transition>
+            </div>           
+            <div class=" wk-panel" v-if="pageStates.activeTab=='xf'">
+                <transition  name="slide-fade">
+                    <div  v-if="pageStates.activeTabContent=='xf'">
+                        <xf-sources :items="apiData.xfSources"/>
+                        <infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf">
+                            <div slot="no-more" class="no-more">没有更多了！</div>
+                        </infinite-loading>
+                    </div>
+                </transition>
+            </div>
+            <div class="wk-panel" v-if="pageStates.activeTab=='press'">
+                <transition  name="slide-fade">
+                    <div  v-if="pageStates.activeTabContent=='press'">
+                        <xf-sources :items="apiData.presses"/>
+                        <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
+                    </div>
+                </transition>
+            </div>
+            <!--tabs内容结束-->         
         </div>
     </div>    
 </template>
@@ -80,7 +88,7 @@
     import esfSources from "@/components/common/esfSources" ;
     import presses from "@/components/common/presses" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
-    import InfiniteLoading from "vue-infinite-loading" ;
+    import InfiniteLoading from "vue-infinite-loading" ;   
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -88,6 +96,7 @@
               pageStates : {
                   optionsVisibility : false ,  //熟悉商圈，自我介绍，成交故事这块可选显示区域的显示状态
                   activeTab : "esf" ,  //停留在哪个tab上 ,
+                  activeTabContent : "esf" ,  //tab内容停留在哪个上
                   introduceExtendable : false ,  //自我介绍文本内容是否可展开
                   storyExtendable : false ,  //成交故事内容是否可展开 ,
                   esfPageIndex : 0 , // 二手房源当前页数据起始条数
@@ -96,7 +105,7 @@
               } ,
               pageConfs : {
                   assistantBigDataParams : "" ,  //页面底部助手条电话咨询按钮埋点的参数
-                  pageSize : 2  //推荐信息每次加载多少条
+                  pageSize : 10  //推荐信息每次加载多少条
               } ,              
               apiData : {
                   agentDetail : {} ,  //经纪人数据
@@ -124,8 +133,12 @@
               this.pageStates.storyExtendable = false ;
           } ,
           //切换二手房 | 新房 | 房产资讯 tabs
-          swapToTab : function(tabName) {
-              this.pageStates.activeTab = tabName ;              
+          swapToTab : function(tabName) {              
+              this.pageStates.activeTab = tabName ; 
+              //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
+              window.setTimeout(() => {
+                  this.pageStates.activeTabContent = tabName ; 
+              } , 10 ) ;           
           } ,          
           //无限加载二手房          
           infiniteLoadingEsf : function() {
@@ -149,7 +162,7 @@
               apiDataFilter.request({
                   apiPath : "space.xf" ,
                   data : { "agentId" : agentId , "pageIndex" : this.pageStates.xfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
-                  successCallback : res => {
+                  successCallback : res => {                      
                       let result = res.body.data.newHouseSummaryModels ;
                       this.$data.apiData.xfSources = this.$data.apiData.xfSources.concat(result) ;  //将房源数据累加
                       this.pageStates.xfPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
@@ -176,30 +189,7 @@
                   this.$data.apiData.agentDetail = agent ; 
                   document.title = "买房卖房就找悟空找房" + agent.agentName ;
               }
-          }) ;
-           /*  
-          //获取推荐二手房信息
-          apiDataFilter.request({
-              apiPath : "space.esf" ,
-              data : { "agentId" : agentId , "pageIndex" : this.pageStates.esfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
-              successCallback : res => {
-                  let result = res.body.data.secondHouseSummaryModels ; 
-                  this.$data.apiData.esfSources = result ;  //把接口数据赋予页面模板
-                  this.pageStates.esfPageIndex += result.length ;  //页面初始请求后将下次请求起始条目index更新，方便上拉加载调用
-              }
-          }) ;
-          //获取推荐新房信息
-          apiDataFilter.request({
-              apiPath : "space.xf" ,
-              data : { "agentId" : agentId , "pageIndex" : this.pageStates.xfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
-              successCallback : res => {
-                  let result = res.body.data.newHouseSummaryModels ; 
-                  this.$data.apiData.xfSources = result ;  //把接口数据赋予页面模板 
-                  this.pageStates.xfPageIndex += result.length ;  //页面初始请求后将下次请求起始条目index更新，方便上拉加载调用
-              }
-          }) ;
-          */
-          //获取房产资讯信息
+          }) ;          
           
       } ,
       components : {
