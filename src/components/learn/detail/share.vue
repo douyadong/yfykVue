@@ -3,12 +3,13 @@
       <div class="wk-panel">
         <businessCard :agent="agent"/>
       </div>
-      <div class="wk-panel">
+      <div class="wk-panel" style="padding-bottom:1.5rem">
        <h1 class="article-title">{{article.title}}</h1>
        <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
        <div class="article-content" v-html="article.content">
       
        </div>
+       <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'icon-zan':true,'active':isUp}" @click="zan"></i> xxx</p>
       </div>
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
@@ -51,6 +52,7 @@
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,
+            isUp:false,
             agent:{
 
             },
@@ -69,6 +71,16 @@
             }
           }
       } ,
+      mounted(){
+        //字体
+        this.setArticleFont();
+
+        //处理链接        
+        this.convertLink();
+        
+        //处理视频
+        this.convertVideo();
+      },
       created() {
         this.fetchArticle();
           /*
@@ -101,6 +113,93 @@
           });*/
       },
       methods:{
+        getQueryString: function(params, name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+          var r = params.match(reg) // 获取url中"?"符后的字符串并正则匹配
+          var context = ''
+          if (r != null)
+            context = r[2]
+          reg = null
+          r = null
+          return context == null || context == '' || context == 'undefined' ? '' : context
+        },
+        convertLink: function() {
+          let self = this;          
+          let links = $('.article-content').find('a')
+          if (!links || !links.length) return false
+          $.each(links, function(index, item) {
+            let $item = $(item)
+            let href = $item.attr('href')
+            let params = href.split('?')
+            let articleId, categoryId
+            if (params) {
+              if (params[0] === 'wkzf://discovery/parameter?articleId=') {
+                if (params[1]) {
+                  articleId = self.getQueryString(params[1], 'articleId')
+                  $item.attr('href', '/article/app-share.' + articleId + '.html')
+                }
+              } else if (params[0] === 'wkzf://discovery/parameter?categoryId=') {
+                if (params[1]) {
+                  categoryId = self.getQueryString(params[1], 'categoryId')
+                  $item.attr('href', '/category/app.' + categoryId + '.html?cityId=' + self.cityId)
+                }
+              }
+            }
+          })
+        },
+        convertVideo: function() {
+          let videos = $('.article-content').find('embed')
+          if (!videos || !videos.length) return false
+          $.each(videos, function(index, item) {
+            var $item = $(item)
+            var coverUrl = $.trim($('#coverUrl').val())
+            var $video, audio
+            var src = $item.attr('src')
+            var split = src && src.split('.')
+            var type = split[split.length - 1]
+            if (type.toLowerCase() === 'mp3') {
+              audio = '<p class="weixinAudio">'
+              audio += '<audio src="' + src + '" id="media" width="1" height="1" preload="auto"></audio>'
+              audio += '<span id="audio_area" class="db audio_area">'
+              audio += '<span class="audio_arrow_back"></span>'
+              audio += '<span class="audio_arrow"></span>'
+              audio += '<span class="audio_wrp db">'
+              audio += '<span class="audio_play_area">'
+              audio += '<i class="icon_audio_default"></i>'
+              audio += '<i class="icon_audio_playing"></i>'
+              audio += '</span>'
+              audio += '<span id="audio_progress" class="progress_bar"></span>'
+              audio += '</span>'
+              audio += '</span>'
+              audio += '<span id="audio_length" class="audio_length tips_global"></span>'
+              audio += '</p>'
+              $item.after($(audio))
+              $item.remove()
+            } else {
+              $video = $('<video src="' + $item.attr('src') + '" controls="controls">您的浏览器不支持 video 标签。</video>')
+              $video.attr({
+                poster: coverUrl,
+                preload: 'auto'
+              })
+              $item.attr({
+                'type': '',
+                'width': '100%',
+                'height': '100%'
+              })
+              $item.after($video)
+              $item.remove()
+            }
+            $('.weixinAudio').wechatAudio({
+              autoplay: false
+            });
+          })
+        },
+        setArticleFont:function(){
+          //修改文章内容中写死的字体大小
+          $('.article-content').find("[style*=font-size]").each(function(index,ele){
+            $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
+          });
+        },
         onInfinite(){
             if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
@@ -175,9 +274,20 @@
                 self.pageInfo.pageIndex=0;
                 self.pageInfo.total = null;
                 self.comments = [];
-                self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
-                //self.fetchComments();
+                self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');                
               });
+            },
+          });
+        },
+        zan(){
+          let self = this;
+          apiDataFilter.request({
+            apiPath:"learn.up",
+            data:{
+              articleId: this.articleId              
+            },
+            successCallback:function(res){
+              self.isUp = true;
             },
           });
         }

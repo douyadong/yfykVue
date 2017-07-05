@@ -20,7 +20,8 @@ export default {
         "learn" : {
             "detail" : "yfyk/quJingShareArticleDetail.rest",  
             "comments": "article/queryArticleCommentList.rest",  
-            "commitComment":"article/commentArticle.rest"        
+            "commitComment":"article/commentArticle.rest",
+            "up":"article/thumbUp.rest",        
         } ,
         "rent" : {
             "detail" : "yfyk/getHouseRentDetailInfo.rest"
