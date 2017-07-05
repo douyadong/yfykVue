@@ -29,7 +29,7 @@ export default {
             "detail" : "yfyk/agentInfoDetail.rest" ,
             "esf" : "yfyk/agentRecmdSecondHouseList.rest" ,
             "xf" : "yfyk/agentRecmdNewHouseList.rest" ,
-            "press" : ""
+            "press" : "yfyk/agentRecmdArticleList.rest"
         }
     }
 } ;

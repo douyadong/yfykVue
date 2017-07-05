@@ -48,19 +48,23 @@
             </ul>
             <!--tabs-frame部分-->
             <transition  name="slide-fade">
-                <div class="wk-panel" v-show="pageStates.activeTab=='esf'">
+                <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
                     <esf-sources :items="apiData.esfSources"/>
-                    <!--<infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf"/>-->
+                    <infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf">
+                        <div slot="no-more" class="no-more">没有更多了</div>
+                    </infinite-loading>
                 </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class=" wk-panel" v-show="pageStates.activeTab=='xf'">
+                <div class=" wk-panel" v-if="pageStates.activeTab=='xf'">
                     <xf-sources :items="apiData.xfSources"/>
-                    <!--<infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf"/>-->
+                    <infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf">
+                        <div slot="no-more" class="no-more">没有更多了</div>
+                    </infinite-loading>
                 </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class="wk-panel" v-show="pageStates.activeTab=='press'">
+                <div class="wk-panel" v-if="pageStates.activeTab=='press'">
                     <xf-sources :items="apiData.presses"/>
                     <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
                 </div>                
@@ -86,12 +90,13 @@
                   activeTab : "esf" ,  //停留在哪个tab上 ,
                   introduceExtendable : false ,  //自我介绍文本内容是否可展开
                   storyExtendable : false ,  //成交故事内容是否可展开 ,
-                  esfPageIndex : 1 , // 二手房源当前页码
-                  xfPageIndex : 1 ,  //新房房源当前页码
-                  pressPageIndex : 1 //房产资讯当前页码
+                  esfPageIndex : 0 , // 二手房源当前页数据起始条数
+                  xfPageIndex : 0 ,  //新房房源当前页数据起始条数
+                  pressPageIndex : 0 //房产资讯当前页数据起始条数
               } ,
               pageConfs : {
-                  assistantBigDataParams : ""  //页面底部助手条电话咨询按钮埋点的参数
+                  assistantBigDataParams : "" ,  //页面底部助手条电话咨询按钮埋点的参数
+                  pageSize : 2  //推荐信息每次加载多少条
               } ,              
               apiData : {
                   agentDetail : {} ,  //经纪人数据
@@ -120,24 +125,47 @@
           } ,
           //切换二手房 | 新房 | 房产资讯 tabs
           swapToTab : function(tabName) {
-              this.pageStates.activeTab = tabName ;
-          } ,
-          /*
+              this.pageStates.activeTab = tabName ;              
+          } ,          
           //无限加载二手房          
           infiniteLoadingEsf : function() {
-              this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:loaded") ;
+              let agentId = this.$route.params.agentId ; 
+              apiDataFilter.request({
+                  apiPath : "space.esf" ,
+                  data : { "agentId" : agentId , "pageIndex" : this.pageStates.esfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
+                  successCallback : res => {
+                      let result = res.body.data.secondHouseSummaryModels ; 
+                      this.$data.apiData.esfSources = this.$data.apiData.esfSources.concat(result) ;  //将房源数据累加
+                      this.pageStates.esfPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
+                      this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成
+                      if(res.body.data.page.total === this.$data.apiData.esfSources.length) this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕
+                  }
+              }) ;
+              
           } ,
           //无限加载新房
           infiniteLoadingXf : function() {
-              this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:loaded") ;
+              let agentId = this.$route.params.agentId ; 
+              apiDataFilter.request({
+                  apiPath : "space.xf" ,
+                  data : { "agentId" : agentId , "pageIndex" : this.pageStates.xfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
+                  successCallback : res => {
+                      let result = res.body.data.newHouseSummaryModels ;
+                      this.$data.apiData.xfSources = this.$data.apiData.xfSources.concat(result) ;  //将房源数据累加
+                      this.pageStates.xfPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
+                      this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成                 
+                      if(res.body.data.page.total === this.$data.apiData.xfSources.length) this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                  }
+              }) ;              
           } ,
+          /*
         //无限加载资讯
           infiniteLoadingPress : function() {
               this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;
           }
           */
       } ,
-      created() {          
+      created() {            
           let agentId = this.$route.params.agentId ; 
           //获取经纪人信息 
           apiDataFilter.request({
@@ -149,24 +177,28 @@
                   document.title = "买房卖房就找悟空找房" + agent.agentName ;
               }
           }) ;
+           /*  
           //获取推荐二手房信息
           apiDataFilter.request({
               apiPath : "space.esf" ,
-              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 20 } ,              
+              data : { "agentId" : agentId , "pageIndex" : this.pageStates.esfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
               successCallback : res => {
                   let result = res.body.data.secondHouseSummaryModels ; 
-                  this.$data.apiData.esfSources = result ;                   
+                  this.$data.apiData.esfSources = result ;  //把接口数据赋予页面模板
+                  this.pageStates.esfPageIndex += result.length ;  //页面初始请求后将下次请求起始条目index更新，方便上拉加载调用
               }
           }) ;
           //获取推荐新房信息
           apiDataFilter.request({
               apiPath : "space.xf" ,
-              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 20 } ,              
+              data : { "agentId" : agentId , "pageIndex" : this.pageStates.xfPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
               successCallback : res => {
                   let result = res.body.data.newHouseSummaryModels ; 
-                  this.$data.apiData.xfSources = result ;                   
+                  this.$data.apiData.xfSources = result ;  //把接口数据赋予页面模板 
+                  this.pageStates.xfPageIndex += result.length ;  //页面初始请求后将下次请求起始条目index更新，方便上拉加载调用
               }
           }) ;
+          */
           //获取房产资讯信息
           
       } ,
