@@ -1,7 +1,7 @@
 <template>
     <div class="article">      
       <div class="wk-panel">
-        <businessCard photo="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg" name="王小五" companyName="志远地产" storeName="虹桥店" phone="18998769098"/>
+        <businessCard :agent="agent"/>
       </div>
       <div class="wk-panel">
        <h1 class="article-title">{{article.title}}</h1>
@@ -27,7 +27,7 @@
         </span>
        </infiniteLoading>
 
-       <assistant :agent="null" :houseId="null" :eventName="null"></assistant>
+       <assistant :agent="agent" :houseId="null" :eventName="null"></assistant>
     </div>   
     
 </template>
@@ -51,6 +51,9 @@
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,
+            agent:{
+
+            },
             article:{
               title:"",
               articleSource:"",
@@ -127,7 +130,8 @@
                   publishTime:data.data.articleDetailModel.publishTime,
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
                   content:data.data.articleDetailModel.content
-                };              
+                };    
+                self.agent = data.data.agentModel;        
               }
           });
         },
@@ -182,75 +186,8 @@
 </script>
 
 <style lang="less" scoped>
-@import "../../../less/variables.less";
-.article{    
-    background-color:@light-gay-background-color;
-    .article-title{
-      font-size:2.4rem;      
-      margin-left:1.5rem;
-      padding-top:2.2rem;
-      line-height:1.4;
-      color:@default-font-color;
-      font-weight:normal;
-      background-color:white;
-    }
-    .article-description{
-      margin-top:.5rem;
-      margin-left:1.5rem;
-      margin-bottom:2rem;
-      font-size:1.4rem;
-      color:@light-font-color;
-      font-weight:normal;
-      background-color:white;
-      .source{
-
-      }
-      .date{
-        margin-left:.5rem;
-      }
-      .visit-number{
-        float:right;
-        margin-right:2rem;
-        .num{
-          color:@default-font-color;
-        }
-        
-      }
-    }
-    .article-content{      
-      background-color:white;
-      padding:0 1.5rem 2.4rem 1.5rem;
-    }    
-    .article-comments{
-      margin-top:1rem;
-      h1{
-        font-weight:600;
-        margin-left:1.5rem;
-        border:none;
-      }
-      .operate{
-        margin-top:1.9rem;
-        font-size:1.4rem;        
-        color: #7C7C7C;
-        text-align: right;
-        .btn{
-            border:none;
-            background-color:white;
-            &.confirm{
-              padding:.4rem 1.2rem;
-              border:1px solid #7C7C7C; 
-              color:#7C7C7C;           
-              border-radius:.2rem;
-              margin-left: 3rem;
-              background-color:white;
-          }
-        }
-        
-      }
-    }
-  }
-
-  .comments{
-      margin-top:3.4rem;
-    }
+@import "../../../less/learn/detail.less"; 
+.comments{
+    margin-top:3.4rem;
+}
 </style>

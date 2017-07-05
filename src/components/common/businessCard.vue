@@ -2,24 +2,24 @@
 	<div class="business-card">		
 		<div>			
 			<div class="photo">
-				<img :src="photo">
+				<img :src="agent.headRectImgUrl+'?x-oss-process=image/resize,w_80'">
 			</div>
 			<div class="detail">
-				<p class="name">{{name}} <i class="icon-good"></i></p>
-				<p class="company-name">{{companyName}} | {{storeName}}</p>
-				<p class="platform">悟空找房</p>
+				<p class="name">{{agent.agentName}} <i class="icon-good"></i></p>
+				<p class="company-name">{{agent.agentBelongToCompanyName}} | {{storeName}}</p>
+				<p class="platform">{{agent.agentName}}</p>
 			</div>			
 			<div style="clear:both"></div>
 		</div>
 		<p class="phone">
-			<i class="icon-kefurexian"></i> <span>{{phone}}</span> <a href="" class="more-house">查看更多好房 &gt;</a>
+			<i class="icon-kefurexian"></i> <span>{{agent.agentMobile}}</span> <a href="" class="more-house">查看更多好房 &gt;</a>
 		</p>
 	</div>
 </template>
 
 <script>
 export default{
-	props:["name","phone","photo","companyName","storeName"]
+	props:["agent"]
 }
 </script>
 
@@ -27,7 +27,8 @@ export default{
 @import "../../less/variables.less";
 	.business-card{
 		padding:1.5rem 3rem 1.1rem 3rem;
-		border-bottom:1px solid #cccccc;
+		border-bottom:1px solid #E4E4E4;
+		box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
 		color:#7c7c7c;
 		.photo{
 			width:8rem;

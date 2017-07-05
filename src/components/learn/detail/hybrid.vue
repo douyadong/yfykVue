@@ -7,7 +7,7 @@
        </div>
       </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
+          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
           <comment class="panel" :items="comments"></comment>
        </div>  
 
@@ -149,51 +149,5 @@
 </script>
 
 <style lang="less" scoped>
-@import "../../../less/variables.less";
-.article{    
-    background-color:@light-gay-background-color;
-    .article-title{
-      font-size:2.4rem;      
-      margin-left:1.5rem;
-      padding-top:2.2rem;
-      line-height:1.4;
-      color:@default-font-color;
-      font-weight:normal;
-      background-color:white;
-    }
-    .article-description{
-      margin-top:.5rem;
-      margin-left:1.5rem;
-      margin-bottom:2rem;
-      font-size:1.4rem;
-      color:@light-font-color;
-      font-weight:normal;
-      background-color:white;
-      .source{
-
-      }
-      .date{
-        margin-left:.5rem;
-      }
-      .visit-number{
-        float:right;
-        margin-right:2rem;
-        .num{
-          color:@default-font-color;
-        }
-        
-      }
-    }
-    .article-content{      
-      background-color:white;
-      padding:0 1.5rem 2.4rem 1.5rem;
-    }    
-    .article-comments{
-      margin-top:1rem;
-      h1{
-        font-weight:normal;
-        margin-left:1.5rem;
-      }
-    }
-  }
+@import "../../../less/learn/detail.less"; 
 </style>
