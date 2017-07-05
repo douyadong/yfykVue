@@ -1,6 +1,6 @@
 <template>
     <div class="presses">
-        <dl class="wk-panel top-gap" v-for="(press , index) in items">
+        <dl v-for="(press , index) in items">
             <dt>{{ press.title }}</dt>
             <dd class="digest">{{ press.digest }}</dd>
             <dd class="outline top-gap">
