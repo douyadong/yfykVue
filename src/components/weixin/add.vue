@@ -18,6 +18,6 @@
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     @import "../../../src/less/weixin/add.less" ;   
 </style>

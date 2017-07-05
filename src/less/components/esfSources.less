@@ -9,7 +9,8 @@
     dl {
         border-bottom : 1px dotted @light-line-gray-color ;
         .clearfix() ;
-        padding : 10px 0 ;
+        margin-left : 1rem ;
+        padding : 1rem 1rem 1rem 0 ;
         &:last-child {
             border : none ;
         }
@@ -31,21 +32,21 @@
                 .text-ellipsis() ;
             }
             &.tags {
+                .clearfix() ;
                 span {
                     background-color : @light-gay-background-color ;
                     .border-radius(3px) ;
-                    display : inline-block ;
-                    margin : 0 2px 2px 0 ;
+                    display : block ;
+                    float : left ;
+                    font-size : 1.0rem ;
+                    margin : 0 1px 1px 0 ;
                     padding : 2px 5px ;
                     &.selected {
                         background-color : @primary-color ;
                         color : #fff ;
                     }
                 }
-            }
-            .money , .price {
-                float : right ;
-            }
+            }            
             .money {
                 color : @danger-color ;
                 font-size : 1.6rem ;
