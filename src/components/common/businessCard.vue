@@ -27,6 +27,7 @@ export default{
 @import "../../less/variables.less";
 	.business-card{
 		padding:1.5rem 3rem 1.1rem 3rem;
+		border-bottom:1px solid #cccccc;
 		color:#7c7c7c;
 		.photo{
 			width:8rem;
