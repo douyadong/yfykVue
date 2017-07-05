@@ -6,7 +6,7 @@
 	<div v-else class="bottom-border">
 		<div class="comment" :key="item.id" v-for="(item,index) in items">
 			<div class="avatar">
-				<img :src="item.guestPhoto">
+				<img :src="item.guestPhoto+'?x-oss-process=image/resize,w_30'">
 			</div>
 			<div :class="'detail '+(items.length - 1 !== index ?'bottom-border':'')">
 				<p class="phone-number">{{item.guestNickname}}</p>
@@ -25,6 +25,6 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@import "../../less/components/comment.less";	
 </style>

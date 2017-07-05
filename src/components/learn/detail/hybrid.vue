@@ -7,7 +7,7 @@
        </div>
       </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
+          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
           <comment class="panel" :items="comments"></comment>
        </div>  
 
@@ -23,7 +23,8 @@
     import Vue from "vue";
     import comment from "@/components/common/comment.vue";
     import infiniteLoading from "vue-infinite-loading"; 
-    import apiDataFilter from "@/libraries/apiDataFilter";       
+    import apiDataFilter from "@/libraries/apiDataFilter";   
+    import $ from "jquery";    
 
     export default {
       name : "learnDetailHybrid" ,
@@ -44,12 +45,25 @@
             pageInfo:{
               pageIndex:0,
               pageSize:10,
-              total:null//把total==null认为是首次加载              
             }
           }
       } ,
+      mounted(){
+        this.setArticleFont();
+
+        this.convertVideo();
+
+        // 注册一个全局函数，解决android webview 中音频播放，app切换出去，音频仍在播放的问题
+        window.pauseAudio = function () {
+        $('audio').each(function (i, el) {
+              el.pause()
+            })
+            $('.audio_area').removeClass('playing')
+          }
+        },
       created() {          
           this.fetchArticle();
+          /*
           this.$wechatShare({
             "title" : "标题" ,
             "timelineTitle" : "标题2" ,
@@ -69,7 +83,7 @@
               console.log('success');
             }
 
-          });
+          });*/
 
           //埋点
           /*this.$bigData({
@@ -83,13 +97,64 @@
           });*/
       },
       methods:{
+        convertVideo: function() {
+          let videos = $('.article-content').find('embed')
+          if (!videos || !videos.length) return false
+          $.each(videos, function(index, item) {
+            var $item = $(item)
+            var coverUrl = $.trim($('#coverUrl').val())
+            var $video, audio
+            var src = $item.attr('src')
+            var split = src && src.split('.')
+            var type = split[split.length - 1]
+            if (type.toLowerCase() === 'mp3') {
+              audio = '<p class="weixinAudio">'
+              audio += '<audio src="' + src + '" id="media" width="1" height="1" preload="auto"></audio>'
+              audio += '<span id="audio_area" class="db audio_area">'
+              audio += '<span class="audio_arrow_back"></span>'
+              audio += '<span class="audio_arrow"></span>'
+              audio += '<span class="audio_wrp db">'
+              audio += '<span class="audio_play_area">'
+              audio += '<i class="icon_audio_default"></i>'
+              audio += '<i class="icon_audio_playing"></i>'
+              audio += '</span>'
+              audio += '<span id="audio_progress" class="progress_bar"></span>'
+              audio += '</span>'
+              audio += '</span>'
+              audio += '<span id="audio_length" class="audio_length tips_global"></span>'
+              audio += '</p>'
+              $item.after($(audio))
+              $item.remove()
+            } else {
+              $video = $('<video src="' + $item.attr('src') + '" controls="controls">您的浏览器不支持 video 标签。</video>')
+              $video.attr({
+                poster: coverUrl,
+                preload: 'auto'
+              })
+              $item.attr({
+                'type': '',
+                'width': '100%',
+                'height': '100%'
+              })
+              $item.after($video)
+              $item.remove()
+            }
+            $('.weixinAudio').wechatAudio({
+              autoplay: false
+            });
+          })
+        },
+        setArticleFont:function(){
+          //修改文章内容中写死的字体大小
+          $('.article-content').find("[style*=font-size]").each(function(index,ele){
+            $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
+          });
+        },
         onInfinite(){
-          if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-            return;
-          }
-          console.log('infinite',this.pageInfo);
-
+          // if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
+          //   this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+          //   return;
+          // }          
           this.fetchComments();          
         },
 
@@ -114,16 +179,11 @@
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
                   content:data.data.articleDetailModel.content
                 };
-
-                /*self.comments = res.articleDetailModel.commentList || [];
-                self.pageInfo.pageIndex = self.comments.length;
-                self.pageInfo.total = res.articleDetailModel.commentNum;*/
               }
           });
         },
-        fetchComments(){
-            let self = this;            
-                      
+        fetchComments(){//获取评论数据
+            let self = this;
             apiDataFilter.request({
               apiPath:"learn.comments",
               data:{
@@ -131,16 +191,15 @@
                 pageIndex:this.pageInfo.pageIndex,
                 pageSize:this.pageInfo.pageSize,
               }, 
-              /*errorCallback:function(){
-                console.log();
-              },*/
               successCallback:function(res){
                 let data = res.body;                
-                self.pageInfo.total = data.count;
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
-                console.log('data',data.data,self.pageInfo);
-                self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+                if(self.comments.length === data.count){
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                }else{
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
+                }              
               } 
             });
         }
@@ -149,51 +208,5 @@
 </script>
 
 <style lang="less" scoped>
-@import "../../../less/variables.less";
-.article{    
-    background-color:@light-gay-background-color;
-    .article-title{
-      font-size:2.4rem;      
-      margin-left:1.5rem;
-      padding-top:2.2rem;
-      line-height:1.4;
-      color:@default-font-color;
-      font-weight:normal;
-      background-color:white;
-    }
-    .article-description{
-      margin-top:.5rem;
-      margin-left:1.5rem;
-      margin-bottom:2rem;
-      font-size:1.4rem;
-      color:@light-font-color;
-      font-weight:normal;
-      background-color:white;
-      .source{
-
-      }
-      .date{
-        margin-left:.5rem;
-      }
-      .visit-number{
-        float:right;
-        margin-right:2rem;
-        .num{
-          color:@default-font-color;
-        }
-        
-      }
-    }
-    .article-content{      
-      background-color:white;
-      padding:0 1.5rem 2.4rem 1.5rem;
-    }    
-    .article-comments{
-      margin-top:1rem;
-      h1{
-        font-weight:normal;
-        margin-left:1.5rem;
-      }
-    }
-  }
+@import "../../../less/learn/detail.less"; 
 </style>

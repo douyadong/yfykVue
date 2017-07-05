@@ -1,17 +1,18 @@
 <template>
     <div class="article">      
       <div class="wk-panel">
-        <businessCard photo="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg" name="王小五" companyName="志远地产" storeName="虹桥店" phone="18998769098"/>
+        <businessCard :agent="agent"/>
       </div>
-      <div class="wk-panel">
-       <h1 class="article-title">{{title}}</h1>
-       <h2 class="article-description"><span class="source">{{source}}</span><span class="date">{{modifiedDate}}</span><span class="visit-number"><span class="num">{{visitNumber}}</span> <span>次浏览</span></span></h2>
-       <div class="article-content">
-        这是文章内容！！！富文本的eee
+      <div class="wk-panel" style="padding-bottom:1.5rem">
+       <h1 class="article-title">{{article.title}}</h1>
+       <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
+       <div class="article-content" v-html="article.content">
+      
        </div>
+       <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'icon-zan':true,'active':isUp}" @click="zan"></i> xxx</p>
       </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{comments && comments.length}})</h1>
+          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
             <input type="text" v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0"> 
             <div class="operate">
@@ -21,7 +22,13 @@
           <comment class="pannel" :items="comments"></comment>
        </div>  
 
-       <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading"></infiniteLoading>    
+       <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
+         <span slot="no-more">
+          
+        </span>
+       </infiniteLoading>
+
+       <assistant :agent="agent" :houseId="null" :eventName="null"></assistant>
     </div>   
     
 </template>
@@ -32,51 +39,50 @@
     import infiniteLoading from 'vue-infinite-loading';  
     import businessCard from "@/components/common/businessCard";
     import apiDataFilter from "@/libraries/apiDataFilter";       
+    import $ from "jquery";
+    import "@/libraries/jquery.tips.js";
+    import assistant from "@/components/common/assistant";
 
     export default {
       name : "learnDetailHybrid" ,
-      components:{comment,infiniteLoading,businessCard},      
+      components:{comment,infiniteLoading,businessCard,assistant},      
       data () {
           return {
             commentText:"",
-            articleId:"",
-            agentId:"",
-            title:"这是标题",
-            modifiedDate:"2014-03-05",
-            visitNumber:"2536",
-            source:"悟空找房",
-            //comments:[],
-            comments:[{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            }],
+            articleId:this.$route.params.id,
+            cityId:this.$route.query.cityId,
+            agentId:this.$route.query.agentId,
+            isUp:false,
+            agent:{
+
+            },
+            article:{
+              title:"",
+              articleSource:"",
+              publishTime:"",
+              viewNumStr:"",
+              content:""
+            },            
+            comments:[],
+            pageInfo:{
+              pageIndex:0,
+              pageSize:10,                        
+            }
           }
       } ,
+      mounted(){
+        //字体
+        this.setArticleFont();
+
+        //处理链接        
+        this.convertLink();
+        
+        //处理视频
+        this.convertVideo();
+      },
       created() {
-          //接受路由参数示范
-          //console.log("文章id为：" + this.$route.params.id) ;
+        this.fetchArticle();
+          /*
           this.$wechatShare({
             "title" : "标题" ,
             "timelineTitle" : "标题2" ,
@@ -96,55 +102,183 @@
               console.log('success');
             }
 
-          });
+          });*/
 
           //埋点
-          this.$bigData({
+          /*this.$bigData({
             page_id:2063,
             article_id:this.articleId,
             agent_id:this.agentId
-          });
+          });*/
       },
       methods:{
-        onInfinite(){
-          
-          this.comments = this.comments.concat([{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            },{
-              url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2677606714,1573372941&fm=117&gp=0.jpg",
-              phoneNumber:"152369***36",
-              createDate:"2017-03-05",
-              content:"这是评论这是评论！！！！"
-            }]);
-          this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        getQueryString: function(params, name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+          var r = params.match(reg) // 获取url中"?"符后的字符串并正则匹配
+          var context = ''
+          if (r != null)
+            context = r[2]
+          reg = null
+          r = null
+          return context == null || context == '' || context == 'undefined' ? '' : context
         },
-        cancel(){
+        convertLink: function() {
+          let self = this;          
+          let links = $('.article-content').find('a')
+          if (!links || !links.length) return false
+          $.each(links, function(index, item) {
+            let $item = $(item)
+            let href = $item.attr('href')
+            let params = href.split('?')
+            let articleId, categoryId
+            if (params) {
+              if (params[0] === 'wkzf://discovery/parameter?articleId=') {
+                if (params[1]) {
+                  articleId = self.getQueryString(params[1], 'articleId')
+                  $item.attr('href', '/article/app-share.' + articleId + '.html')
+                }
+              } else if (params[0] === 'wkzf://discovery/parameter?categoryId=') {
+                if (params[1]) {
+                  categoryId = self.getQueryString(params[1], 'categoryId')
+                  $item.attr('href', '/category/app.' + categoryId + '.html?cityId=' + self.cityId)
+                }
+              }
+            }
+          })
+        },
+        convertVideo: function() {
+          let videos = $('.article-content').find('embed')
+          if (!videos || !videos.length) return false
+          $.each(videos, function(index, item) {
+            var $item = $(item)
+            var coverUrl = $.trim($('#coverUrl').val())
+            var $video, audio
+            var src = $item.attr('src')
+            var split = src && src.split('.')
+            var type = split[split.length - 1]
+            if (type.toLowerCase() === 'mp3') {
+              audio = '<p class="weixinAudio">'
+              audio += '<audio src="' + src + '" id="media" width="1" height="1" preload="auto"></audio>'
+              audio += '<span id="audio_area" class="db audio_area">'
+              audio += '<span class="audio_arrow_back"></span>'
+              audio += '<span class="audio_arrow"></span>'
+              audio += '<span class="audio_wrp db">'
+              audio += '<span class="audio_play_area">'
+              audio += '<i class="icon_audio_default"></i>'
+              audio += '<i class="icon_audio_playing"></i>'
+              audio += '</span>'
+              audio += '<span id="audio_progress" class="progress_bar"></span>'
+              audio += '</span>'
+              audio += '</span>'
+              audio += '<span id="audio_length" class="audio_length tips_global"></span>'
+              audio += '</p>'
+              $item.after($(audio))
+              $item.remove()
+            } else {
+              $video = $('<video src="' + $item.attr('src') + '" controls="controls">您的浏览器不支持 video 标签。</video>')
+              $video.attr({
+                poster: coverUrl,
+                preload: 'auto'
+              })
+              $item.attr({
+                'type': '',
+                'width': '100%',
+                'height': '100%'
+              })
+              $item.after($video)
+              $item.remove()
+            }
+            $('.weixinAudio').wechatAudio({
+              autoplay: false
+            });
+          })
+        },
+        setArticleFont:function(){
+          //修改文章内容中写死的字体大小
+          $('.article-content').find("[style*=font-size]").each(function(index,ele){
+            $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
+          });
+        },
+        onInfinite(){         
+          this.fetchComments();        
+        },
+        fetchArticle(){//获取文章内容
+          let self = this;
+          apiDataFilter.request({
+            apiPath:"learn.detail",
+              data:{
+                cityId:this.cityId,
+                articleId:this.articleId,
+                agentId:this.agentId
+              }, 
+              errorCallback:function(){
+
+              },
+              successCallback:function(res){
+                let data = res.body;
+                self.article = {
+                  title:data.data.articleDetailModel.title,
+                  articleSource:data.data.articleDetailModel.articleSource,
+                  publishTime:data.data.articleDetailModel.publishTime,
+                  viewNumStr:data.data.articleDetailModel.viewNumStr,
+                  content:data.data.articleDetailModel.content
+                };    
+                self.agent = data.data.agentModel;        
+              }
+          });
+        },
+        fetchComments(){//获取评论数据
+            let self = this;                    
+            apiDataFilter.request({
+              apiPath:"learn.comments",
+              data:{
+                articleId:this.articleId,
+                pageIndex:this.pageInfo.pageIndex,
+                pageSize:this.pageInfo.pageSize,
+              }, 
+              successCallback:function(res){
+                let data = res.body;                
+                self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
+                self.comments = self.comments.concat(data.data);
+                if(self.comments.length === data.count){
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                } else{
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
+                }                
+              } 
+            });
+        },
+        cancel(){//取消评论，清空评论输入框
           this.commentText = "";
         },
-        commit(){
+        commit(){//提交评论
+          let self = this;
           apiDataFilter.request({
-            apiPath:"common.commitComment",
+            apiPath:"learn.commitComment",
+            data:{
+              articleId: this.articleId,
+              comment: this.commentText
+            },
             successCallback:function(res){
-              
-            }
+              self.commentText = "";
+              $.tips("评论成功！！",1,function(){
+                self.pageInfo.pageIndex=0;
+                self.comments = [];
+                self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');                
+              });
+            },
+          });
+        },
+        zan(){//点赞
+          let self = this;
+          apiDataFilter.request({
+            apiPath:"learn.up",
+            data:{
+              articleId: this.articleId              
+            },
+            successCallback:function(res){
+              self.isUp = true;
+            },
           });
         }
       }
@@ -152,75 +286,12 @@
 </script>
 
 <style lang="less" scoped>
-@import "../../../less/variables.less";
-.article{    
-    background-color:@light-gay-background-color;
-    .article-title{
-      font-size:2.4rem;      
-      margin-left:1.5rem;
-      padding-top:2.2rem;
-      line-height:1.4;
-      color:@default-font-color;
-      font-weight:normal;
-      background-color:white;
-    }
-    .article-description{
-      margin-top:.5rem;
-      margin-left:1.5rem;
-      margin-bottom:2rem;
-      font-size:1.4rem;
-      color:@light-font-color;
-      font-weight:normal;
-      background-color:white;
-      .source{
+@import "../../../less/learn/detail.less"; 
+.comments{
+    margin-top:3.4rem;
+}
 
-      }
-      .date{
-        margin-left:.5rem;
-      }
-      .visit-number{
-        float:right;
-        margin-right:2rem;
-        .num{
-          color:@default-font-color;
-        }
-        
-      }
-    }
-    .article-content{      
-      background-color:white;
-      padding:0 1.5rem 2.4rem 1.5rem;
-    }    
-    .article-comments{
-      margin-top:1rem;
-      h1{
-        font-weight:600;
-        margin-left:1.5rem;
-        border:none;
-      }
-      .operate{
-        margin-top:1.9rem;
-        font-size:1.4rem;        
-        color: #7C7C7C;
-        text-align: right;
-        .btn{
-            border:none;
-            background-color:white;
-            &.confirm{
-              padding:.4rem 1.2rem;
-              border:1px solid #7C7C7C; 
-              color:#7C7C7C;           
-              border-radius:.2rem;
-              margin-left: 3rem;
-              background-color:white;
-          }
-        }
-        
-      }
-    }
-  }
-
-  .comments{
-      margin-top:3.4rem;
-    }
+input{
+  border: 1px solid #999999;
+}
 </style>
