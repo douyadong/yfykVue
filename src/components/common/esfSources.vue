@@ -1,18 +1,28 @@
 <template>
     <div class="esf-sources">
-        <dl v-for="(source , index) in items">
-            <dt><img v-lazy="source.pictUrl"></dt>
-            <dd class="title">{{ source.title }}</dd>
+        <dl v-for="(source , index) in items" :key="source.encryptHouseId">
+            <dt><img v-lazy="source.houseImgUrl + '?x-oss-process=image/resize,w_150'"></dt>
+            <dd class="title">{{ source.houseTitle }}</dd>
             <dd>
-                <span>{{ source.layout }} {{ source.area }} ㎡</span>
-                <span class="money">{{ source.money }} 万</span>
+                <span>{{ source.houseChild }} {{ source.areaStr }}</span>
+                <span class="money">{{ source.totalPrice }} 万</span>
             </dd>
             <dd>
-                <span>{{ source.directName }} {{ source.townName }}</span>
-                <span class="price">{{ source.price }} 元/㎡</span>
+                <span>{{ source.district }} {{ source.town }}</span>
+                <span class="price">{{ source.unitPrice }} 元/㎡</span>
             </dd>
             <dd class="tags">
-                <span v-for="tag in source.tags">{{ tag }}</span>                          
+                <span class="selected" v-if="source.isTopHouse >1">精选</span>         
+                <span v-else-if="source.isStorePush === 1">店长推荐</span>
+                <span v-else-if="source.commAgent > 0">急售</span>
+
+                <span v-if="source.fullYears >= 5 && source.onlyOne == 1">满五唯一</span>
+                <span v-if="source.fullYears >= 2">满二</span>
+
+                <span v-if="source.isSubwayHouse === 1">地铁</span>
+                <span v-if="source.isSchoolHouse === 1">近学校</span>
+                <span v-if="source.isNewOnStore === 1">新上</span>
+                <span v-if="source.orientation === 9">南北通透</span>                        
             </dd>
         </dl>
     </div>

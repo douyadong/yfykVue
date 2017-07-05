@@ -1,39 +1,39 @@
 <template>
     <div id="spaceDetailShare">
-        <assistant :agent="apiData.simpleAgentModel" houseId="" :eventName="pageConfs.assistantTelEventName" />
+        <assistant :agent="apiData.agentDetail" :bigDataParams="pageConfs.assistantBigDataParams" />
         <div class="wk-panel card">
             <dl class="outline">
-                <dt><img src="https://imgwater-test.wkzf.com/45bd6d1ee7d049a2b632685767ea4bdb" class="img-responsive"></dt>
+                <dt><img :src="apiData.agentDetail.agentHeadImgUrl" class="img-responsive"></dt>
                 <dd>
                     <div class="agent-name">
-                        <span class="name">程茂盛</span>
-                        <span class="good">好</span>
+                        <span class="name">{{ apiData.agentDetail.agentName }}</span>
+                        <span class="good" v-if="apiData.agentDetail.isWellAgent">好</span>
                     </div>
                     <div class="volume">
                         <img src="../../../assets/volume.png">
-                        <span>成交 100 套</span>
+                        <span>成交 {{ apiData.agentDetail.agentVolume }} 套</span>
                     </div>
                 </dd>
-                <dd>志远地产 | 虹桥店</dd>
+                <dd>{{ apiData.agentDetail.agentBelongToCompanyName }}</dd>
             </dl>
             <hr>
             <a href="javascript:;" class="more" @click="spreadOptional" v-show=" ! pageStates.optionsVisibility">查看更多</a>
             <transition  name="slide-fade">         
-                <div class="optional" v-show="pageStates.optionsVisibility">                         
+                <div class="optional" v-show="pageStates.optionsVisibility">
                     <dl>
                         <dt>熟悉商圈</dt>
-                        <dd>长宁区虹桥、古北、仙霞板块，虹许路</dd>
+                        <dd>{{ apiData.agentDetail.agentBizTown }}</dd>
                     </dl>
                     <hr>
                     <dl>
                         <dt>自我介绍</dt>
-                        <dd class="content" ref="introduce" :class="{ ellipsis : pageStates.introduceExtendable }">五年成功的房产经纪经验，促成了1000多套不动产的交易达成，是个不折不扣的销售牛人，不服来战</dd>
+                        <dd class="content" ref="introduce" :class="{ ellipsis : pageStates.introduceExtendable }">{{ apiData.agentDetail.agentIntroduction }}</dd>
                         <dd class="switch" v-show="pageStates.introduceExtendable" @click="spreadIntroduceContent"><i class="iconfont icon-arrowDSS"></i></dd>
                     </dl>
                     <hr>
                     <dl>
                         <dt>成交故事</dt>
-                        <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">王先生看中一套静安区的900万的房子苦于没钱，百般无赖找到了我，最终我卖血抽签买好送给他了，这才叫友邦保险白求恩吧！</dd>
+                        <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">{{ apiData.agentDetail.agentStory }}</dd>
                         <dd class="switch" v-show="pageStates.storyExtendable" @click="spreadStoryContent"><i class="iconfont icon-arrowDSS"></i></dd>
                     </dl>
                 </div>
@@ -74,7 +74,8 @@
     import assistant from "@/components/common/assistant" ;
     import xfSources from "@/components/common/xfSources" ;
     import esfSources from "@/components/common/esfSources" ;
-    import presses from "@/components/common/presses" ; 
+    import presses from "@/components/common/presses" ;
+    import apiDataFilter from "@/libraries/apiDataFilter" ;
     import InfiniteLoading from "vue-infinite-loading" ;
     export default {
       name : "spaceDetailShare" ,
@@ -90,16 +91,16 @@
                   pressPageIndex : 1 //房产资讯当前页码
               } ,
               pageConfs : {
-                  assistantTelEventName : 201705  //页面底部助手条电话咨询按钮埋点的事件名称
+                  assistantBigDataParams : ""  //页面底部助手条电话咨询按钮埋点的参数
               } ,              
               apiData : {
-                  simpleAgentModel : {} ,  //经纪人数据
+                  agentDetail : {} ,  //经纪人数据
                   esfSources : [] , //二手房源
                   xfSources : [] ,  //新房房源
                   presses : []  //房产资讯
               }             
           }
-      } , 
+      } ,       
       methods : {
           //展开熟悉商圈，自我介绍，成交故事这块可选显示区域，Vue.nextTick表示在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
           spreadOptional : function() {
@@ -135,6 +136,18 @@
               this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;
           }
           */
+      } ,
+      created() {          
+          let agentId = this.$route.params.agentId ;         
+          apiDataFilter.request({
+              apiPath : "space.detail" ,
+              data : { "agentId" : agentId } ,              
+              successCallback : res => {
+                  let agent = res.body.data.agentDetail ; 
+                  this.$data.apiData.agentDetail = agent ; 
+                  document.title =  agent.agentName + "的首页" ;
+              }
+          }) ;
       } ,
       components : {
           assistant ,

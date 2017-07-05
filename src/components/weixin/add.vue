@@ -1,18 +1,23 @@
 <template>
-    <div>
-       <h1>添加经纪人微信页面</h1>
-    </div>    
+    <dl>
+        <dt><img :src="wechatQrcodeUrl"></dt>
+        <dd>扫码加微信</dd>
+        <dd>微信号：{{ wechatId }}</dd>
+    </dl>   
 </template>
 
 <script>   
     export default {
       name : "weixinAdd" ,
       data () {
-          return {}
+          return {
+              wechatQrcodeUrl : "" ,
+              wechatId : ""
+          }
       }
     }
 </script>
 
 <style lang="less">
-    
+    @import "../../../src/less/weixin/add.less" ;   
 </style>
