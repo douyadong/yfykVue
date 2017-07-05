@@ -66,8 +66,7 @@
             comments:[],
             pageInfo:{
               pageIndex:0,
-              pageSize:10,
-              total:null//把total==null认为是首次加载              
+              pageSize:10,                        
             }
           }
       } ,
@@ -200,16 +199,10 @@
             $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
           });
         },
-        onInfinite(){
-            if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
-            this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-            return;
-          }
-          
-
+        onInfinite(){         
           this.fetchComments();        
         },
-        fetchArticle(){
+        fetchArticle(){//获取文章内容
           let self = this;
           apiDataFilter.request({
             apiPath:"learn.detail",
@@ -234,9 +227,8 @@
               }
           });
         },
-        fetchComments(){
-            let self = this;            
-                      
+        fetchComments(){//获取评论数据
+            let self = this;                    
             apiDataFilter.request({
               apiPath:"learn.comments",
               data:{
@@ -244,23 +236,22 @@
                 pageIndex:this.pageInfo.pageIndex,
                 pageSize:this.pageInfo.pageSize,
               }, 
-              /*errorCallback:function(){
-                console.log();
-              },*/
               successCallback:function(res){
                 let data = res.body;                
-                self.pageInfo.total = data.count;
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
-                console.log('data',data.data,self.pageInfo);
-                self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+                if(self.comments.length === data.count){
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                } else{
+                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
+                }                
               } 
             });
         },
-        cancel(){
+        cancel(){//取消评论，清空评论输入框
           this.commentText = "";
         },
-        commit(){
+        commit(){//提交评论
           let self = this;
           apiDataFilter.request({
             apiPath:"learn.commitComment",
@@ -272,14 +263,13 @@
               self.commentText = "";
               $.tips("评论成功！！",1,function(){
                 self.pageInfo.pageIndex=0;
-                self.pageInfo.total = null;
                 self.comments = [];
                 self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');                
               });
             },
           });
         },
-        zan(){
+        zan(){//点赞
           let self = this;
           apiDataFilter.request({
             apiPath:"learn.up",
