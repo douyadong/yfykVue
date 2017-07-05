@@ -1,0 +1,68 @@
+@import "../variables.less";
+.article{    
+    background-color:@light-gay-background-color;
+    .article-title{
+      font-size:2.4rem;      
+      margin-left:1.5rem;
+      padding-top:2.2rem;
+      line-height:1.4;
+      color:@default-font-color;
+      font-weight:normal;
+      background-color:white;
+    }
+    .article-description{
+      margin-top:.5rem;
+      margin-left:1.5rem;
+      margin-bottom:2rem;
+      font-size:1.4rem;
+      color:@light-font-color;
+      font-weight:normal;
+      background-color:white;
+      .source{
+
+      }
+      .date{
+        margin-left:.5rem;
+      }
+      .visit-number{
+        float:right;
+        margin-right:2rem;
+        .num{
+          color:@default-font-color;
+        }
+        
+      }
+    }
+    .article-content{      
+      background-color:white;
+      padding:0 1.5rem 2.4rem 1.5rem;
+    }    
+    .article-comments{
+      margin-top:1rem;
+      h1{
+        font-weight:600;
+        margin-left:1.5rem;
+        border:none;
+      }
+      .operate{
+        margin-top:1.9rem;
+        font-size:1.4rem;        
+        color: #7C7C7C;
+        text-align: right;
+        .btn{
+            border:none;
+            background-color:white;
+            &.confirm{
+              padding:.4rem 1.2rem;
+              border:1px solid #7C7C7C; 
+              color:#7C7C7C;           
+              border-radius:.2rem;
+              margin-left: 3rem;
+              background-color:white;
+          }
+        }
+        
+      }
+    }
+  }
+

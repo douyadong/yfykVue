@@ -106,7 +106,7 @@
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
             return;
           }
-          console.log('infinite',this.pageInfo);
+          
 
           this.fetchComments();        
         },
@@ -189,5 +189,9 @@
 @import "../../../less/learn/detail.less"; 
 .comments{
     margin-top:3.4rem;
+}
+
+input{
+  border: 1px solid #999999;
 }
 </style>
