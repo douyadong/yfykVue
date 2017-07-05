@@ -124,7 +124,8 @@
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,              
               successCallback : res => {                 
-                  Object.assign(this.$data.apiData , res.body.data) ;                                    
+                  Object.assign(this.$data.apiData , res.body.data) ;
+                  document.title = "租房详情" ;
               }
           }) ;
       } ,

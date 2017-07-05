@@ -42,25 +42,25 @@
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
             <ul class="wk-panel tabs-handle">
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');">二手房</a></li>
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');">新房</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');">推荐二手房</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');">推荐新房</a></li>
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');">房产资讯</a></li>
             </ul>
             <!--tabs-frame部分-->
             <transition  name="slide-fade">
-                <div class="tabs-frame esf lr-padding" v-show="pageStates.activeTab=='esf'">
+                <div class="wk-panel" v-show="pageStates.activeTab=='esf'">
                     <esf-sources :items="apiData.esfSources"/>
                     <!--<infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf"/>-->
                 </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class="tabs-frame xf lr-padding" v-show="pageStates.activeTab=='xf'">
+                <div class=" wk-panel" v-show="pageStates.activeTab=='xf'">
                     <xf-sources :items="apiData.xfSources"/>
                     <!--<infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf"/>-->
                 </div>                
             </transition>
             <transition  name="slide-fade">
-                <div class="tabs-frame press lr-padding" v-show="pageStates.activeTab=='press'">
+                <div class="wk-panel" v-show="pageStates.activeTab=='press'">
                     <xf-sources :items="apiData.presses"/>
                     <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
                 </div>                
@@ -106,8 +106,8 @@
           spreadOptional : function() {
               this.pageStates.optionsVisibility = true ;               
               Vue.nextTick(() => {
-                  this.pageStates.introduceExtendable = parseInt(this.$refs.introduce.clientHeight , 10) > 40 ;
-                  this.pageStates.storyExtendable = parseInt(this.$refs.story.clientHeight , 10) > 40 ;                  
+                  this.pageStates.introduceExtendable = parseInt(this.$refs.introduce.clientHeight , 10) > 42 ;
+                  this.pageStates.storyExtendable = parseInt(this.$refs.story.clientHeight , 10) > 42 ;                  
               }) ;
           } ,
           //展开自我介绍文本
@@ -138,16 +138,37 @@
           */
       } ,
       created() {          
-          let agentId = this.$route.params.agentId ;         
+          let agentId = this.$route.params.agentId ; 
+          //获取经纪人信息 
           apiDataFilter.request({
               apiPath : "space.detail" ,
               data : { "agentId" : agentId } ,              
               successCallback : res => {
                   let agent = res.body.data.agentDetail ; 
                   this.$data.apiData.agentDetail = agent ; 
-                  document.title =  agent.agentName + "的首页" ;
+                  document.title = "买房卖房就找悟空找房" + agent.agentName ;
               }
           }) ;
+          //获取推荐二手房信息
+          apiDataFilter.request({
+              apiPath : "space.esf" ,
+              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 20 } ,              
+              successCallback : res => {
+                  let result = res.body.data.secondHouseSummaryModels ; 
+                  this.$data.apiData.esfSources = result ;                   
+              }
+          }) ;
+          //获取推荐新房信息
+          apiDataFilter.request({
+              apiPath : "space.xf" ,
+              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 20 } ,              
+              successCallback : res => {
+                  let result = res.body.data.newHouseSummaryModels ; 
+                  this.$data.apiData.xfSources = result ;                   
+              }
+          }) ;
+          //获取房产资讯信息
+          
       } ,
       components : {
           assistant ,

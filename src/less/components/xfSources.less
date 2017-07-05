@@ -7,44 +7,49 @@
 @import "../mixins.less" ;
 .xf-sources {
     dl {
-        padding : 10px 0 ;
+        border-bottom : 1px dotted @light-line-gray-color ;
+        .clearfix() ;
+        margin-left : 1rem ;
+        padding : 1rem 1rem 1rem 0 ;
+        &:last-child {
+            border : none ;
+        }
         dt {
+            float : left ;
+            height : 87px ;            
+            overflow : hidden ;
+            width : 131px ;
             img {
                 height : 185px ;  
                 width : 100% ;              
             }
         }
         dd {
+            margin-left : 141px ;
             &.title {
-                font-size : 1.6rem ;
-                line-height : 26px ;
-                margin-top : 5px ;
+                font-size : 1.6rem ;                
                 .text-ellipsis() ;
             }
             &.summary {
-                .clearfix() ;
-                span {
-                    display : block ;
-                    font-size : 1.4rem ;
-                }
-                .location-area {
-                    float : left ;                    
-                }
-                .price {
-                    float : right ;
-                    color : @danger-color ;                    
-                    font-weight : 600 ;
-                }
+                color : @light-font-color ;
+                font-size : 1.1rem ; 
+                line-height : 22px ;
             }
-            &.tags {
+            &.tags {                
                 span {
                     background-color : @light-gay-background-color ;
+                    color : @light-font-color ;
                     .border-radius(3px) ;
                     display : inline-block ;
                     margin : 0 2px 2px 0 ;
                     padding : 2px 5px ;
                 }
-            }            
+            }
+            &.price {                
+                color : @danger-color ;
+                font-size : 1.6rem ;                
+                font-weight : 600 ;
+            }          
         }
     }
 }

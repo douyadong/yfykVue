@@ -27,8 +27,8 @@ export default {
         } ,
         "space": {
             "detail" : "yfyk/agentInfoDetail.rest" ,
-            "esf" : "" ,
-            "xf" : "" ,
+            "esf" : "yfyk/agentRecmdSecondHouseList.rest" ,
+            "xf" : "yfyk/agentRecmdNewHouseList.rest" ,
             "press" : ""
         }
     }
