@@ -151,7 +151,7 @@
               //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
               window.setTimeout(() => {
                   this.pageStates.activeTabContent = tabName ; 
-              } , 10 ) ; 
+              } , 100 ) ; 
           } ,          
           //无限加载二手房          
           infiniteLoadingEsf : function() {
