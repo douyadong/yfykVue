@@ -5,15 +5,26 @@
             <dd>找对人，买好房</dd>
             <dd>就在悟空找房！</dd>
         </dl>
-        <a href="javascript:;" class="wk-btn wk-btn-transparent wk-btn-xs">下载APP</a>
+        <a href="javascript:;" class="wk-btn wk-btn-transparent wk-btn-xs" @click="wakeup">下载APP</a>
     </div>
 </template>
 
-<script>   
+<script>
+    import WakeupApp from "@/libraries/wakeupApp.js" ;
     export default {
         name : "downloadApp" ,
         data () {
             return {}
+        } ,
+        methods : {
+            wakeup : function() {
+                new WakeupApp({
+                    androidSchemes : "wkzf://external_call" ,
+                    isoSchemes : "wkzf://external_call" ,
+                    androidDownloadLink : "//m.wkzf.com/download/transit" ,
+                    iosDownloadLink : "//m.wkzf.com/download/transit"
+                }) ;
+            }
         }
     }
 </script>
