@@ -143,7 +143,7 @@
                       "title" : wechatShare.title ,
                       "timelineTitle" : wechatShare.timelineTitle ,
                       "content" : wechatShare.content ,
-                      "imgUrl" : agent.picUrl ,                      
+                      "imgUrl" : wechatShare.picUrl ,                      
                       "success" : function() { console.log("分享成功！") ;  } ,
                       "fail" : function() { console.log("分享失败！") ;  } ,
                       "cancel" : function() { console.log("您取消了分享！") ; } ,
