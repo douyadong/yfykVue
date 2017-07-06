@@ -8,13 +8,16 @@
 
 <script>   
     export default {
-      name : "weixinAdd" ,
-      data () {
-          return {
-              wechatQrcodeUrl : "" ,
-              wechatId : ""
-          }
-      }
+        name : "weixinAdd" ,
+        data () {
+            return {
+                wechatQrcodeUrl : decodeURIComponent(this.$route.query.wechatqr) ,
+                wechatId : this.$route.query.wechatid
+            }
+        } ,
+        created() {
+            document.title = "买房卖房就找悟空找房" ;
+        }
     }
 </script>
 
