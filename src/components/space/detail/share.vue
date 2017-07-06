@@ -117,6 +117,7 @@
           }
       } ,
       methods : {
+          //获取埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
               let eventParam = { agent_id : this.$route.params.agentId } ;
               if(otherParams !== undefined && otherParams !== null ) {
