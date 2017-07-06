@@ -6,22 +6,71 @@
  @import "../variables.less" ;
  @import "../mixins.less" ;
  .presses {
-     .wk-panel {
-         dt {
-             font-size : 1.6rem ;
-             font-weight : 600 ;
+     .press {
+         .cover {
+             height : 195px ;
+             overflow : hidden ;
+             position : relative ;
+             .play {
+                 background-color : rgba( 0 , 0 , 0 , .4 ) ;
+                 .border-radius(100px) ;
+                 height : 50px ;
+                 left : 50% ;
+                 margin : -25px 0 0 -25px ;
+                 position : absolute ;
+                 top : 50% ;
+                 width : 50px ;
+                 i {
+                     .triangle-next( 22px , #fff ) ;
+                 }
+             }
          }
-         dd {
-             font-size : 1.4rem ;
-             &.digest {                 
+         .summary {
+             .clearfix() ;
+             &.has-thumb {
+                 dt {
+                     display : block ;
+                 }
+                 dd {
+                     margin-right : 13.5rem ;
+                 }
+             }
+             dt {
+                 display : none ;
+                 float : right ;
+                 height : 70px ;                
+                 overflow : hidden ;
+                 width : 10.5rem ;
+             }
+             dd {
+                 margin-right : 0 ;
+             }
+             .title {
+                 font-size : 1.6rem ;
+                 font-weight : 600 ;
+             }
+             .digest {
+                 font-size : 1.4rem ;
                  line-height : 22px ;
              }
-             &.outline {
-                 .clearfix() ;
+         }
+         .thumbs {
+             .clearfix() ;
+             li {
+                 float : left ;
+                 height : 70px ;
+                 overflow : hidden ;
+                 padding-right : 1.5rem ;
+                 width : 33.3% ;
+             }
+         }
+         .outline {
+             div {
                  color : @light-font-color ;
-                 .pv {
-                     color : @default-font-color ;
-                 }
+                 font-size : 1.4rem ;
+             }
+             .pv {
+                 color : @default-font-color ;
              }
          }
      }

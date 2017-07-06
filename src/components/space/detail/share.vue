@@ -72,7 +72,9 @@
                 <transition  name="slide-fade">
                     <div  v-if="pageStates.activeTabContent=='press'">
                         <xf-sources :items="apiData.presses"/>
-                        <!--<infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress"/>-->
+                        <infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress">
+                            <div slot="no-more" class="no-more">没有更多了！</div>
+                        </infinite-loading>
                     </div>
                 </transition>
             </div>
@@ -171,12 +173,22 @@
                   }
               }) ;              
           } ,
-          /*
-        //无限加载资讯
+         //无限加载资讯
           infiniteLoadingPress : function() {
-              this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;
+              let agentId = this.$route.params.agentId ; 
+              apiDataFilter.request({
+                  apiPath : "space.press" ,
+                  data : { "agentId" : agentId , "pageIndex" : this.pageStates.pressPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
+                  successCallback : res => {                      
+                      let result = res.body.data.agentRecmdArticleDetailModels ;
+                      this.$data.apiData.presses = this.$data.apiData.presses.concat(result) ;  //将房源数据累加
+                      this.pageStates.pressPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
+                      this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成                 
+                      if(res.body.data.page.total === this.$data.apiData.presses.length) this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                  }
+              }) ;              
           }
-          */
+         
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
