@@ -1,7 +1,7 @@
 <template>
     <div class="presses">
         <!--资讯遍历开始-->
-        <div class="press" v-for="(press , index) in items" :key="press.articleId">
+        <router-link :to="'/learn/detail/share/' + press.articleId" class="press" v-for="(press , index) in items" :key="press.articleId" :data-bigdata="getUvParamsString({ eventName : eventName , articleId : press.articleId , otherParams : otherParams })">
             <div class="cover" v-if="[ 1 , 3 , 6 , 8 ].indexOf(press.articleCoverShowOrder) !== -1 && press.articleCoverShowType === 2">
                 <img :src="press.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_450'" class="img-responsive">
                 <div class="play"><i></i></div>
@@ -29,7 +29,7 @@
                 <div class="pull-left">{{ press.articleSource }} {{ press.publishTime}}</div>
                 <div class="pull-right"><span class="pv">{{ press.viewNumStr }}</span> <span>次浏览</span></div>
             </div>            
-        </div>
+        </router-link>
         <!--资讯遍历结束-->
     </div>
 </template>
@@ -38,11 +38,22 @@
     export default {
         name : "presses" ,
         data () {
-            return {
-                
+            return {}
+        } ,
+        methods : {
+            getUvParamsString : function({ eventName , articleId , otherParams }) {
+                let eventParam = { article_id : articleId } ;
+                if(otherParams !== undefined && otherParams !== null ) {
+                    eventParam = Object.assign( eventParam , otherParams ) ;
+                }              
+                return encodeURIComponent(JSON.stringify({ 
+                    eventName : eventName , 
+                    eventParam : eventParam ,
+                    type : 2
+                })) ;
             }
         } ,
-        props : ["items"]
+        props : [ "items" , "eventName" , "otherParams" ]
     }
 </script>
 <style lang="less" scoped>

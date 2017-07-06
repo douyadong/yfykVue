@@ -1,13 +1,13 @@
 <template>
     <ul class="assistant" :class="{ 'no-weixin' : agent.agentWChatId === null }">
         <li class="portrait">
-            <a :href="'/space/detail/share/' + agent.agentId" :data-bigdata="portraitBigDataParams">
+            <router-link :to="'/space/detail/share/' + agent.agentId" :data-bigdata="portraitBigDataParams">
                 <dl>
                     <dt><img :src="agent.agentHeadImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
                     <dd class="agent-name">{{ agent.agentName }}</dd>
                     <dd class="agent-tel">{{ agent.agentBelongToCompanyName }}</dd>
                 </dl>
-            </a>
+            </router-link>
         </li>    
         <li class="tools">
             <a :href="'tel:' + agent.agentMobile" class="bigdata-btn" :data-bigdata="callBigDataParams">
@@ -16,10 +16,10 @@
             </a>
         </li>        
         <li class="tools">
-            <a :href="'/weixin/add?wechatid=' + agent.agentWChatId + '&wechatqr=' +  encodeURIComponent(agent.agentWChartQRImgUrl)" :data-bigdata="wechatBigDataParams">
+            <router-link :to="'/weixin/add?wechatid=' + agent.agentWChatId + '&wechatqr=' +  encodeURIComponent(agent.agentWChartQRImgUrl)" :data-bigdata="wechatBigDataParams">
                 <span><i class="iconfont icon-weixinkefu"></i></span>
                 <span>添加微信</span>
-            </a>
+            </router-link>
         </li>        
     </ul>
 </template>
