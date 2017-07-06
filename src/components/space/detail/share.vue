@@ -1,6 +1,6 @@
 <template>
     <div id="spaceDetailShare">
-        <assistant :agent="apiData.agentDetail" :portraitBigDataParams="portraitBigDataParams" :callBigDataParams="callBigDataParams" :wechatBigDataParams="wechatBigDataParams" />
+        <assistant :agent="apiData.agentDetail" :portraitBigDataParams="getUvParamsString({ eventName : 2065001 })" :callBigDataParams="getUvParamsString({ eventName : 2065001 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065001 })" />
         <div class="wk-panel card">
             <dl class="outline">
                 <dt><img :src="apiData.agentDetail.agentHeadImgUrl" class="img-responsive"></dt>
@@ -42,9 +42,9 @@
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
             <ul class="wk-panel tabs-handle">
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="esfTabBigDataParams">推荐二手房</a></li>
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');">推荐新房</a></li>
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');">房产资讯</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">推荐二手房</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">推荐新房</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
             </ul>
             <!--tabs-frame部分-->            
             <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
@@ -116,31 +116,18 @@
               }             
           }
       } ,
-      computed : {
-          //页面底部assistant条点击埋点参数
-          portraitBigDataParams() {
-
-          } ,
-          callBigDataParams() {
-
-          } ,
-          wechatBigDataParams() {
-              
-          } ,
-          //二手房tab点击埋点参数
-          esfTabBigDataParams() {
-              let agentId = this.$route.params.agentId ; 
-              let result = { 
-                  eventName : 2065001 , 
-                  eventParam : {                      
-                      agent_id : agentId
-                  } ,
-                  type : 2
-              }
-              return encodeURIComponent(JSON.stringify(result)) ;
-          }
-      } ,
       methods : {
+          getUvParamsString : function({ eventName , otherParams }) {
+              let eventParam = { agent_id : this.$route.params.agentId } ;
+              if(otherParams !== undefined && otherParams !== null ) {
+                  eventParam = eventParam.assign(otherParams) ;
+              }              
+              return encodeURIComponent(JSON.stringify({ 
+                  eventName : eventName , 
+                  eventParam : eventParam ,
+                  type : 2
+              })) ;
+          } ,
           //展开熟悉商圈，自我介绍，成交故事这块可选显示区域，Vue.nextTick表示在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
           spreadOptional : function() {
               this.pageStates.optionsVisibility = true ;               
