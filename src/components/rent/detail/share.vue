@@ -110,8 +110,7 @@
               } ,
               apiData : {
                   simpleHouseRentDetailInfo : {} ,
-                  simpleAgentModel : {} ,
-                  weChatShare : {}
+                  simpleAgentModel : {}
               }            
           }
       } ,
@@ -138,6 +137,18 @@
               successCallback : res => {                 
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
+                  //定制页面微信分享参数
+                  let wechatShare = res.body.data.weChatShare ;
+                  this.$wechatShare({
+                      "title" : wechatShare.title ,
+                      "timelineTitle" : wechatShare.timelineTitle ,
+                      "content" : wechatShare.content ,
+                      "imgUrl" : agent.picUrl ,                      
+                      "success" : function() { console.log("分享成功！") ;  } ,
+                      "fail" : function() { console.log("分享失败！") ;  } ,
+                      "cancel" : function() { console.log("您取消了分享！") ; } ,
+                      "complete" : function() { console.log("分享完成！") ; }
+                  }) ;
               }
           }) ;
           //页面埋点功能
