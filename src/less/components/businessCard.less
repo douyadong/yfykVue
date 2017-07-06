@@ -1,0 +1,64 @@
+@import "../variables.less";
+.business-card{
+	background: url("../../assets/businessCard-bg.png");
+	background-size:cover;
+	display:block;
+	padding:1.5rem 3rem 1.1rem 3rem;
+	border-bottom:1px solid #E4E4E4;
+	box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.1);
+	color:#7c7c7c;
+	.photo{
+		width:8rem;
+		height:8rem;
+		overflow: hidden;		
+		float:left;
+		//border:1px solid red;
+		img{
+			width:100%;
+		}
+	}
+
+	.detail{
+		margin-left:10rem;
+		padding-top:0.65rem;
+		.name{
+			font-size:1.8rem;
+			color:@default-font-color;				
+			line-height: 1;
+			margin-bottom:1rem;
+		}
+
+		.icon-good{
+			color:#CE8000;
+			font-size:1.1rem;
+			line-height:1.45;
+			background-color:#FBE69A;			
+			border-radius: 4px;
+			width:1.6rem;
+			padding:.1rem .3rem;
+		}
+
+		.company-name{
+			font-size:1.6rem;
+			margin-bottom:0.75rem;				
+
+		}		
+
+		.platform{
+			font-size:1.6rem;
+		}
+	}
+
+	.phone{
+		font-size:1.8rem;
+		margin-top:1.2rem;
+		color:@default-font-color;
+		i{
+			font-weight: 600
+		}
+		.more-house{
+			color:#4081D6;
+			float:right;
+		}
+	}
+}

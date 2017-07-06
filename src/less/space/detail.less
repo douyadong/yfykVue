@@ -1,0 +1,93 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> space -> detail.less (经纪人个人店铺详情)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ #spaceDetailShare {
+     padding-bottom : 50px ;
+ }
+.card {    
+    padding : 1.5rem 0 1.5rem 1.5rem ;
+    dl {
+        .clearfix() ;
+        dt {
+            float : left ; 
+            font-size : 1.4rem ;                     
+        }
+        dd {
+            margin-left : 75px ;
+            padding : 2px 1.5rem 2px 0 ;
+        }
+    }
+    .outline {        
+        dt {
+            height : 60px ;
+            overflow : hidden ; 
+            width : 60px ;    
+        }
+        dd {
+            .fit-height() ;
+            font-size : 1.6rem ;             
+            .agent-name {
+                float : left ;
+                span {
+                    display : inline-block ;
+                }
+                .name {
+                    font-size : 1.8rem ;
+                }
+                .good {
+                    background-color : #fbe69a ;
+                    .border-radius(3px) ;
+                    color : #ce8000 ;
+                    font-size : 1.1rem ;
+                    margin-left : 5px ;
+                    padding : 2px 3px ;
+                }
+            }
+            .volume {
+                float : right ;
+                font-size : 1.2rem ;                
+            }
+        }
+    }
+    .more {
+        color : #92a7c3 ;
+        display : block ;
+        font-size : 1.6rem ;
+        line-height : 30px ;
+        text-align : center ;
+    }
+    .optional {
+        dt {
+            color : @light-font-color ;
+            margin-top : 2px ;
+            width : 65px ;
+        }
+        dd {
+            font-size : 1.4rem ;
+            &.ellipsis {
+                height : 45px ;
+                overflow : hidden ;
+                text-overflow : ellipsis ; 
+            }
+            &.switch {
+                text-align : center ;
+                .iconfont {
+                    font-size : 1.0rem ;                    
+                }
+            }
+        }
+    }
+}
+
+.wk-tabs {
+    .tabs-handle {
+        li {
+            text-align : center ;
+            width : 33.3% ;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> downloadApp.less (下载app条)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ .download-app {
+     background-color : #fff ;
+     border-bottom : 1px solid @lighter-line-gray-color ;
+     .clearfix() ;
+     height : 50px ;
+     padding : 8px ;
+     &>dl {
+         .clearfix() ;
+         float : left ;
+         dt {
+             float : left ;
+             width : 3.2rem ;
+             i {
+                color : @primary-color ;
+                font-size : 3.2rem ;
+            }
+         }
+         dd {             
+             font-size : 1rem ;
+             margin-left : 3.5rem ;
+         }
+     }
+     &>a {
+         border : 1px solid @primary-color ;
+         color : @primary-color ;
+         float : right ;
+     }
+ }

@@ -1,0 +1,90 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> presses.less (资讯)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+ .presses {
+     .press {
+         border-bottom : 1px dotted @light-line-gray-color ;
+         color : @default-font-color ;
+         display : block ;
+         margin-left : 1.5rem ;
+         padding : 1rem 1rem 1rem 0 ;
+         &:last-child {
+            border : none ;
+         }
+         .cover {
+             height : 195px ;
+             overflow : hidden ;
+             position : relative ;
+             .play {
+                 background-color : rgba( 0 , 0 , 0 , .4 ) ;
+                 .border-radius(100px) ;
+                 height : 50px ;
+                 left : 50% ;
+                 line-height : 50px ;
+                 margin : -25px 0 0 -25px ;
+                 position : absolute ;
+                 text-align : center ;
+                 top : 50% ;
+                 width : 50px ;
+                 i {
+                     display : inline-block ;
+                     .triangle-next( 13px , #fff ) ;
+                     margin-left : 12px ; 
+                 }
+             }
+         }
+         .summary {
+             .clearfix() ;
+             &.has-thumb {
+                 dt {
+                     display : block ;
+                 }
+                 dd {
+                     margin-right : 13.5rem ;
+                 }
+             }
+             dt {
+                 display : none ;
+                 float : right ;
+                 height : 70px ;                
+                 overflow : hidden ;
+                 width : 10.5rem ;
+             }
+             dd {
+                 margin-right : 0 ;
+             }
+             .title {
+                 font-size : 1.6rem ;
+                 font-weight : 600 ;
+             }
+             .digest {
+                 font-size : 1.4rem ;
+                 line-height : 22px ;
+             }
+         }
+         .thumbs {
+             .clearfix() ;
+             li {
+                 float : left ;
+                 height : 70px ;
+                 overflow : hidden ;
+                 padding-right : 1.5rem ;
+                 width : 33.3% ;
+             }
+         }
+         .outline {
+             .clearfix() ;
+             div {
+                 color : @light-font-color ;
+                 font-size : 1.4rem ;
+             }
+             .pv {
+                 color : @default-font-color ;
+             }
+         }
+     }
+ }
