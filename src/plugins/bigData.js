@@ -26,12 +26,13 @@ export default {
 			let $target = $(event.target);
 			let data = $target.data('bigdata');
 			if(data){				
-				alert('bigdata');
-				//bigData(JSON.parse(data));
+				//alert('bigdata');
+				bigData(JSON.parse(decodeURIComponent(data)));
 			}else{
 				let $parents = $target.parents('[data-bigdata]');
 				if($parents.length>0){
-					alert('bigdata');
+					//alert('bigdata');
+					bigData(JSON.parse(decodeURIComponent(data)));
 				}
 			}
 		},true);

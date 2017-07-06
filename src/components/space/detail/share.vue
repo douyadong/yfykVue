@@ -1,6 +1,6 @@
 <template>
     <div id="spaceDetailShare">
-        <assistant :agent="apiData.agentDetail" :bigDataParams="pageConfs.assistantBigDataParams" />
+        <assistant :agent="apiData.agentDetail" :portraitBigDataParams="portraitBigDataParams" :callBigDataParams="callBigDataParams" :wechatBigDataParams="wechatBigDataParams" />
         <div class="wk-panel card">
             <dl class="outline">
                 <dt><img :src="apiData.agentDetail.agentHeadImgUrl" class="img-responsive"></dt>
@@ -42,7 +42,7 @@
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
             <ul class="wk-panel tabs-handle">
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');">推荐二手房</a></li>
+                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="esfTabBigDataParams">推荐二手房</a></li>
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');">推荐新房</a></li>
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');">房产资讯</a></li>
             </ul>
@@ -71,7 +71,7 @@
             <div class="wk-panel" v-if="pageStates.activeTab=='press'">
                 <transition  name="slide-fade">
                     <div  v-if="pageStates.activeTabContent=='press'">
-                        <xf-sources :items="apiData.presses"/>
+                        <presses :items="apiData.presses"/>
                         <infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress">
                             <div slot="no-more" class="no-more">没有更多了！</div>
                         </infinite-loading>
@@ -105,8 +105,7 @@
                   xfPageIndex : 0 ,  //新房房源当前页数据起始条数
                   pressPageIndex : 0 //房产资讯当前页数据起始条数
               } ,
-              pageConfs : {
-                  assistantBigDataParams : "" ,  //页面底部助手条电话咨询按钮埋点的参数
+              pageConfs : {                  
                   pageSize : 10  //推荐信息每次加载多少条
               } ,              
               apiData : {
@@ -116,14 +115,38 @@
                   presses : []  //房产资讯
               }             
           }
-      } ,       
+      } ,
+      computed : {
+          //页面底部assistant条点击埋点参数
+          portraitBigDataParams() {
+
+          } ,
+          callBigDataParams() {
+
+          } ,
+          wechatBigDataParams() {
+              
+          } ,
+          //二手房tab点击埋点参数
+          esfTabBigDataParams() {
+              let agentId = this.$route.params.agentId ; 
+              let result = { 
+                  eventName : 2065001 , 
+                  eventParam : {                      
+                      agent_id : agentId
+                  } ,
+                  type : 2
+              }
+              return encodeURIComponent(JSON.stringify(result)) ;
+          }
+      } ,
       methods : {
           //展开熟悉商圈，自我介绍，成交故事这块可选显示区域，Vue.nextTick表示在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
           spreadOptional : function() {
               this.pageStates.optionsVisibility = true ;               
               Vue.nextTick(() => {
-                  this.pageStates.introduceExtendable = parseInt(this.$refs.introduce.clientHeight , 10) > 42 ;
-                  this.pageStates.storyExtendable = parseInt(this.$refs.story.clientHeight , 10) > 42 ;                  
+                  this.pageStates.introduceExtendable = parseInt(this.$refs.introduce.clientHeight , 10) > 45 ;
+                  this.pageStates.storyExtendable = parseInt(this.$refs.story.clientHeight , 10) > 45 ;                  
               }) ;
           } ,
           //展开自我介绍文本
@@ -140,7 +163,7 @@
               //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
               window.setTimeout(() => {
                   this.pageStates.activeTabContent = tabName ; 
-              } , 10 ) ;           
+              } , 10 ) ; 
           } ,          
           //无限加载二手房          
           infiniteLoadingEsf : function() {
@@ -178,7 +201,7 @@
               let agentId = this.$route.params.agentId ; 
               apiDataFilter.request({
                   apiPath : "space.press" ,
-                  data : { "agentId" : agentId , "pageIndex" : this.pageStates.pressPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
+                  data : { "agentId" : agentId , "startIndex" : this.pageStates.pressPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
                   successCallback : res => {                      
                       let result = res.body.data.agentRecmdArticleDetailModels ;
                       this.$data.apiData.presses = this.$data.apiData.presses.concat(result) ;  //将房源数据累加
@@ -192,6 +215,14 @@
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
+          //页面埋点功能
+          this.$bigData({
+            pageName : 2065 ,
+            pageParam : {
+                agent_id : agentId
+            } ,
+            type : 1
+          }) ;
           //获取经纪人信息 
           apiDataFilter.request({
               apiPath : "space.detail" ,
@@ -199,10 +230,21 @@
               successCallback : res => {
                   let agent = res.body.data.agentDetail ; 
                   this.$data.apiData.agentDetail = agent ; 
-                  document.title = "买房卖房就找悟空找房" + agent.agentName ;
+                  //页面标题和分享内容设置
+                  let generalTitle = "买房卖房就找悟空找房" + agent.agentName ;
+                  let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
+                  document.title = generalTitle ;  //设置页面title
+                  //页面微信分享设置
+                  this.$wechatShare({                      
+                      "content" : shareContent ,
+                      "imgUrl" : agent.agentHeadImgUrl ,                      
+                      "success" : function() { console.log("分享成功！") ;  } ,
+                      "fail" : function() { console.log("分享失败！") ;  } ,
+                      "cancel" : function() { console.log("您取消了分享！") ; } ,
+                      "complete" : function() { console.log("分享完成！") ; }
+                  }) ; 
               }
-          }) ;          
-          
+          }) ;                    
       } ,
       components : {
           assistant ,
