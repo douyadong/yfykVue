@@ -6,7 +6,7 @@
 			</div>
 			<div class="detail">
 				<p class="name"><span>{{agent.agentName}}</span> &nbsp;<span class="icon-good" v-if="agent.isWellAgent==1">好</span></p>
-				<p class="company-name">{{agent.agentBelongToCompanyName}} | {{storeName}}</p>
+				<p class="company-name">{{agent.agentBelongToCompanyName}} | {{agent.storeName}}</p>
 				<p class="platform">悟空找房</p>
 			</div>			
 			<div style="clear:both"></div>

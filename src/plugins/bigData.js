@@ -27,12 +27,18 @@ export default {
 			let data = $target.data('bigdata');
 			if(data){				
 				//alert('bigdata');
-				bigData(JSON.parse(decodeURIComponent(data)));
+				data = JSON.parse(decodeURIComponent(data));
+				data.type = 2;				
+				bigData(data);
 			}else{
 				let $parents = $target.parents('[data-bigdata]');
+				
 				if($parents.length>0){
 					//alert('bigdata');
-					bigData(JSON.parse(decodeURIComponent(data)));
+					data = $parents.data('bigdata');
+					data = JSON.parse(decodeURIComponent(data));
+					data.type = 2;
+					bigData(data);
 				}
 			}
 		},true);
