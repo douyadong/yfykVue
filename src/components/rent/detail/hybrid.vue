@@ -1,6 +1,6 @@
 <template>
     <div id="rentDetailHybrid">
-        <assistant :agent="apiData.simpleAgentModel" :bigDataParams="pageConfs.assistantBigDataParams" />
+        <assistant :agent="apiData.simpleAgentModel" :portraitBigDataParams="portraitBigDataParams" :callBigDataParams="callBigDataParams" :wechatBigDataParams="wechatBigDataParams" />
        <download-app />
        <!--<albums :items="apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :houseId="apiData.simpleHouseRentDetailInfo.houseId" :eventName="pageConfs.albumsEventName" />-->
        <!--相册内容-->
@@ -92,8 +92,7 @@
               pageStates : {
                   swiperActiveIndex : 1 //相册当前在第几帧
               } ,
-              pageConfs : {
-                  assistantBigDataParams : "" ,  //电话咨询按钮埋点参数                 
+              pageConfs : {                                
                   swiperOption : {  // 整个相册 swiper插件的选项                     
                       name : "currentSwiper" ,
                       // 所有配置均为可选（同Swiper配置）
@@ -117,6 +116,18 @@
               }            
           }
       } ,
+      computed : {
+          //页面底部assistant条点击埋点参数
+          portraitBigDataParams() {
+
+          } ,
+          callBigDataParams() {
+
+          } ,
+          wechatBigDataParams() {
+              
+          }
+      } ,
       created() {          
           let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;         
@@ -127,6 +138,15 @@
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
               }
+          }) ;
+          //页面埋点功能
+          this.$bigData({
+            pageName : 2057 ,
+            pageParam : {
+                agent_id : agentId ,
+                house_id : houseId
+            } ,
+            type : 1
           }) ;
       } ,
       components : {

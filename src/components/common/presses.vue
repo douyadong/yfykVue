@@ -25,7 +25,7 @@
                 <li><img :src="press.articleCoverUrlList[1] + '?x-oss-process=image/resize,w_120'"></li>
                 <li><img :src="press.articleCoverUrlList[2] + '?x-oss-process=image/resize,w_120'"></li>
             </ul>
-            <div class="outline">
+            <div class="outline top-gap">
                 <div class="pull-left">{{ press.articleSource }} {{ press.publishTime}}</div>
                 <div class="pull-right"><span class="pv">{{ press.viewNumStr }}</span> <span>次浏览</span></div>
             </div>            
