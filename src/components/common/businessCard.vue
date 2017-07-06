@@ -1,5 +1,5 @@
 <template>
-	<a class="business-card" :href="'/space/detail/share/'+agent.agentId">		
+	<router-link class="business-card" :to="'/space/detail/share/'+agent.agentId">		
 		<div>			
 			<div class="photo">
 				<img :src="agent.agentHeadImgUrl+'?x-oss-process=image/resize,w_80'">
@@ -14,7 +14,7 @@
 		<p class="phone">
 			<i class="iconfont icon-kefurexian"></i> <span>{{agent.agentMobile}}</span> <span href="" class="more-house">查看更多好房 &gt;</span>
 		</p>
-	</a>	
+	</router-link>	
 </template>
 
 <script>

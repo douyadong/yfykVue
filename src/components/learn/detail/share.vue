@@ -84,28 +84,8 @@
         this.convertVideo();
       },
       created() {
-        this.fetchArticle();
-          /*
-          this.$wechatShare({
-            "title" : "标题" ,
-            "timelineTitle" : "标题2" ,
-            "content" : "内容" ,
-            "imgUrl" : "" ,
-            "environment" : "prod",
-            "success":function(){
-              console.log('success');
-            },
-            "fail":function(){
-              console.log('success');
-            },
-            "cancel":function(){
-              console.log('success');
-            },
-            "complete":function(){
-              console.log('success');
-            }
-
-          });*/
+        this.fetchArticle();          
+          
 
           //埋点
           this.$bigData({
@@ -238,7 +218,18 @@
                   content:data.data.articleDetailModel.content,
                   thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0
                 };    
-                self.agent = data.data.agentModel;        
+                self.agent = data.data.agentModel;
+
+                        self.$wechatShare({
+                          "title" : data.data.articleDetailModel.shareTitle ,
+                          "timelineTitle" : data.data.articleDetailModel.shareTitle ,
+                          "content" : data.data.articleDetailModel.shareContent ,
+                          "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                          "linkUrl": data.data.articleDetailModel.shareLinkUrl,
+                          "complete":function(){
+                            
+                          }
+                        });
               }
           });
         },
