@@ -74,14 +74,15 @@
           }
       } ,
       mounted(){
-        //字体
-        this.setArticleFont();
+        // //字体
+        // this.setArticleFont();
 
-        //处理链接        
-        this.convertLink();
+        // //处理链接        
+        // this.convertLink();
         
-        //处理视频
-        this.convertVideo();
+        // //处理视频
+        // this.convertVideo();
+        
       },
       created() {
         this.fetchArticle();          
@@ -169,7 +170,7 @@
               $item.after($(audio))
               $item.remove()
             } else {
-              $video = $('<video src="' + $item.attr('src') + '" controls="controls">您的浏览器不支持 video 标签。</video>')
+              $video = $('<video src="' + $item.attr('src') + '" controls="controls" width="100%">您的浏览器不支持 video 标签。</video>')
               $video.attr({
                 poster: coverUrl,
                 preload: 'auto'
@@ -230,6 +231,21 @@
                             
                           }
                         });
+
+                        //字体
+        /*self.setArticleFont();
+
+        //处理链接        
+        self.convertLink();
+        
+        //处理视频
+        self.convertVideo();*/
+
+        Vue.nextTick(()=>{
+          self.setArticleFont();
+          self.convertLink();
+          self.convertVideo();
+        })
               }
           });
         },
