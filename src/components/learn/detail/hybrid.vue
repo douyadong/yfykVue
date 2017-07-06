@@ -45,6 +45,7 @@
             pageInfo:{
               pageIndex:0,
               pageSize:10,
+              total:0
             }
           }
       } ,
@@ -86,15 +87,14 @@
           });*/
 
           //埋点
-          /*this.$bigData({
-            page_id:2061,
+          this.$bigData({
+            pageName:2061,
             pageParam:{
-              article_id:this.articleId,
-              agent_id:this.agentId,
-            },            
-            type:1,
-            page_time:Date.now()
-          });*/
+              article_id: this.articleId,
+              agent_id: this.agentId
+            },
+            type:1//1-pv，2-click
+          });
       },
       methods:{
         convertVideo: function() {
@@ -195,6 +195,7 @@
                 let data = res.body;                
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
+                self.pageInfo.total = data.count;
                 if(self.comments.length === data.count){
                   self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
                 }else{

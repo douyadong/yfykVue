@@ -1,7 +1,7 @@
 <template>
     <div class="article">      
       <div class="wk-panel">
-        <businessCard :agent="agent"/>
+        <businessCard :agent="agent" :data-bigdata='getBigDataParamStr(2063001,{c_agent_id:agentId,agent_id:agentId,article_id:articleId})'/>
       </div>
       <div class="wk-panel" style="padding-bottom:1.5rem">
        <h1 class="article-title">{{article.title}}</h1>
@@ -68,7 +68,8 @@
             comments:[],
             pageInfo:{
               pageIndex:0,
-              pageSize:10,                        
+              pageSize:10, 
+              total:0                       
             }
           }
       } ,
@@ -107,13 +108,24 @@
           });*/
 
           //埋点
-          /*this.$bigData({
-            page_id:2063,
-            article_id:this.articleId,
-            agent_id:this.agentId
-          });*/
+          this.$bigData({
+            pageName:2061,
+            pageParam:{
+              article_id: this.articleId,
+              agent_id: this.agentId
+            },
+            type:1//1-pv，2-click
+          });
       },
       methods:{
+        getBigDataParamStr(eventName,eventParam){
+          let obj = {
+            eventName:eventName,
+            eventParam:eventParam
+          }
+
+          return encodeURIComponent(JSON.stringify(obj));
+        },
         getQueryString: function(params, name) {
           var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
           var r = params.match(reg) // 获取url中"?"符后的字符串并正则匹配
@@ -243,6 +255,7 @@
                 let data = res.body;                
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
+                self.pageInfo.total = data.count;
                 if(self.comments.length === data.count){
                   self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
                 } else{
