@@ -137,7 +137,7 @@
               successCallback : res => {                 
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
-                  //定制页面微信分享参数
+                  //定制页面微信分享参数                  
                   let wechatShare = res.body.data.weChatShare ;
                   this.$wechatShare({
                       "title" : wechatShare.title ,
