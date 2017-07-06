@@ -9,7 +9,7 @@
        <div class="article-content" v-html="article.content">
       
        </div>
-       <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'icon-zan':true,'active':isUp}" @click="zan"></i> xxx</p>
+       <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'iconfont':true,'icon-zan':true,'active':article.isUp}" @click="zan"></i> {{article.thumbUpNumStr}}</p>
       </div>
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
@@ -28,7 +28,8 @@
         </span>
        </infiniteLoading>
 
-       <assistant :agent="agent" :houseId="null" :eventName="null"></assistant>
+       <assistant :agent="agent" :houseId="null" :eventName="null"></assistant>       
+       <a class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
     </div>   
     
 </template>
@@ -51,8 +52,7 @@
             commentText:"",
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId,
-            isUp:false,
+            agentId:this.$route.query.agentId,            
             agent:{
 
             },
@@ -61,7 +61,9 @@
               articleSource:"",
               publishTime:"",
               viewNumStr:"",
-              content:""
+              content:"",
+              thumbUpNumStr:0,
+              isUp:false
             },            
             comments:[],
             pageInfo:{
@@ -221,7 +223,8 @@
                   articleSource:data.data.articleDetailModel.articleSource,
                   publishTime:data.data.articleDetailModel.publishTime,
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
-                  content:data.data.articleDetailModel.content
+                  content:data.data.articleDetailModel.content,
+                  thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0
                 };    
                 self.agent = data.data.agentModel;        
               }
@@ -271,13 +274,17 @@
         },
         zan(){//点赞
           let self = this;
+          if(self.article.isUp){
+            return;
+          }
           apiDataFilter.request({
             apiPath:"learn.up",
             data:{
               articleId: this.articleId              
             },
             successCallback:function(res){
-              self.isUp = true;
+              self.article.isUp = true;
+              self.article.thumbUpNumStr=(self.article.thumbUpNumStr||0)+1;
             },
           });
         }
@@ -289,6 +296,29 @@
 @import "../../../less/learn/detail.less"; 
 .comments{
     margin-top:3.4rem;
+}
+
+.iconfont.active{
+  color:#92A7C3 ;
+}
+
+.float-call{
+  position:fixed;
+  bottom:8rem;
+  right:1.5rem;
+  background-color:white;
+  text-align: center;
+  box-shadow: 0 2px 3px 0;
+  border-radius: 3px;
+  font-size:1rem;
+  line-height:1.4;
+  width:5rem;
+  padding-top:0.8rem;
+  padding-bottom:0.2rem;
+
+  *{
+    display:block
+  }
 }
 
 input{

@@ -10,10 +10,10 @@ export default {
 	install(Vue,options){
 		let env = apiDataFilter.getEnv();
 		let apiPrefix = "//wechat.wkzf.com/";
-		if (this.environment === "test") apiPrefix = "//10.0.18.79:8134/" ;
-    	else if (this.environment === "beta") apiPrefix = "//wechat-beta.wkzf.com/" ;
-    	else if (this.environment === "sim") apiPrefix = "//wechat.sim.wkzf/" ;
-    	else if (this.environment === "prod") apiPrefix = "//wechat.wkzf.com/" ;
+		if (env === "test") apiPrefix = "//10.0.18.79:8134/" ;
+    	else if (env === "beta") apiPrefix = "//wechat-beta.wkzf.com/" ;
+    	else if (env === "sim") apiPrefix = "//wechat.sim.wkzf/" ;
+    	else if (env === "prod") apiPrefix = "//wechat.wkzf.com/" ;
     	let apiUrl = apiPrefix + "wx_js_sdk_sign.rest?wechatCode=1000001";
 
     	let initial = true;
