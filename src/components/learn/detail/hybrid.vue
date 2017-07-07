@@ -142,6 +142,11 @@
             $('.weixinAudio').wechatAudio({
               autoplay: false
             });
+
+            Vue.nextTick(()=>{
+              self.setArticleFont();              
+              self.convertVideo();
+            })
           })
         },
         setArticleFont:function(){
