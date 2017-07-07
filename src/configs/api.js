@@ -9,7 +9,7 @@ export default {
     "successStatusCode" : 1 ,    
     "prefix" : {
         "dev" : "//10.0.18.78:8107" ,
-        "test" : "//10.0.18.79:8107" ,
+        "test" : "//m.test.wkzf" ,
         "sim" : "//m.sim.wkzf" ,
         "prod" : "//m.wkzf.com"
     } ,
