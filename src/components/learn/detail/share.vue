@@ -63,7 +63,8 @@
               viewNumStr:"",
               content:"",
               thumbUpNumStr:0,
-              isUp:false
+              isUp:false,
+              coverUrl:""
             },            
             comments:[],
             pageInfo:{
@@ -146,7 +147,7 @@
           if (!videos || !videos.length) return false
           $.each(videos, function(index, item) {
             var $item = $(item)
-            var coverUrl = $.trim($('#coverUrl').val())
+            var coverUrl = this.article.coverUrl
             var $video, audio
             var src = $item.attr('src')
             var split = src && src.split('.')
@@ -217,7 +218,8 @@
                   publishTime:data.data.articleDetailModel.publishTime,
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
                   content:data.data.articleDetailModel.content,
-                  thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0
+                  thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0,
+                  coverUrl:data.data.articleDetailModel.coverUrl
                 };    
                 self.agent = data.data.agentModel;
 
