@@ -18,7 +18,7 @@
             </dl>
             <div class="cover" v-if="[ 5 , 7 ].indexOf(press.articleCoverShowOrder) !== -1 && press.articleCoverShowType === 2">
                 <img v-lazy="press.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_450'" class="img-responsive">
-                <div class="play"><i></i></div>
+                <div class="play" v-if="press.articleCoverShowOrder == 7"><i></i></div>
             </div>
             <ul class="thumbs" v-if="press.articleCoverShowOrder === 5 && press.articleCoverShowType === 3">
                 <li><img v-lazy="press.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_120'"></li>
