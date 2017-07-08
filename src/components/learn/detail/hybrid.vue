@@ -38,7 +38,7 @@
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,  
             agent:{
-              agentVerifiedStatus: ""
+              agentVerifiedStatus: 1
             } ,         
             article:{
               title:"",
