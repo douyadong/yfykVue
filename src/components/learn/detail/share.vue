@@ -145,9 +145,11 @@
         convertVideo: function() {
           let videos = $('.article-content').find('embed')
           if (!videos || !videos.length) return false
+
+          let self = this;
           $.each(videos, function(index, item) {
             var $item = $(item)
-            var coverUrl = this.article.coverUrl
+            var coverUrl = self.article.coverUrl
             var $video, audio
             var src = $item.attr('src')
             var split = src && src.split('.')
@@ -265,10 +267,9 @@
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
                 self.pageInfo.total = data.count;
+                self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
                 if(self.comments.length === data.count){
                   self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-                } else{
-                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
                 }                
               } 
             });

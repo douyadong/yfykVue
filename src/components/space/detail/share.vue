@@ -44,7 +44,7 @@
             <ul class="wk-panel tabs-handle">
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">推荐二手房</a></li>
                 <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">推荐新房</a></li>
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
+                <li v-if="pageStates.hasPress"><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
             </ul>
             <!--tabs-frame部分-->            
             <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
@@ -103,7 +103,8 @@
                   storyExtendable : false ,  //成交故事内容是否可展开 ,
                   esfPageIndex : 0 , // 二手房源当前页数据起始条数
                   xfPageIndex : 0 ,  //新房房源当前页数据起始条数
-                  pressPageIndex : 0 //房产资讯当前页数据起始条数
+                  pressPageIndex : 0 ,//房产资讯当前页数据起始条数
+                  hasPress:false
               } ,
               pageConfs : {                  
                   pageSize : 10  //推荐信息每次加载多少条
@@ -164,7 +165,9 @@
                       this.$data.apiData.esfSources = this.$data.apiData.esfSources.concat(result) ;  //将房源数据累加
                       this.pageStates.esfPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
                       this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成
-                      if(res.body.data.page.total === this.$data.apiData.esfSources.length) this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕
+                      if(res.body.data.page.total === this.$data.apiData.esfSources.length) {
+                        this.$refs.infiniteLoadingEsf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕
+                      }
                   }
               }) ;
               
@@ -180,7 +183,9 @@
                       this.$data.apiData.xfSources = this.$data.apiData.xfSources.concat(result) ;  //将房源数据累加
                       this.pageStates.xfPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
                       this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成                 
-                      if(res.body.data.page.total === this.$data.apiData.xfSources.length) this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                      if(res.body.data.page.total === this.$data.apiData.xfSources.length) {
+                        this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                      }
                   }
               }) ;              
           } ,
@@ -192,10 +197,17 @@
                   data : { "agentId" : agentId , "startIndex" : this.pageStates.pressPageIndex , "pageSize" : this.pageConfs.pageSize } ,              
                   successCallback : res => {                      
                       let result = res.body.data.agentRecmdArticleDetailModels ;
-                      this.$data.apiData.presses = this.$data.apiData.presses.concat(result) ;  //将房源数据累加
-                      this.pageStates.pressPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
-                      this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成                 
-                      if(res.body.data.page.total === this.$data.apiData.presses.length) this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                      if(result){
+                        this.$data.apiData.presses = this.$data.apiData.presses.concat(result) ;  //将房源数据累加
+                        this.pageStates.pressPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
+                        this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成                 
+                        if(res.body.data.page.total === this.$data.apiData.presses.length) {
+                          this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕             
+                        }
+                      }else{//此时认为数据加载完成了
+                        this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:loaded") ;  //
+                        this.$refs.infiniteLoadingPress.$emit("$InfiniteLoading:complete") ;
+                      }
                   }
               }) ;              
           }
@@ -232,7 +244,23 @@
                       "complete" : function() { console.log("分享完成！") ; }
                   }) ; 
               }
-          }) ;                    
+          }) ;   
+
+          //查询是否有文章，决定是否显示资讯tab
+          apiDataFilter.request({
+              apiPath : "space.press" ,
+              data : { "agentId" : agentId , "startIndex" : 0 , "pageSize" : 1 } ,              
+              successCallback : res => {                      
+                  let result = res.body.data.agentRecmdArticleDetailModels ;
+                  if(result && result.length > 0){
+                    this.pageStates.hasPress = true;
+                    
+                  }else{//此时认为数据加载完成了
+                    this.pageStates.hasPress = false;
+                  }
+              }
+          }) ; 
+
       } ,
       components : {
           assistant ,

@@ -39,7 +39,8 @@
               articleSource:"",
               publishTime:"",
               viewNumStr:"",
-              content:""
+              content:"",
+              coverUrl:""
             },          
             comments:[],
             pageInfo:{
@@ -50,9 +51,9 @@
           }
       } ,
       mounted(){
-        this.setArticleFont();
+        //this.setArticleFont();
 
-        this.convertVideo();
+        //this.convertVideo();
 
         // 注册一个全局函数，解决android webview 中音频播放，app切换出去，音频仍在播放的问题
         window.pauseAudio = function () {
@@ -98,11 +99,14 @@
       },
       methods:{
         convertVideo: function() {
+
           let videos = $('.article-content').find('embed')
+          console.log('convertvideo...',videos)
           if (!videos || !videos.length) return false
+          let self = this;
           $.each(videos, function(index, item) {
             var $item = $(item)
-            var coverUrl = $.trim($('#coverUrl').val())
+            var coverUrl = self.article.coverUrl
             var $video, audio
             var src = $item.attr('src')
             var split = src && src.split('.')
@@ -126,7 +130,7 @@
               $item.after($(audio))
               $item.remove()
             } else {
-              $video = $('<video src="' + $item.attr('src') + '" controls="controls">您的浏览器不支持 video 标签。</video>')
+              $video = $('<video src="' + $item.attr('src') + '" controls="controls" width="100%">您的浏览器不支持 video 标签。</video>')
               $video.attr({
                 poster: coverUrl,
                 preload: 'auto'
@@ -138,15 +142,10 @@
               })
               $item.after($video)
               $item.remove()
-            }
-            $('.weixinAudio').wechatAudio({
-              autoplay: false
-            });
-
-            Vue.nextTick(()=>{
-              self.setArticleFont();              
-              self.convertVideo();
-            })
+            }            
+            // $('.weixinAudio').wechatAudio({
+            //   autoplay: false
+            // });          
           })
         },
         setArticleFont:function(){
@@ -182,8 +181,14 @@
                   articleSource:data.data.articleDetailModel.articleSource,
                   publishTime:data.data.articleDetailModel.publishTime,
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
-                  content:data.data.articleDetailModel.content
+                  content:data.data.articleDetailModel.content,
+                  coverUrl:data.data.articleDetailModel.coverUrl
                 };
+
+                Vue.nextTick(()=>{
+                  self.setArticleFont();              
+                  self.convertVideo();
+                })
               }
           });
         },
@@ -201,11 +206,10 @@
                 self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
                 self.comments = self.comments.concat(data.data);
                 self.pageInfo.total = data.count;
+                self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
                 if(self.comments.length === data.count){
                   self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-                }else{
-                  self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
-                }              
+                }             
               } 
             });
         }

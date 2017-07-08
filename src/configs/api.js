@@ -8,8 +8,8 @@ export default {
     "timeout": 60 * 1000 ,  //超时请求时间，单位：毫秒
     "successStatusCode" : 1 ,    
     "prefix" : {
-        "dev" : "//10.0.18.78:8107" ,
-        "test" : "//10.0.18.78:8107" ,
+        "dev" : "//10.0.18.79:8107" ,
+        "test" : "//10.0.18.79:8107" ,
         "sim" : "//m.sim.wkzf" ,
         "prod" : "//m.wkzf.com"
     } ,
