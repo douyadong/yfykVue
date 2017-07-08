@@ -1,5 +1,8 @@
 <template>
     <div class="article">
+      <p class="not-verified" v-if="agent.agentVerifiedStatus != 0">
+        请完善实名认证，分享文章将可带有您的个人名片及联系方式
+      </p>
       <div class="wk-panel">
        <h1 class="article-title">{{article.title}}</h1>
        <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
@@ -33,7 +36,10 @@
           return { 
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId,            
+            agentId:this.$route.query.agentId,  
+            agent:{
+              agentVerifiedStatus: ""
+            } ,         
             article:{
               title:"",
               articleSource:"",
@@ -184,6 +190,7 @@
                   content:data.data.articleDetailModel.content,
                   coverUrl:data.data.articleDetailModel.coverUrl
                 };
+                self.agent.agentVerifiedStatus = data.data.agentModel.agentVerifiedStatus;
 
                 Vue.nextTick(()=>{
                   self.setArticleFont();              
@@ -218,5 +225,10 @@
 </script>
 
 <style lang="less">
-@import "../../../less/learn/detail.less"; 
+@import "../../../less/learn/detail.less";
+.not-verified{
+  font-size:1.6rem;
+  padding: 1.5rem;  
+  color: maroon;
+} 
 </style>
