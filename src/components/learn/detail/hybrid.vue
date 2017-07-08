@@ -217,6 +217,6 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "../../../less/learn/detail.less"; 
 </style>

@@ -16,25 +16,63 @@
             </a>
         </li>        
         <li class="tools">
-            <router-link :to="'/weixin/add?wechatid=' + agent.agentWChatId + '&wechatqr=' +  encodeURIComponent(agent.agentWChartQRImgUrl)" :data-bigdata="wechatBigDataParams">
+            <a :data-bigdata="wechatBigDataParams" @click="showWX">
                 <span><i class="iconfont icon-weixinkefu"></i></span>
                 <span>添加微信</span>
-            </router-link>
+            </a>
         </li>        
     </ul>
 </template>
 
 <script>   
+    import $ from 'jquery';
+    import "@/libraries/jquery.modal";
+    import Clipboard from "clipboard";
     export default {
         name : "assistant" ,
         data () {
             return {
                 
             }
-        } ,        
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams" ]
+        } ,             
+        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams" ],
+        methods:{
+            showWX(){
+               
+                let str = '<dl>'+
+                            '<dt><img style="width:14rem" src="'+this.agent.agentWChartQRImgUrl+'"></dt>'+
+                            '<dd style="color: #999999;">长按识别二维码加微信</dd>'+
+                            '<dd style="color: #4E4E4E;">微信号：<span id="wechartCode">'+this.agent.agentWChatId+'</span></dd>'+
+                          '</dl>';
+                $.confirm({
+                    "id" : "confirmDialog" ,
+                    "title" : "" ,
+                    "content" : str ,
+                    "confirmText" : "取消" ,
+                    "confirmInterface" : function() { $.modal.close("confirmDialog") ; } ,
+                    "cancelText" : "复制微信号" ,
+                    "cancelInterface" : function() { 
+                        //复制我不会
+                     } 
+                });
+
+                $('#confirmDialog .wkzf-btn:eq(1)').addClass('btn-confirm');
+                $('.btn-confirm').attr('data-clipboard-target',"#wechartCode");
+                var clipboard = new Clipboard('.btn-confirm');
+            }
+        }
     }
 </script>
-<style lang="less" scoped>
-    @import "../../../src/less/components/assistant.less" ;   
+<style lang="less">
+    @import "../../../src/less/components/assistant.less" ;
+    .wkzf-modal{
+        width: 27rem;
+        max-width:80%;          
+        border-radius: 12px; 
+        .wkzf-btn:nth-child(2){
+            color: #FC4C5A;
+            font-size: 1.6rem;
+            border-left:none;
+        }
+    }     
 </style>

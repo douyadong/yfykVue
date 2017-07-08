@@ -29,7 +29,7 @@
        </infiniteLoading>
 
        <assistant :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
-       <a class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
+       <a v-if="isShowCall" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
     </div>   
     
 </template>
@@ -52,7 +52,8 @@
             commentText:"",
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId,            
+            agentId:this.$route.query.agentId,  
+            isShowCall:false,          
             agent:{
 
             },
@@ -221,8 +222,10 @@
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
                   content:data.data.articleDetailModel.content,
                   thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0,
-                  coverUrl:data.data.articleDetailModel.coverUrl
-                };    
+                  coverUrl:data.data.articleDetailModel.coverUrl,
+                  phoneNum:data.data.articleDetailModel.phoneNum
+                };   
+                self.isShowCall = !!data.data.articleDetailModel.phoneNum; 
                 self.agent = data.data.agentModel;
 
                         self.$wechatShare({
@@ -315,7 +318,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "../../../less/learn/detail.less"; 
 .comments{
     margin-top:3.4rem;

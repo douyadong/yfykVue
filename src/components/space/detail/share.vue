@@ -90,7 +90,7 @@
     import esfSources from "@/components/common/esfSources" ;
     import presses from "@/components/common/presses" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
-    import InfiniteLoading from "vue-infinite-loading" ;   
+    import InfiniteLoading from "vue-infinite-loading" ;       
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -273,5 +273,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../../src/less/space/detail.less" ;   
+    @import "../../../../src/less/space/detail.less" ;
 </style>
