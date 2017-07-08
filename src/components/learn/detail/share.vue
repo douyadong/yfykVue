@@ -29,7 +29,7 @@
        </infiniteLoading>
 
        <assistant :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
-       <a v-if="isShowCall" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
+       <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
     </div>   
     
 </template>
@@ -341,7 +341,9 @@
   width:5rem;
   padding-top:0.8rem;
   padding-bottom:0.2rem;
-
+  &:active, &:focus, &:link, &:visited{
+    color:#4e4e4e;
+  }
   *{
     display:block
   }
