@@ -1,7 +1,7 @@
 <template>
     <div class="presses">
         <!--资讯遍历开始-->
-        <router-link :to="'/learn/detail/share/' + press.articleId" class="press" v-for="(press , index) in items" :key="press.articleId" :data-bigdata="getUvParamsString({ eventName : eventName , articleId : press.articleId , otherParams : otherParams })">
+        <router-link :to="'/learn/detail/share/' + press.articleId+'?agentId='+agentId" class="press" v-for="(press , index) in items" :key="press.articleId" :data-bigdata="getUvParamsString({ eventName : eventName , articleId : press.articleId , otherParams : otherParams })">
             <div class="cover" v-if="[ 1 , 3 , 6 , 8 ].indexOf(press.articleCoverShowOrder) !== -1 && press.articleCoverShowType === 2">
                 <img v-lazy="press.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_450'" class="img-responsive">
                 <div class="play"><i></i></div>
@@ -53,7 +53,7 @@
                 })) ;
             }
         } ,
-        props : [ "items" , "eventName" , "otherParams" ]
+        props : ["agentId", "items" , "eventName" , "otherParams" ]
     }
 </script>
 <style lang="less" scoped>

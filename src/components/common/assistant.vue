@@ -59,6 +59,16 @@
                 $('#confirmDialog .wkzf-btn:eq(1)').addClass('btn-confirm');
                 $('.btn-confirm').attr('data-clipboard-target',"#wechartCode");
                 var clipboard = new Clipboard('.btn-confirm');
+
+                clipboard.on('success', function(e) {
+                    console.log('xxxxxx');
+                    $.tips("复制成功!",3);
+                });
+
+                clipboard.on('error', function(e) {
+                    console.log('xxxxxxsdfdf');
+                   $.tips("复制失败!",3);
+                });
             }
         }
     }
@@ -74,5 +84,9 @@
             font-size: 1.6rem;
             border-left:none;
         }
-    }     
+    }    
+
+    .wkzf-tips{
+        z-index:9999;
+    } 
 </style>

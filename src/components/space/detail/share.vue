@@ -71,7 +71,7 @@
             <div class="wk-panel" v-if="pageStates.activeTab=='press'">
                 <transition  name="slide-fade">
                     <div  v-if="pageStates.activeTabContent=='press'">
-                        <presses :items="apiData.presses" eventName="2065007" :otherParams="{ agent_id : apiData.agentDetail.agentId }" />
+                        <presses :items="apiData.presses" eventName="2065007" :otherParams="{ agent_id : apiData.agentDetail.agentId }" :agentId="agentId"/>
                         <infinite-loading :on-infinite="infiniteLoadingPress" ref="infiniteLoadingPress">
                             <div slot="no-more" class="no-more">没有更多了！</div>
                         </infinite-loading>
@@ -114,7 +114,8 @@
                   esfSources : [] , //二手房源
                   xfSources : [] ,  //新房房源
                   presses : []  //房产资讯
-              }             
+              },
+              agentId:""             
           }
       } ,
       methods : {
@@ -215,6 +216,7 @@
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
+          this.agentId = agentId;
           //页面埋点功能
           this.$bigData({
             pageName : 2065 ,

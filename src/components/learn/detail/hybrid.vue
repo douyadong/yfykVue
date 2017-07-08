@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-      <p class="not-verified" v-if="agent.agentVerifiedStatus != 0">
+      <p class="not-verified" v-if="agent.agentVerifiedStatus != 1">
         请完善实名认证，分享文章将可带有您的个人名片及联系方式
       </p>
       <div class="wk-panel">
