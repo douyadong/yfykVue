@@ -65,7 +65,7 @@ export default {
 		            wx.ready(function(){
 		            	wx.onMenuShareTimeline({
 					        title : options.timelineTitle || window.document.title,
-					        link : options.linkUrl || window.location.href,
+					        /*link : options.linkUrl|| window.location.href,*/
 					        imgUrl : options.imgUrl ,
 					        trigger : options.trigger ,
 					        success : options.success ,
@@ -77,7 +77,7 @@ export default {
 					    wx.onMenuShareAppMessage({
 					        title : options.title || window.document.title, // 分享标题
 					        desc : options.content , // 分享描述
-					        link : options.linkUrl || window.location.href, // 分享链接
+					        /*link : options.linkUrl || window.location.href,*/ // 分享链接
 					        imgUrl : options.imgUrl , // 分享图标
 					        type : '' , // 分享类型,music、video或link，不填默认为link
 					        dataUrl : '' , // 如果type是music或video，则要提供数据链接，默认为空

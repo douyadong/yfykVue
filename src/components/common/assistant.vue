@@ -35,10 +35,10 @@
                 
             }
         } ,             
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams" ],
+        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams" ],
         methods:{
             showWX(){
-               
+                let self = this;
                 let str = '<dl>'+
                             '<dt><img style="width:14rem" src="'+this.agent.agentWChartQRImgUrl+'"></dt>'+
                             '<dd style="color: #999999;">长按识别二维码加微信</dd>'+
@@ -52,7 +52,13 @@
                     "confirmInterface" : function() { $.modal.close("confirmDialog") ; } ,
                     "cancelText" : "复制微信号" ,
                     "cancelInterface" : function() { 
-                        //复制我不会
+                        if(self.copyWechatBigDataParams){
+                            let data = JSON.parse(decodeURIComponent(self.copyWechatBigDataParams));
+                            data.type = 1;
+                            console.log(data);
+                            self.$bigData(data);
+                        }
+                        
                      } 
                 });
 

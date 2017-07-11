@@ -9,7 +9,7 @@
                         <span class="name">{{ apiData.agentDetail.agentName }}</span>
                         <span class="good" v-if="apiData.agentDetail.isWellAgent">好</span>
                     </div>
-                    <div class="volume">
+                    <div class="volume" v-if="!!apiData.agentDetail.agentVolume">
                         <img src="../../../assets/volume.png">
                         <span>成交 {{ apiData.agentDetail.agentVolume }} 套</span>
                     </div>
@@ -106,6 +106,7 @@
                   pressPageIndex : 0 ,//房产资讯当前页数据起始条数
                   hasPress:false
               } ,
+              shopId:"",
               pageConfs : {                  
                   pageSize : 10  //推荐信息每次加载多少条
               } ,              
