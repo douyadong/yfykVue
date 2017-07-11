@@ -1,6 +1,6 @@
 <template>
     <div class="esf-sources">
-        <a :href="getRedirectUrl(source.houseIdUrl)" v-for="(source , index) in items" :key="source.houseId" :data-bigdata="getUvParamsString({ eventName : eventName , houseId : source.houseId , otherParams : otherParams })">
+        <a :href="getRedirectUrl(source.encryptHouseId)" v-for="(source , index) in items" :key="source.houseId" :data-bigdata="getUvParamsString({ eventName : eventName , houseId : source.houseId , otherParams : otherParams })">
             <dl>
                 <dt><img v-lazy="source.houseImgUrl + '?x-oss-process=image/resize,w_150'"></dt>
                 <dd class="title">{{ source.houseTitle }}</dd>
@@ -49,10 +49,10 @@ export default {
           })) ;
       } ,
       getRedirectUrl : function(url) {
-          return prefix + url;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
+          return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
       }
   } ,
-  props : [ "items" , "eventName" , "otherParams" ] ,
+  props : [ "items" , "eventName" , "otherParams", "agentId", "cityId" ] ,
 }
 </script>
 <style lang="less" scoped>
