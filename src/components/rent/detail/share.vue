@@ -117,7 +117,7 @@
       methods : {
           //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-              let eventParam = { agent_id : this.$route.params.agentId , house_id : this.$route.params.houseId } ;
+              let eventParam = { agent_id : this.$route.params.agentId , house_id : this.apiData.simpleHouseRentDetailInfo.houseId } ;
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
               }              
@@ -150,17 +150,18 @@
                       "cancel" : function() { console.log("您取消了分享！") ; } ,
                       "complete" : function() { console.log("分享完成！") ; }
                   }) ;
+
+                  //页面埋点功能
+                this.$bigData({
+                  pageName : 2057 ,
+                  pageParam : {
+                      agent_id : agentId ,
+                      house_id : this.apiData.simpleHouseRentDetailInfo.houseId
+                  } ,
+                  type : 1
+                }) ;
               }
-          }) ;
-          //页面埋点功能
-          this.$bigData({
-            pageName : 2057 ,
-            pageParam : {
-                agent_id : agentId ,
-                house_id : houseId
-            } ,
-            type : 1
-          }) ;
+          }) ;          
       } ,
       components : {
           downloadApp ,
