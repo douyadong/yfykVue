@@ -16,7 +16,7 @@
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
             <input type="text" v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0"> 
             <div class="operate">
-              <button class="btn" @click="cancel">取消</button><button class="btn confirm" @click="commit" :disabled="commentText.length===0">评论</button>
+              <button class="btn" @click="cancel">取消</button><button class="btn confirm" @click="commit" :disabled="commentText.length===0||commiting">评论</button>
             </div>
           </div>
           <comment class="pannel" :items="comments"></comment>
@@ -68,6 +68,7 @@
               coverUrl:""
             },            
             comments:[],
+            commiting:false,
             pageInfo:{
               pageIndex:0,
               pageSize:10, 
@@ -285,6 +286,7 @@
         },
         commit(){//提交评论
           let self = this;
+          this.commiting = true;
           apiDataFilter.request({
             apiPath:"learn.commitComment",
             data:{
@@ -293,12 +295,16 @@
             },
             successCallback:function(res){
               self.commentText = "";
+              self.commiting = false;
               $.tips("评论成功！！",1,function(){
                 self.pageInfo.pageIndex=0;
                 self.comments = [];
                 self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');                
               });
             },
+            errorCallback:function(){
+              self.commiting = false;
+            }
           });
         },
         zan(){//点赞
