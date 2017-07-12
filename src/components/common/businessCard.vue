@@ -1,5 +1,5 @@
 <template>
-	<router-link class="business-card" :to="'/space/detail/share/'+agent.agentId" v-if="agent.agentVerifiedStatus==1">		
+	<router-link class="business-card" :to="'/space/detail/share/'+agent.agentId+'?cityId='+cityId" v-if="agent.agentVerifiedStatus==1">		
 		<div>			
 			<div class="photo">
 				<img :src="agent.agentHeadImgUrl+'?x-oss-process=image/resize,w_80'">
@@ -19,7 +19,7 @@
 
 <script>
 export default{
-	props:["agent"]
+	props:["agent","cityId"]
 }
 </script>
 

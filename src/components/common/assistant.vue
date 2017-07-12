@@ -1,7 +1,7 @@
 <template>
     <ul class="assistant" :class="{ 'no-weixin' : agent.agentWChatId === null }">
         <li class="portrait">
-            <router-link :to="'/space/detail/share/' + agent.agentId" :data-bigdata="portraitBigDataParams">
+            <router-link :to="'/space/detail/share/' + agent.agentId+'?cityId='+cityId" :data-bigdata="portraitBigDataParams">
                 <dl>
                     <dt><img :src="agent.agentHeadImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
                     <dd class="agent-name">{{ agent.agentName }}</dd>
@@ -35,7 +35,7 @@
                 
             }
         } ,             
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams" ],
+        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId" ],
         methods:{
             showWX(){
                 let self = this;

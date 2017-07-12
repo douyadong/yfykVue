@@ -1,7 +1,7 @@
 <template>
     <div class="article">      
       <div class="wk-panel">
-        <businessCard :agent="agent" :data-bigdata='getBigDataParamStr(2063001,{c_agent_id:agentId,agent_id:agentId,article_id:articleId})'/>
+        <businessCard :agent="agent" :cityId="cityId" :data-bigdata='getBigDataParamStr(2063001,{c_agent_id:agentId,agent_id:agentId,article_id:articleId})'/>
       </div>
       <div class="wk-panel" style="padding-bottom:1.5rem">
        <h1 class="article-title">{{article.title}}</h1>
@@ -28,7 +28,7 @@
         </span>
        </infiniteLoading>
 
-       <assistant :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
+       <assistant :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
        <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
     </div>   
     

@@ -1,6 +1,6 @@
 <template>
     <div id="rentDetailShare">
-        <assistant :agent="apiData.simpleAgentModel" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
+        <assistant :cityId="cityId" :agent="apiData.simpleAgentModel" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
        <download-app />
        <!--相册内容-->
        <swiper :options="pageConfs.swiperOption">            
@@ -130,7 +130,8 @@
       } ,      
       created() {          
           let houseId = this.$route.params.houseId ;
-          let agentId = this.$route.params.agentId ;         
+          let agentId = this.$route.params.agentId ;  
+          this.cityId = this.$route.query.cityId;       
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,              

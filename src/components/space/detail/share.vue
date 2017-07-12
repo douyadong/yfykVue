@@ -1,6 +1,6 @@
 <template>
     <div id="spaceDetailShare">
-        <assistant :agent="apiData.agentDetail" :callBigDataParams="getUvParamsString({ eventName : 2065008 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065009 })" />
+        <assistant :cityId="cityId" :agent="apiData.agentDetail" :callBigDataParams="getUvParamsString({ eventName : 2065008 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065009 })" />
         <div class="wk-panel card">
             <dl class="outline">
                 <dt><img :src="apiData.agentDetail.agentHeadImgUrl" class="img-responsive"></dt>
@@ -51,7 +51,7 @@
                 <transition  name="slide-fade">
                     <!--为什么这里要多套一层容器，是用上面wk-panel容器显示来改变页面滚动条状态从而来触发切换到的tab的循环加载插件加载-->
                     <div  v-if="pageStates.activeTabContent=='esf'">
-                        <esf-sources :agentId="apiData.agentDetail.agentId" :items="apiData.esfSources" eventName="2065005" :otherParams="{ agent_id : apiData.agentDetail.agentId }" />
+                        <esf-sources :cityId="cityId" :agentId="apiData.agentDetail.agentId" :items="apiData.esfSources" eventName="2065005" :otherParams="{ agent_id : apiData.agentDetail.agentId }" />
                         <infinite-loading :on-infinite="infiniteLoadingEsf" ref="infiniteLoadingEsf">
                             <div slot="no-more" class="no-more">没有更多了！</div>
                         </infinite-loading>
@@ -61,7 +61,7 @@
             <div class=" wk-panel" v-if="pageStates.activeTab=='xf'">
                 <transition  name="slide-fade">
                     <div  v-if="pageStates.activeTabContent=='xf'">
-                        <xf-sources :agentId="apiData.agentDetail.agentId" :items="apiData.xfSources" eventName="2065006" :otherParams="{ agent_id : apiData.agentDetail.agentId }" />
+                        <xf-sources :cityId="cityId" :agentId="apiData.agentDetail.agentId" :items="apiData.xfSources" eventName="2065006" :otherParams="{ agent_id : apiData.agentDetail.agentId }" />
                         <infinite-loading :on-infinite="infiniteLoadingXf" ref="infiniteLoadingXf">
                             <div slot="no-more" class="no-more">没有更多了！</div>
                         </infinite-loading>
@@ -116,7 +116,8 @@
                   xfSources : [] ,  //新房房源
                   presses : []  //房产资讯
               },
-              agentId:""             
+              agentId:"",
+              cityId:""             
           }
       } ,
       methods : {
@@ -218,6 +219,7 @@
       created() {            
           let agentId = this.$route.params.agentId ; 
           this.agentId = agentId;
+          this.cityId = this.$route.query.cityId;
           //页面埋点功能
           this.$bigData({
             pageName : 2065 ,
