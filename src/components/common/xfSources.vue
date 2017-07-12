@@ -1,6 +1,6 @@
 <template>
     <div class="xf-sources">
-        <a :href="getRedirectUrl(source.encryptEstateId)" v-for="(source , index) in items" :key="source.estateId" :data-bigdata="getUvParamsString({ eventName : eventName , estateId : source.estateId , otherParams : otherParams })">
+        <a :href="getRedirectUrl(source.encryptSubEstateId)" v-for="(source , index) in items" :key="source.estateId" :data-bigdata="getUvParamsString({ eventName : eventName , estateId : source.estateId , otherParams : otherParams })">
             <dl>
                 <dt><img v-lazy="source.imageUrl + '?x-oss-process=image/resize,w_150'" class="img-responsive"></dt>
                 <dd class="title">{{ source.estateName }}</dd>
@@ -50,4 +50,4 @@ export default {
 </script>
 <style lang="less" scoped>
      @import "../../../src/less/components/xfSources.less" ;    
-</style>
+</style>111
