@@ -49,7 +49,7 @@ export default {
           })) ;
       } ,
       getRedirectUrl : function(url) {
-          return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
+          return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+this.cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
       }
   } ,
   props : [ "items" , "eventName" , "otherParams", "agentId", "cityId" ] ,
