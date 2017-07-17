@@ -2,6 +2,11 @@
     <div class="presses">
         <!--资讯遍历开始-->
         <router-link :to="'/learn/detail/share/' + press.articleId+'?agentId='+agentId" class="press" v-for="(press , index) in items" :key="press.articleId" :data-bigdata="getUvParamsString({ eventName : eventName , articleId : press.articleId , otherParams : otherParams })">
+            <!--
+                var articleCoverType:Int = 0 //文章封面类型1图片 2视频 3音频（板式二字段）
+                var articleCoverShowOrder:Int = 0 // 板式二图文或与视频显示顺序 1纯图 2纯文 3纯视频 4纯语音 5文+图 6图+文 7文+视频 8视频+文
+                var articleCoverShowType:Int = 0 //文章封面图展示类型 1:单张小图，2:单张大图，3:三张j'图片(3.6新增)
+            -->
             <div class="cover" v-if="[ 1 , 3 , 6 , 8 ].indexOf(press.articleCoverShowOrder) !== -1 && press.articleCoverShowType === 2">
                 <img v-lazy="press.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_450'" class="img-responsive">
                 <div class="play"><i></i></div>
