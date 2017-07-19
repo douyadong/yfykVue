@@ -11,6 +11,9 @@
        </div>
        <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'iconfont':true,'icon-zan':true,'active':article.isUp}" @click="zan"></i> {{article.thumbUpNumStr}}</p>
       </div>
+      <div class="wk-panel">
+          <spread/>
+      </div>
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
@@ -19,7 +22,7 @@
               <button class="btn" @click="cancel">取消</button><button class="btn confirm" @click="commit" :disabled="commentText.length===0||commiting">评论</button>
             </div>
           </div>
-          <comment class="pannel" :items="comments"></comment>
+          <comment class="pannel" :items="comments"></comment>          
        </div>  
 
        <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
@@ -29,7 +32,8 @@
        </infiniteLoading>
 
        <assistant :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
-       <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>       
+       <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>
+       
     </div>   
     
 </template>
@@ -43,10 +47,11 @@
     import $ from "jquery";
     import "@/libraries/jquery.tips.js";
     import assistant from "@/components/common/assistant";
+    import spread from "@/components/common/spread";
 
     export default {
       name : "learnDetailHybrid" ,
-      components:{comment,infiniteLoading,businessCard,assistant},      
+      components:{comment,infiniteLoading,businessCard,assistant,spread},      
       data () {
           return {
             commentText:"",
