@@ -35,6 +35,9 @@
                         <dt>成交故事</dt>
                         <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">{{ apiData.agentDetail.agentStory }}</dd>
                         <dd class="switch" v-show="pageStates.storyExtendable" @click="spreadStoryContent"><i class="iconfont icon-arrowDSS"></i></dd>
+                        <dd v-if="apiData.agentDetail.myBizStoryImgUrls.length" class="picts">
+                            <img :src="pict" v-for="( pict , index ) in apiData.agentDetail.myBizStoryImgUrls">
+                        </dd>
                     </dl>
                 </div>
             </transition>
