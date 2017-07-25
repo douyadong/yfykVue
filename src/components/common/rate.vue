@@ -1,8 +1,7 @@
 <template>
     <dl class="rate">
         <dt>
-            <i class="iconfont icon-star-10" v-for="n in shi"></i>
-            <i class="iconfont icon-star-5" v-if="hasSmall"></i>
+            <i class="iconfont icon-star-10" v-for="n in score"></i>            
         </dt>
         <dd class="content">{{ content }}</dd>
         <dd class="summary">买家 {{ rater }} | {{ date }}</dd> 
@@ -17,7 +16,7 @@
                 
             }
         }  ,
-        props : [ "shi" , "hasSmall" , "content" , "rater" , "date" ]       
+        props : [ "score" , "content" , "rater" , "date" ]       
     }
 </script>
 <style lang="less">

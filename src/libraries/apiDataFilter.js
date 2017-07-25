@@ -9,9 +9,10 @@
 加载相关资源
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import Vue from "vue" ;
-import apiConf from "../configs/api" ;
+import apiConf from "@/configs/api" ;
+import utils from "@/libraries/utils" ;
 import $ from 'jquery';
-import '@/libraries/jquery.tips';
+import '@/libraries/jquery.tips' ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 apiDataFilter的定义
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -24,17 +25,21 @@ let apiDataFilter =  {
         let apiUrl = this.pathToUrl(apiPath) ;
         method =  method.toLowerCase() ;
         let opts = {
-            "timeout" : apiConf.timeout
+            "timeout" : apiConf.timeout ,
+            "headers" : {
+                "authorization" : utils.getCookieId()
+            }
         } ;
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         如果启用jsonp模式，而且如果设置了jsonp参数
-        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
-        if( method === "jsonp" && jsonp !== "" && jsonp !== undefined ) opts.jsonp = jsonp ;
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/         
         if(method === "post")  {
-            if(contentType) opts.headers["content-type"] = contentType ;
-            opts.body = data ;        
+            if(contentType) opts.headers["content-type"] = contentType ;                
         }
-        else opts.params = data ;
+        else if(  method === "jsonp" ||  method === "get" ) {
+            opts.params = data ;
+            if( method === "jsonp" && jsonp !== "" && jsonp !== undefined ) opts.jsonp = jsonp ;
+        }         
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         不是生产环境在控制台输出请求log
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
@@ -44,12 +49,19 @@ let apiDataFilter =  {
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         发起请求
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/        
-        errorCallback = errorCallback || this.errorCallback;
-        Vue.http[method](apiUrl , opts ).then( (res) => {
-            let status = parseInt(res.body.status , 10) ;
-            if(status === apiConf.successStatusCode) successCallback(res) ;
-            else { errorCallback(res&&res.body&&res.body.message) ; } ;
-        } , errorCallback) ;        
+        errorCallback = errorCallback || this.errorCallback ;
+        if(method === "post") {
+            Vue.http[method](apiUrl , data , opts ).then( (res) => {                
+                if( parseInt(res.body.status , 10) === apiConf.successStatusCode) successCallback(res) ;
+                else { errorCallback(res&&res.body&&res.body.message) ; } ;
+            } , errorCallback) ;
+        }
+        else if(  method === "jsonp" ||  method === "get" ) {
+            Vue.http[method](apiUrl , opts ).then( (res) => {                
+                if( parseInt(res.body.status , 10) === apiConf.successStatusCode) successCallback(res) ;
+                else { errorCallback(res&&res.body&&res.body.message) ; } ;
+            } , errorCallback) ;
+        }            
     } ,
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     通过域名来获取当前阶段环境
@@ -72,7 +84,7 @@ let apiDataFilter =  {
                 break ;
         }        
         return env ;
-    } ,
+    } ,    
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     请求错误处理方法
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
