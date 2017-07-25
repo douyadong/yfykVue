@@ -54,7 +54,7 @@
             <div class="panel-body lr-padding">
                 <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
                 <rate :score="rate.score" :content="rate.content" :rater="rate.customerName" :date="rate.createTimeStr"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />
-                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate-btn">我来评价</router-link>
+                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate-btn top-gap">我来评价</router-link>
             </div>
         </div>
         <!--三个tabs部分-->
@@ -289,7 +289,7 @@
               apiPath : "space.rate" ,
               data : { "agentId" : agentId , "startIndex" : 0 , "pageSize" : 2 } ,              
               successCallback : res => {                      
-                  let result = res.body.data ;
+                  let result = res.body.data.simpleAgentCommentList ;
                   if(result)  this.$data.apiData.rates = this.$data.apiData.rates.concat( res.body.data ) ;                   
               }
           }) ; 
