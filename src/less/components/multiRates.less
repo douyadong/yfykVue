@@ -1,0 +1,44 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components -> multiRates.less (综合评价得分及标签)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../variables.less" ;
+ @import "../mixins.less" ;
+.multi-rates {
+    dt {
+        color : @light-font-color ;
+        font-size : 1.4rem ;
+        line-height : 50px ;
+        .iconfont {
+            color : @star-color ;
+            font-size : 1.2rem ;
+        }
+        .number {
+            color : @default-font-color ;
+            font-size : 2.0rem ;
+        }
+    }
+    .tags {
+        .clearfix() ;
+        span {
+            background-color : #e1f0ff ;
+            .border-radius(4px) ;            
+            display : block ;
+            float : left ;
+            font-size : 1.4rem ;
+            line-height : 30px ;
+            margin-right : 2% ;
+            margin-bottom : 8px ;
+            text-align : center ;
+            width : 32% ;
+            &:nth-child(3) , &:nth-child(6) {
+                margin-right : 0 ;
+            }
+            &.bad {
+                background-color : #f5f5f5 ;
+                color : @light-font-color ;
+            }
+        }
+    }
+}

@@ -35,13 +35,29 @@
                         <dt>成交故事</dt>
                         <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">{{ apiData.agentDetail.agentStory }}</dd>
                         <dd class="switch" v-show="pageStates.storyExtendable" @click="spreadStoryContent"><i class="iconfont icon-arrowDSS"></i></dd>
-                        <dd v-if="apiData.agentDetail.myBizStoryImgUrls.length" class="picts">
+                        <dd v-if="apiData.agentDetail.myBizStoryImgUrls !== null " class="picts">
                             <img :src="pict" v-for="( pict , index ) in apiData.agentDetail.myBizStoryImgUrls">
                         </dd>
                     </dl>
                 </div>
             </transition>
         </div>
+        <!--评价部分-->
+        <div class="wk-panel top-gap rates-panel">
+            <div class="panel-header">
+                <h2>用户评价</h2>
+                <div class="count">
+                    <span>{{ apiData.agentDetail.agentCommentCount }}</span>
+                    <i class="iconfont icon-arrowR"></i>
+                </div>
+            </div>
+            <div class="panel-body lr-padding">
+                <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
+                <!--<rate :shi="rate.shi" :hasSmall="rate.hasSmall" :content="rate.comment" :rater="rate.guestName" :date="rate.createTimeString"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />-->
+                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate">我来评价</router-link>
+            </div>
+        </div>
+        <!--三个tabs部分-->
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
             <ul class="wk-panel tabs-handle">
@@ -92,6 +108,8 @@
     import xfSources from "@/components/common/xfSources" ;
     import esfSources from "@/components/common/esfSources" ;
     import presses from "@/components/common/presses" ;
+    import rate from "@/components/common/rate" ;
+    import multiRates from "@/components/common/multiRates" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     import InfiniteLoading from "vue-infinite-loading" ;       
     export default {
@@ -109,18 +127,19 @@
                   pressPageIndex : 0 ,//房产资讯当前页数据起始条数
                   hasPress:false
               } ,
-              shopId:"",
+              shopId : "" ,
               pageConfs : {                  
                   pageSize : 10  //推荐信息每次加载多少条
               } ,              
               apiData : {
                   agentDetail : {} ,  //经纪人数据
+                  rates : [] ,  //评价数据
                   esfSources : [] , //二手房源
-                  xfSources : [] ,  //新房房源
+                  xfSources : [] ,  //新房房源                  
                   presses : []  //房产资讯
               },
-              agentId:"",
-              cityId:""             
+              agentId : "" ,
+              cityId : ""             
           }
       } ,
       methods : {
@@ -221,8 +240,8 @@
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
-          this.agentId = agentId;
-          this.cityId = this.$route.query.cityId;
+          this.agentId = agentId ;
+          this.cityId = this.$route.query.cityId ;
           //页面埋点功能
           this.$bigData({
             pageName : 2065 ,
@@ -260,12 +279,8 @@
               data : { "agentId" : agentId , "startIndex" : 0 , "pageSize" : 1 } ,              
               successCallback : res => {                      
                   let result = res.body.data.agentRecmdArticleDetailModels ;
-                  if(result && result.length > 0){
-                    this.pageStates.hasPress = true;
-                    
-                  }else{//此时认为数据加载完成了
-                    this.pageStates.hasPress = false;
-                  }
+                  if(result && result.length > 0) this.pageStates.hasPress = true ;
+                  else this.pageStates.hasPress = false ;
               }
           }) ; 
 
@@ -275,6 +290,8 @@
           xfSources ,
           esfSources ,
           presses ,
+          rate ,
+          multiRates ,
           InfiniteLoading
       }
     }

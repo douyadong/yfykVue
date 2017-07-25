@@ -1,0 +1,102 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> space -> rate -> write.less (写经纪人评价)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../../variables.less" ;
+ @import "../../mixins.less" ;
+ .write-rate {
+     background-color : #fff ;
+     height : 100% ;
+     padding : 0 1.5rem ;
+     .header {
+         line-height : 70px ;
+         text-align : center ;         
+         .head-portrait {
+             .border-radius(100px) ;
+             display : inline-block ;
+             height : 35px ;
+             margin-right : 1rem ;
+             overflow : hidden ;
+             width : 35px ;
+         }
+         h2 {
+             display : inline-block ;
+             font-size : 1.6rem ;
+             font-weight : 400 ;
+         }
+         .good {
+             background-color : #fbe69a ;
+             .border-radius(4px) ;
+             color : #ce8000 ;
+             display : inline-block ;
+             font-size : 1.1rem ;
+             line-height : 14px ;
+             padding : 3px ;
+         }
+     }
+     fieldset {
+         border : 0 ;
+         border-top : 1px solid @light-line-gray-color ;
+         legend {
+            margin : 0 auto ;
+            padding : 0 2rem ;
+         }
+     }
+     .stars {
+         line-height : 80px ;
+         text-align : center ;
+         .iconfont {
+             color : @line-gray-color ;
+             font-size : 3.0rem ;
+             margin : 0 4px ;
+         }
+         .on {
+             color : @star-color ;
+         }
+     }
+     .tags {
+         .clearfix() ;
+         span {
+             background-color : #f0f0f0 ;
+             .border-radius(3px) ;
+             display : block ;
+             float : left ;
+             line-height: 30px ;
+             margin-right : 2% ;
+             margin-bottom : 8px ;
+             text-align : center ;
+             width : 32% ;
+             &:nth-child(3) , &:nth-child(6) {
+                 margin-right : 0 ;
+             }
+             &.on {
+                 background-color : #e0f0ff ;
+             }
+         }
+     }
+     textarea {
+         background-color : #f0f0f0 ;
+         .border-radius(3px) ;
+         border : 0 ; 
+         font-size : 1.4rem ;
+         height : 158px ;
+         line-height : 20px ;
+         padding : 1rem ;
+         width : 100% ;
+     }
+     .switch {
+         color : @light-font-color ;
+         font-size : 1.4rem ;
+         line-height : 50px ;
+     }
+     .submit {
+         bottom : 0 ;
+         left : 0 ; 
+         padding : 1.5rem ;
+         position : absolute ;
+         width : 100% ;
+     }
+
+ }
+ 

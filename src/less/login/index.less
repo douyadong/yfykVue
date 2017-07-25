@@ -1,0 +1,82 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> login -> index.less (登录)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+.login-canvas {
+     background-image : url(../../assets/login-bg.jpg) ;
+     background-size : 100% 100% ;
+     height : 100% ;
+     padding-top : 6rem ;
+     position : relative ;
+     width : 100% ;
+     dl {
+         background-color : #fff ;
+         .border-radius(5px) ;
+         margin : 0 auto ;
+         padding : 1rem 2.5rem 1.5rem 2.5rem ;
+         width : 90% ;
+         dt {
+           font-size : 2.1rem ;
+           font-weight : 400 ;
+           line-height : 6rem ;
+           text-align : center ;
+         }
+         button {
+           margin : 2.5rem 0 1.5rem 0 ;
+         }
+         .item {
+           .clearfix() ;
+           border-bottom : 1px solid @light-line-gray-color ;
+           padding : .5rem 0 ;
+           input[type='text'] {
+             font-size : 1.6rem ;
+             line-height : 30px ;
+             width : 100% ;
+           }
+           .verify-code-input {             
+             margin-right : 65px ;
+           }
+           .verify-code-pict {
+             float : right ;
+             width : 65px ;
+             img {
+               height : 28px ;
+               width : 65px ;
+             }
+           }
+         }
+         .audio-verify {
+           text-align : center ;
+           a {
+             color : @primary-color ;
+           }
+         }
+     }
+     .tips {
+       background-color : rgba( 0 , 0 , 0 , .6) ;
+       .border-radius(5px) ;
+       color : #fff ;
+       font-size : 1.2rem ;
+       line-height : 18px ;
+       margin : 3rem auto ;
+       padding : .8rem 0 ;
+       text-align : center ;
+       width : 80% ;
+     }
+     .footer {
+       bottom : 0 ;
+       color : #fff ;
+       font-size : 1.2rem ;
+       left : 0 ;
+       line-height : 40px ;
+       position : absolute ;
+       text-align : center ;
+       width : 100% ;
+       a {
+         color : #fff ;
+       }
+     }
+}

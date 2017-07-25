@@ -15,7 +15,10 @@ import rentDetailHybrid from "@/components/rent/detail/hybrid" ;
 import rentDetailShare from "@/components/rent/detail/share" ;
 import spaceDetailHybrid from "@/components/space/detail/hybrid" ;
 import spaceDetailShare from "@/components/space/detail/share" ;
+import spaceRateWrite from "@/components/space/rate/write" ;
+import spaceRateList from "@/components/space/rate/list" ;
 import weixinAdd from "@/components/weixin/add" ;
+import login from "@/components/login/index" ;
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -72,9 +75,24 @@ export default new Router({
             component : spaceDetailShare
         } ,
         {
+            path : "/space/rate/write/:agentId" ,
+            name : "spaceRateWrite",
+            component : spaceRateWrite
+        } ,
+        {
+            path : "/space/rate/list/:agentId" ,
+            name : "spaceRateList",
+            component : spaceRateList
+        } ,
+        {
             path : "/weixin/add" ,
             name : "weixinAdd",
             component : weixinAdd
+        } ,
+        {
+            path : "/login" ,
+            name : "login",
+            component : login
         }
     ]
 }) ;
