@@ -6,16 +6,12 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import $ from 'jquery';
 import apiDataFilter from '@/libraries/apiDataFilter';
-
-let guid = localStorage.guid;
-if(!guid){
-	guid = localStorage.guid = NewGuid();
-}
+import utils from '@/libraries/utils';
 
 export default {
 	install(Vue,options){
 		let bigData = function(data){
-			data.cookieId = guid;
+			data.cookieId = utils.getCookieId();
 			apiDataFilter.request({
 				apiPath:"common.bigData",
 				data:data,
@@ -53,12 +49,3 @@ export default {
 		Vue.bigData = Vue.prototype.$bigData = bigData;
 	}
 };
-
-function S4() 
-{   
-   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);   
-}    
-function NewGuid() 
-{   
-   return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());   
-}
