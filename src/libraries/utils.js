@@ -23,12 +23,18 @@ let utils = {
         return localStorage.cookieId ;
     } ,
     //检查是否是登录状态，如果没有就跳转到登录页面并带上redirect参数
-    checkLoginStatus(redirectUrl) {
+    checkLoginStatus({ onCallback , offCallback }) {
         apiDataFilter.request({
             apiPath : "member.checkLoginStatus" ,
             data : { "uuid" : localStorage.yfyk2h5Token } ,              
-            successCallback : res => {                
-                window.location.href = (res.body.data.status.toString() === "1") ?  redirectUrl : "/login?redirect=" + encodeURIComponent(redirectUrl) ;
+            successCallback : res => {
+                let status = res.body.data.status.toString() ;
+                if( status === "1") {
+                    if( onCallback && typeof onCallback == "function") onCallback() ;
+                }
+                else {
+                    if( offCallback && typeof offCallback == "function") offCallback() ;
+                }                
             }
         }) ;
     }
