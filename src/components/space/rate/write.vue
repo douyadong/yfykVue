@@ -131,7 +131,11 @@
                     method:"post",
                     data:this.model,
                     successCallback:function(res){
-                        $.tips("评论成功！",3);
+                        $.tips("评论成功！",3,function(){
+                            self.$router.push({
+                                path:"/space/detail/share/"+self.$route.params.agentId
+                            });
+                        });                        
                     }
                 });
             }
