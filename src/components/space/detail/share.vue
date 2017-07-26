@@ -54,7 +54,7 @@
             <div class="panel-body lr-padding">
                 <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
                 <rate :score="rate.score" :content="rate.content" :rater="rate.customerName" :date="rate.createTimeStr"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />
-                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate-btn top-gap">我来评价</router-link>
+                <a class="wk-btn wk-btn-block rate-btn top-gap" @click="redirectToRate">我来评价</a>
             </div>
         </div>
         <!--三个tabs部分-->
@@ -111,7 +111,8 @@
     import rate from "@/components/common/rate" ;
     import multiRates from "@/components/common/multiRates" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
-    import InfiniteLoading from "vue-infinite-loading" ;       
+    import InfiniteLoading from "vue-infinite-loading" ; 
+    import utils from "@/libraries/utils" ;
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -178,7 +179,11 @@
               window.setTimeout(() => {
                   this.pageStates.activeTabContent = tabName ; 
               } , 100 ) ; 
-          } ,          
+          } ,
+          //跳转到评价页
+          redirectToRate : function() {
+              utils.checkLoginStatus("/space/rate/write/" + this.agentId) ;
+          } , 
           //无限加载二手房          
           infiniteLoadingEsf : function() {
               let agentId = this.$route.params.agentId ; 
