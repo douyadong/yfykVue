@@ -182,7 +182,16 @@
           } ,
           //跳转到评价页
           redirectToRate : function() {
-              utils.checkLoginStatus("/space/rate/write/" + this.agentId) ;
+              let href = "/space/rate/write/" + this.agentId ;
+              utils.checkLoginStatus({
+                  onCallback : () => {
+                      window.location.href = href
+                  } ,
+                  offCallback : () => {
+                      window.location.href = "/login?redirect=" + encodeURIComponent(href) ;
+                  }
+              }) ;
+              
           } , 
           //无限加载二手房          
           infiniteLoadingEsf : function() {
