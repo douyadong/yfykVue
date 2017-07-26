@@ -35,7 +35,8 @@ export default {
             "esf" : "yfyk/agentRecmdSecondHouseList.rest" ,
             "xf" : "yfyk/agentRecmdNewHouseList.rest" ,
             "press" : "yfyk/agentRecmdArticleList.rest" ,
-            "rate" : "yfyk/queryAgentCommentList.rest"
+            "rate" : "yfyk/queryAgentCommentList.rest",
+            "addComment":"commentAgent/addComment.rest"
         }
     }
 } ;
