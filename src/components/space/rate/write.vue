@@ -32,7 +32,8 @@
 <script>
     import $ from "jquery" ;
     import Switch from 'vue-switch/switch-2';
-    import apiDataFilter from '@/libraries/apiDataFilter';    
+    import apiDataFilter from '@/libraries/apiDataFilter';  
+    import utils from "@/libraries/utils" ;  
 
     export default {
         components:{
@@ -114,30 +115,36 @@
                 let $source = $(event.target) ;
                 $source.toggleClass("on") ; 
             },
-            commit(){
-                //todo::判断是否登录
-
-
+            commit(){                
                 let self = this;
-                let labels = [];
-                $('.tags span.on').each(function(index,ele){
-                    labels.push({labelId:$(ele).data('value')});                    
-                });
-                this.model.labels = labels;
-                this.model.score = this.pageStates.starCount;
-
-                apiDataFilter.request({
-                    apiPath:"space.addComment",
-                    method:"post",
-                    data:this.model,
-                    successCallback:function(res){
-                        $.tips("评论成功！",3,function(){
-                            self.$router.push({
-                                path:"/space/detail/share/"+self.$route.params.agentId
-                            });
-                        });                        
+                utils.checkLoginStatus({ onCallback:function(){
+                    let labels = [];
+                    $('.tags span.on').each(function(index,ele){
+                        labels.push({labelId:$(ele).data('value')});                    
+                    });
+                    self.model.labels = labels;
+                    self.model.score = self.pageStates.starCount;
+                    if(self.model.score == 0){
+                        $.tips("请给经纪人打分^_^",3);
+                        return;
                     }
-                });
+
+                    apiDataFilter.request({
+                        apiPath:"space.addComment",
+                        method:"post",
+                        data:self.model,
+                        successCallback:function(res){
+                            $.tips("评论成功！",3,function(){
+                                self.$router.push({
+                                    path:"/space/detail/share/"+self.$route.params.agentId
+                                });
+                            });                        
+                        }
+                    });
+                }, offCallback:function(){
+                    var href = "/space/rate/write/" + self.$route.params.agentId; 
+                    self.$router.push({path:"/login?redirect=" + encodeURIComponent(href) });
+                } })                     
             }
         }
     }
