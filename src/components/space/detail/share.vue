@@ -46,15 +46,15 @@
         <div class="wk-panel top-gap rates-panel">
             <div class="panel-header">
                 <h2>用户评价</h2>
-                <div class="count">
+                <router-link class="count" :to="'/space/rate/list/' + agentId">
                     <span>{{ apiData.agentDetail.agentCommentCount }}</span>
                     <i class="iconfont icon-arrowR"></i>
-                </div>
+                </router-link>
             </div>
             <div class="panel-body lr-padding">
                 <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
-                <!--<rate :shi="rate.shi" :hasSmall="rate.hasSmall" :content="rate.comment" :rater="rate.guestName" :date="rate.createTimeString"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />-->
-                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate">我来评价</router-link>
+                <rate :score="rate.score" :content="rate.content" :rater="rate.customerName" :date="rate.createTimeStr"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />
+                <router-link :to="'/space/rate/write/' + agentId" class="wk-btn wk-btn-block rate-btn top-gap">我来评价</router-link>
             </div>
         </div>
         <!--三个tabs部分-->
@@ -281,6 +281,16 @@
                   let result = res.body.data.agentRecmdArticleDetailModels ;
                   if(result && result.length > 0) this.pageStates.hasPress = true ;
                   else this.pageStates.hasPress = false ;
+              }
+          }) ; 
+
+          //查询经纪人评价数据
+          apiDataFilter.request({
+              apiPath : "space.rate" ,
+              data : { "agentId" : agentId , "startIndex" : 0 , "pageSize" : 2 } ,              
+              successCallback : res => {                      
+                  let result = res.body.data.simpleAgentCommentList ;
+                  if(result)  this.$data.apiData.rates = this.$data.apiData.rates.concat( res.body.data ) ;                   
               }
           }) ; 
 
