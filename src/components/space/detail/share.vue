@@ -184,11 +184,11 @@
           redirectToRate : function() {
               let href = "/space/rate/write/" + this.agentId ;
               utils.checkLoginStatus({
-                  onCallback : () => {
-                      window.location.href = href
+                  onCallback : () => {                     
+                      this.$router.push( { "path" : href } ) ;
                   } ,
-                  offCallback : () => {
-                      window.location.href = "/login?redirect=" + encodeURIComponent(href) ;
+                  offCallback : () => {                      
+                      this.$router.push( { "path" : "/login?redirect=" + encodeURIComponent(href) } ) ;
                   }
               }) ;
               
