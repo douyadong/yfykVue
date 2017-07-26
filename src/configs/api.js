@@ -19,7 +19,9 @@ export default {
         } ,
         "member" : {
             "pictVerifyCode" : "member/getVertifyCode.rest" ,
-            "identifyCode" : "member/checkAndGenerateIdentifyCode.rest"
+            "identifyCode" : "member/checkAndGenerateIdentifyCode.rest" ,
+            "login" : "member/loginFromMobilePhone.rest" ,
+            "checkLoginStatus" : "member/h5IsLogin.rest"
         } ,
         "learn" : {
             "detail" : "yfyk/quJingShareArticleDetail.rest",  
