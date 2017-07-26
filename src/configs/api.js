@@ -36,7 +36,7 @@ export default {
             "xf" : "yfyk/agentRecmdNewHouseList.rest" ,
             "press" : "yfyk/agentRecmdArticleList.rest" ,
             "rate" : "yfyk/queryAgentCommentList.rest",
-            "addComment":"commentAgent/addComment.rest"
+            "addComment":"commentAgent/h5AddComment.rest"
         }
     }
 } ;

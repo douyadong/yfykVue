@@ -32,7 +32,7 @@
 <script>
     import $ from "jquery" ;
     import Switch from 'vue-switch/switch-2';
-    import apiDataFilter from '@/libraries/apiDataFilter';
+    import apiDataFilter from '@/libraries/apiDataFilter';    
 
     export default {
         components:{
@@ -48,57 +48,9 @@
                     agentName:"",//经纪人名字
                     isWellAgent:0,//是否好经纪人
                     headRoundImgUrl:"",
-                    badTags : [
-                        {
-                            "label" : "不够热情" ,
-                            "value" : 0
-                        } ,
-                        {
-                            "label" : "仪表不整" ,
-                            "value" : 1
-                        } ,
-                        {
-                            "label" : "不够专业" ,
-                            "value" : 2
-                        } ,
-                        {
-                            "label" : "不够诚信" ,
-                            "value" : 3
-                        } ,
-                        {
-                            "label" : "房源不熟" ,
-                            "value" : 4
-                        } ,
-                        {
-                            "label" : "不给回音" ,
-                            "value" : 5
-                        }
+                    badTags : [                        
                     ] ,
-                    goodTags : [
-                        {
-                            "label" : "礼貌热情" ,
-                            "value" : 6
-                        } ,
-                        {
-                            "label" : "仪表整洁" ,
-                            "value" : 7
-                        } ,
-                        {
-                            "label" : "比较专业" ,
-                            "value" : 8
-                        } ,
-                        {
-                            "label" : "诚实可靠" ,
-                            "value" : 9
-                        } ,
-                        {
-                            "label" : "熟悉房源" ,
-                            "value" : 10
-                        } ,
-                        {
-                            "label" : "勤于练习" ,
-                            "value" : 11
-                        }
+                    goodTags : [                        
                     ]
                 },
                 currentLabels:[],
@@ -138,16 +90,24 @@
         methods : {
             checkStar(n) {
                 let $source = $(event.target) ;
-                if($source.hasClass('on') && n != this.pageStates.starCount){
-                    return;
-                }
-                
-                if(!$source.hasClass('on') && n != this.pageStates.starCount + 1){
-                    return;
+
+                if($source.hasClass('on')){//从当前到最后都灭掉
+                    $('.stars i:gt('+(n-1)+')').removeClass('icon-star2').removeClass('on').addClass('icon-star');
+
+                }else{//从头到当前都点亮
+                    $('.stars i:lt('+n+')').removeClass('icon-star').addClass('icon-star2').addClass('on');
                 }
 
-                $source.toggleClass("icon-star").toggleClass("icon-star2").toggleClass("on") ;
-                $source.parent().siblings(".tags").children("span").removeClass("on") ;
+                // if($source.hasClass('on') && n != this.pageStates.starCount){
+                //     return;
+                // }
+                
+                // if(!$source.hasClass('on') && n != this.pageStates.starCount + 1){
+                //     return;
+                // }
+
+                // $source.toggleClass("icon-star").toggleClass("icon-star2").toggleClass("on") ;
+                // $source.parent().siblings(".tags").children("span").removeClass("on") ;
                 this.pageStates.starCount = $source.parent().children(".on").length ;
             } ,
             checkTag(event) {
@@ -155,10 +115,13 @@
                 $source.toggleClass("on") ; 
             },
             commit(){
+                //todo::判断是否登录
+
+
                 let self = this;
                 let labels = [];
                 $('.tags span.on').each(function(index,ele){
-                    labels.push($(ele).data('value'));                    
+                    labels.push({labelId:$(ele).data('value')});                    
                 });
                 this.model.labels = labels;
                 this.model.score = this.pageStates.starCount;
@@ -168,7 +131,7 @@
                     method:"post",
                     data:this.model,
                     successCallback:function(res){
-
+                        $.tips("评论成功！",3);
                     }
                 });
             }
@@ -178,7 +141,7 @@
 
 <style lang="less" scoped>
     @import "../../../less/space/rate/write.less" ; 
-    .vue-switch.z-on:active::after{
+    .vue-switch.z-on::after{
         left:20px !important;
     }
     .vue-switch::after{
