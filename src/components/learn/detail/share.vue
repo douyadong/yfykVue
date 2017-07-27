@@ -12,7 +12,7 @@
        <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'iconfont':true,'icon-zan':true,'active':article.isUp}" @click="zan"></i> {{article.thumbUpNumStr}}</p>
       </div>
       <div class="wk-panel">
-          <spread/>
+          <spread :title="article.title" />
       </div>
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
