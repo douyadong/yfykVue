@@ -56,7 +56,7 @@
                 },
                 currentLabels:[],
                 model:{
-                    nameless: false,
+                    nameless: "0",
                     agentId:"",
                     score:0,
                     content:"",
@@ -126,6 +126,11 @@
                     self.model.score = self.pageStates.starCount;
                     if(self.model.score == 0){
                         $.tips("请给经纪人打分^_^",3);
+                        return;
+                    }
+
+                    if(!self.model.content){
+                        $.tips("请填写评价^_^",3);
                         return;
                     }
 
