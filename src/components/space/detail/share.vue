@@ -304,7 +304,7 @@
               data : { "agentId" : agentId , "startIndex" : 0 , "pageSize" : 2 } ,              
               successCallback : res => {                      
                   let result = res.body.data.simpleAgentCommentList ;
-                  if(result)  this.$data.apiData.rates = this.$data.apiData.rates.concat( res.body.data ) ;                   
+                  if(result)  this.$data.apiData.rates = this.$data.apiData.rates.concat( result ) ;                           
               }
           }) ; 
 
