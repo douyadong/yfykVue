@@ -56,7 +56,7 @@
                 },
                 currentLabels:[],
                 model:{
-                    nameless: false,
+                    nameless: "0",
                     agentId:"",
                     score:0,
                     content:"",
