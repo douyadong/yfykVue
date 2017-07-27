@@ -8,10 +8,10 @@ export default {
     "timeout": 60 * 1000 ,  //超时请求时间，单位：毫秒
     "successStatusCode" : 1 ,    
     "prefix" : {
-        "dev" : "https://10.0.18.78:8107" ,
-        "test" : "https://10.0.18.79:8107" ,
-        "sim" : "https://m.sim.wkzf" ,
-        "prod" : "https://m.wkzf.com"
+        "dev" : "//10.0.18.78:8107" ,
+        "test" : "//m.test.wkzf" ,
+        "sim" : "//m.sim.wkzf" ,
+        "prod" : "//m.wkzf.com"
     } ,
     "suffix": { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
         "common" : {
