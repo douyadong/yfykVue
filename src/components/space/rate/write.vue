@@ -129,6 +129,11 @@
                         return;
                     }
 
+                    if(!self.model.content){
+                        $.tips("请填写评价^_^",3);
+                        return;
+                    }
+
                     apiDataFilter.request({
                         apiPath:"space.addComment",
                         method:"post",
