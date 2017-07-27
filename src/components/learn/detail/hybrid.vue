@@ -1,25 +1,24 @@
 <template>
     <div class="article">
-      <p class="not-verified" v-if="agent.agentVerifiedStatus != 1">
-        请完善实名认证，分享文章将可带有您的个人名片及联系方式
-      </p>
-      <div class="wk-panel">
-       <h1 class="article-title">{{article.title}}</h1>
-       <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
-       <div class="article-content" v-html="article.content">        
-       </div>
-      </div>
-       <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
-          <comment class="panel" :items="comments"></comment>
-       </div>  
-
+        <p class="not-verified" v-if="agent.agentVerifiedStatus != 1">
+          请完善实名认证，分享文章将可带有您的个人名片及联系方式
+        </p>
+        <div class="wk-panel">
+            <h1 class="article-title">{{article.title}}</h1>
+            <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
+            <div class="article-content" v-html="article.content"></div>
+        </div>
+        <div class="wk-panel">
+            <div class="panel-body lr-padding tb-padding"><img  src="../../../assets/spread.png" class="img-responsive"></div>
+        </div>
+        <div class="wk-panel article-comments">
+            <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
+            <comment class="panel" :items="comments"></comment>
+        </div>
        <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
-         <span slot="no-more">
-          
-        </span>
+            <span slot="no-more"></span>
        </infiniteLoading>    
-    </div>       
+    </div>
 </template>
 
 <script> 
