@@ -37,7 +37,7 @@
                    $.modal({
                         "id" : "spreadErrorDialog" ,
                         "title" : "提示信息" ,
-                        "content" : "<p>长按复制下面的链接后打开有房有客，可自动进入该文章，分享后即可生成您个人品牌形象的文章~</p><p style=\"word-wrap:break-word\">" + window.location.href + "</p>" ,
+                        "content" : "<p>长按复制下面的链接后打开有房有客，可自动进入该文章，分享后即可生成您个人品牌形象的文章~</p><br><p style=\"word-wrap:break-word\">" + JSON.stringify(clipboardContent) + "</p>" ,
                         "buttons" : [
                             { "text" : "确定" , "clickInterface" : function(){ $.modal.close("spreadErrorDialog") ; } }                             
                         ]
