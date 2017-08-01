@@ -19,12 +19,12 @@
             </div>            
         </transition>
         <transition  name="slide-fade">
-            <div class="tags" v-if="pageStates.starCount > 0 && pageStates.starCount < 4">            
+            <div class="tags" v-if="pageStates.starCount > 0 && pageStates.starCount < 5">            
                 <span v-for="( tag , index ) in apiData.badTags" :data-value="tag.id" @click="checkTag">{{ tag.label }}</span>            
             </div>
         </transition>
         <transition  name="slide-fade">
-            <div class="tags" v-if="pageStates.starCount > 3 && pageStates.starCount < 6">            
+            <div class="tags" v-if="pageStates.starCount > 4 && pageStates.starCount < 6">            
                 <span v-for="( tag , index ) in apiData.goodTags" :data-value="tag.id"  @click="checkTag">{{ tag.label }}</span>
             </div>
         </transition>                
