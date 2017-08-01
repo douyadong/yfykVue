@@ -18,6 +18,15 @@
             <div class="tags" v-if="pageStates.starCount > 3 && pageStates.starCount < 6">            
                 <span v-for="( tag , index ) in apiData.goodTags" :data-value="tag.id"  @click="checkTag">{{ tag.label }}</span>
             </div>
+        </transition>        
+        <transition>
+            <div class="desc">
+                <span v-if="pageStates.starCount == 1">非常不满意，指出不足</span>
+                <span v-if="pageStates.starCount == 2">不满意，指出不足</span>
+                <span v-if="pageStates.starCount == 3">服务一般，指出不足</span>
+                <span v-if="pageStates.starCount == 4">比较满意，指出不足</span>
+                <span v-if="pageStates.starCount == 5">非常满意，夸夸经纪人吧</span>
+            </div>            
         </transition>
         <textarea placeholder="经纪人的服务您还满意吗？您的评价将督促我们不断进步!" v-model="model.content"></textarea>
         <div class="switch wrap">
@@ -78,10 +87,10 @@
                         agentName:res.body.data.agentDetail.agentName,
                         isWellAgent:res.body.data.agentDetail.isWellAgent,
                         headRoundImgUrl:res.body.data.agentDetail.headRoundImgUrl,
-                        badTags:res.body.data.agentDetail.tags && res.body.data.agentDetail.tags.filter(function(tag){
+                        badTags:res.body.data.agentDetail.allTags && res.body.data.agentDetail.allTags.filter(function(tag){
                             return tag.type ==2
                         }) || [],
-                        goodTags:res.body.data.agentDetail.tags && res.body.data.agentDetail.tags.filter(function(tag){
+                        goodTags:res.body.data.agentDetail.allTags && res.body.data.agentDetail.allTags.filter(function(tag){
                             return tag.type ==1
                         }) || []
                     };
@@ -156,15 +165,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../less/space/rate/write.less" ; 
-    .vue-switch.z-on::after{
-        left:20px !important;
-    }
-    .vue-switch::after{
-        width:25px !important;
-        height:25px !important;
-    }
-    .vue-switch{
-        height:30px !important;
-    }
+    @import "../../../less/space/rate/write.less" ;     
 </style>
