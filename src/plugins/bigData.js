@@ -10,18 +10,80 @@ import utils from '@/libraries/utils';
 
 export default {
 	install(Vue,options){
+
+		let ls = {};
+		let getLocalStorage = function(){
+			return window.localStorage || ls;
+		};
+
+		//从localStorage中读取未成功的大数据埋点
+		let getBigData = function(){
+			if(getLocalStorage().bigData){
+				return JSON.parse(getLocalStorage().bigData);
+			}else{
+				return [];
+			}
+		};
+
+		//设置未成功的大数据埋点到localStorage
+		let setBigData = function(data){
+			getLocalStorage().bigData = JSON.stringify(data);
+		};
+
+		//插入一条埋点数据到localStorage
+		let insertBigData = function(item){
+			let items = getBigData()||[];
+			items.push(item);
+			setBigData(items);
+		}
+
+		//发送埋点请求
+		let send = function(item){
+			//item.cookieId = utils.getCookieId();
+			//console.log("send...",item);
+			apiDataFilter.request({
+				apiPath:"common.bigData",
+				data:item,
+				successCallback:function(){
+					traverse();
+				},
+				errorCallback:function(res,res2){
+					//失败时插入localStorage
+					/*if(!res2){
+						insertBigData(item);
+					}else{
+						traverse();
+					}*/
+					insertBigData(item);
+				}
+			});
+		};
+
+		//从localStorage中读取一个bigData发送出去
+		let traverse = function(){
+			let items = getBigData();
+			if(items && items.length > 0){
+				let item = items.splice(0,1)[0];
+				setBigData(items);
+				send(item);
+			}
+		};
+
 		let bigData = function(data){
 			data.cookieId = utils.getCookieId();
-			apiDataFilter.request({
+			send(data);
+			//insertBigData(data);
+			//traverse();
+			/*apiDataFilter.request({
 				apiPath:"common.bigData",
 				data:data,
 				successCallback:function(){
-					console.log(data,"埋点成功！");
+					//console.log(data,"埋点成功！");					
 				},
 				errorCallback:function(){
 					
 				}
-			});
+			});*/
 		};
 
 		window.document.body.addEventListener("click",function(event){
