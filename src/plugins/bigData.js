@@ -30,6 +30,18 @@ export default {
 			getLocalStorage().bigData = JSON.stringify(data);
 		};
 
+		let getTotal = function(){
+			if(getLocalStorage().bigDataTotal){
+				return parseInt(getLocalStorage().bigDataTotal);
+			}else{
+				return 1;
+			}
+		}
+
+		let setTotal = function(total){
+			getLocalStorage().bigDataTotal = total;
+		}
+
 		//插入一条埋点数据到localStorage
 		let insertBigData = function(item){
 			let items = getBigData()||[];
@@ -41,6 +53,8 @@ export default {
 		let send = function(item){
 			//item.cookieId = utils.getCookieId();
 			//console.log("send...",item);
+			let total = getTotal();
+			item.pCount = total - 1;
 			apiDataFilter.request({
 				apiPath:"common.bigData",
 				data:item,
@@ -71,6 +85,9 @@ export default {
 
 		let bigData = function(data){
 			data.cookieId = utils.getCookieId();
+			let total = getTotal();
+			data.pNum = total;
+			setTotal(total+1);
 			send(data);
 			//insertBigData(data);
 			//traverse();
