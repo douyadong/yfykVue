@@ -16,10 +16,10 @@
                 
             }
         } , 
-        props : [ "title" , "articleId" ] ,
+        props : [ "title" ] ,
         methods : {
             generate() {
-                let clipboardContent = { "url" : encodeURIComponent(window.location.href.replace( "share" , "hybrid" )) , "title" : this.title , "articleId" : this.articleId } ;
+                let clipboardContent = { "url" : encodeURIComponent(window.location.href.replace( "share" , "hybrid" )) , "title" : this.title } ;
                 //先设置按钮的data-clipboard-text属性
                 $(".generate").attr("data-clipboard-text" , JSON.stringify(clipboardContent)) ;     
                 let clipboard = new Clipboard(".generate") ;
