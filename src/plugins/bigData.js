@@ -54,7 +54,7 @@ export default {
 			//item.cookieId = utils.getCookieId();
 			//console.log("send...",item);
 			let total = getTotal();
-			item.pCount = total - 1;
+			//item.pCount = total - 1;
 			apiDataFilter.request({
 				apiPath:"common.bigData",
 				data:item,
@@ -86,7 +86,7 @@ export default {
 		let bigData = function(data){
 			data.cookieId = utils.getCookieId();
 			let total = getTotal();
-			//data.pNum = total;
+			data.pNum = total;
 			setTotal(total+1);
 			send(data);
 			//insertBigData(data);
