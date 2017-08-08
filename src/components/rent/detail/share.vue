@@ -117,7 +117,7 @@
       methods : {
           //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-              let eventParam = { agent_id : this.$route.params.agentId , house_id : this.apiData.simpleHouseRentDetailInfo.houseId } ;
+              let eventParam = { house_id : this.apiData.simpleHouseRentDetailInfo.houseId } ;
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
               }              
