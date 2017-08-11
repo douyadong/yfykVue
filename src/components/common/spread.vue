@@ -1,6 +1,6 @@
 <template>
     <div class="spread">
-        <img  src="../../assets/spread.png" class="img-responsive">
+        <!--<img  src="../../assets/spread.png" class="img-responsive">-->
         <a href="javascript:;" class="generate" @click="generate" data-clipboard-text="">生成我的个人品牌形象文章</a>
     </div>
 </template>
