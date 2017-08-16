@@ -20,18 +20,22 @@
             <a href="javascript:;" class="more" @click="spreadOptional" v-show=" ! pageStates.optionsVisibility">查看更多</a>
             <transition  name="slide-fade">         
                 <div class="optional" v-show="pageStates.optionsVisibility">
+                  <template v-if="apiData.agentDetail.agentBizTown">
                     <dl>
                         <dt>熟悉商圈</dt>
                         <dd>{{ apiData.agentDetail.agentBizTown }}</dd>
                     </dl>
                     <hr>
+                    </template>
+                    <template v-if="apiData.agentDetail.agentIntroduction">
                     <dl>
                         <dt>自我介绍</dt>
                         <dd class="content" ref="introduce" :class="{ ellipsis : pageStates.introduceExtendable }">{{ apiData.agentDetail.agentIntroduction }}</dd>
                         <dd class="switch" v-show="pageStates.introduceExtendable" @click="spreadIntroduceContent"><i class="iconfont icon-arrowDSS"></i></dd>
                     </dl>
                     <hr>
-                    <dl>
+                    </template>
+                    <dl v-if="apiData.agentDetail.agentStory">
                         <dt>成交故事</dt>
                         <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">{{ apiData.agentDetail.agentStory }}</dd>
                         <dd class="switch" v-show="pageStates.storyExtendable" @click="spreadStoryContent"><i class="iconfont icon-arrowDSS"></i></dd>
@@ -46,10 +50,11 @@
         <div class="wk-panel top-gap rates-panel">
             <div class="panel-header">
                 <h2>用户评价</h2>
-                <router-link class="count" :to="'/space/rate/list/' + agentId">
+                <router-link class="count" :to="'/space/rate/list/' + agentId" v-if="apiData.agentDetail.agentCommentCount>0">
                     <span>{{ apiData.agentDetail.agentCommentCount }}</span>
                     <i class="iconfont icon-arrowR"></i>
                 </router-link>
+                <span class="count" v-else>暂无</span>
             </div>
             <div class="panel-body lr-padding">
                 <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
@@ -126,7 +131,9 @@
                   esfPageIndex : 0 , // 二手房源当前页数据起始条数
                   xfPageIndex : 0 ,  //新房房源当前页数据起始条数
                   pressPageIndex : 0 ,//房产资讯当前页数据起始条数
-                  hasPress:false
+                  hasPress:false,
+                  hasEsf:false,
+                  hasXf:false
               } ,
               shopId : "" ,
               pageConfs : {                  
@@ -297,6 +304,27 @@
                   else this.pageStates.hasPress = false ;
               }
           }) ; 
+
+          //查询是否有新房数据，决定是否显示新房tab
+          apiDataFilter.request({
+              apiPath : "space.xf" ,
+              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 1 } ,              
+              successCallback : res => {                      
+                  let result = res.body.data.newHouseSummaryModels ;
+                  this.pageStates.hasXf = !!(result && result.length>0);  
+              }              
+          }) ;  
+
+          //查询是否有二手房数据，决定是否显示二手房tab
+          apiDataFilter.request({
+              apiPath : "space.esf" ,
+              data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 1 } ,              
+              successCallback : res => {
+                  let result = res.body.data.secondHouseSummaryModels ; 
+                  this.pageStates.hasEsf = !!(result && result.length>0);
+              }
+          }) ;
+
 
           //查询经纪人评价数据
           apiDataFilter.request({

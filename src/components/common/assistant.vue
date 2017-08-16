@@ -1,5 +1,12 @@
 <template>
     <ul class="assistant" :class="{ 'no-weixin' : agent.agentWChatId === null }">
+        <li class="bubble">
+            <div class="content">
+                点击查看经纪人详情
+            </div>
+            <div class="triangle">
+            </div>
+        </li>
         <li class="portrait">
             <router-link :to="'/space/detail/share/' + agent.agentId+'?cityId='+cityId" :data-bigdata="portraitBigDataParams">
                 <dl>
@@ -30,6 +37,13 @@
     import Clipboard from "clipboard";
     export default {
         name : "assistant" ,
+        mounted(){
+            $('body').one('touchstart',function(){
+                $('.bubble').fadeOut();
+            }).one('tap',function(){
+                $('.bubble').fadeOut();
+            });
+        },
         data () {
             return {
                 

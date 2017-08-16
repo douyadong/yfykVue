@@ -5,11 +5,17 @@
         </p>
         <div class="wk-panel">
             <h1 class="article-title">{{article.title}}</h1>
-            <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
+            <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span></h2>
             <div class="article-content" v-html="article.content"></div>
-        </div>
-        <div class="wk-panel">
-            <div class="panel-body lr-padding tb-padding"><img  src="../../../assets/spread.png" class="img-responsive"></div>
+            <div class="panel-body lr-padding tb-padding"><img  src="../../../assets/spread.png" class="img-responsive"></div>   
+            <div class="article-statistics">
+              <span class="share-num" v-if="article.shareCountStr">
+                <span class="num">{{article.shareCountStr}}</span> <span>分享</span>&nbsp;&nbsp;
+              </span>
+              <span class="visit-num">
+                <span class="num">{{article.viewNumStr}}</span> <span>浏览</span>
+              </span>
+            </div>         
         </div>
         <div class="wk-panel article-comments">
             <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
@@ -56,10 +62,6 @@
           }
       } ,
       mounted(){
-        //this.setArticleFont();
-
-        //this.convertVideo();
-
         // 注册一个全局函数，解决android webview 中音频播放，app切换出去，音频仍在播放的问题
         window.pauseAudio = function () {
         $('audio').each(function (i, el) {
@@ -69,28 +71,7 @@
           }
         },
       created() {          
-          this.fetchArticle();
-          /*
-          this.$wechatShare({
-            "title" : "标题" ,
-            "timelineTitle" : "标题2" ,
-            "content" : "内容" ,
-            "imgUrl" : "" ,
-            "environment" : "prod",
-            "success":function(){
-              console.log('success');
-            },
-            "fail":function(){
-              console.log('success');
-            },
-            "cancel":function(){
-              console.log('success');
-            },
-            "complete":function(){
-              console.log('success');
-            }
-
-          });*/
+          this.fetchArticle();          
 
           //埋点
           this.$bigData({
@@ -159,11 +140,11 @@
             $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
           });
         },
-        onInfinite(){
-          // if(this.pageInfo.total != null && this.pageInfo.pageIndex>=this.pageInfo.total){
-          //   this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-          //   return;
-          // }          
+        removeBlankAttr:function(){
+          $('.article-content a[target=_blank]').removeAttr('target');
+          console.log('hahahahh');
+        },
+        onInfinite(){         
           this.fetchComments();          
         },
 
@@ -186,6 +167,22 @@
                   articleSource:data.data.articleDetailModel.articleSource,
                   publishTime:data.data.articleDetailModel.publishTime,
                   viewNumStr:data.data.articleDetailModel.viewNumStr,
+                  shareCountStr: (function(shareCount){
+                    if(shareCount<10000){
+                      return shareCount;
+                    }else{
+                      let tenThousand = parseInt(shareCount/10000);
+                      let thousand = parseInt(shareCount/1000%10);
+                      let result = "万+";
+                      if(thousand>0){
+                        result = tenThousand + "." + thousand + result;
+                      }else{
+                        result = tenThousand + result;
+                      }
+
+                      return result;
+                    }
+                  })(data.data.articleDetailModel.shareCount),
                   content:data.data.articleDetailModel.content,
                   coverUrl:data.data.articleDetailModel.coverUrl
                 };
@@ -194,6 +191,7 @@
                 Vue.nextTick(()=>{
                   self.setArticleFont();              
                   self.convertVideo();
+                  self.removeBlankAttr();
                 })
               }
           });

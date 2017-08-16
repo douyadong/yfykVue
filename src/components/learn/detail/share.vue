@@ -5,11 +5,16 @@
       </div>
       <div class="wk-panel" style="padding-bottom:1.5rem">
        <h1 class="article-title">{{article.title}}</h1>
-       <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span><span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>次浏览</span></span></h2>
+       <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span></h2>
        <div class="article-content" v-html="article.content">
       
        </div>
-       <p style="font-size:1.4rem;margin-left:1.5rem;"><i :class="{'iconfont':true,'icon-zan':true,'active':article.isUp}" @click="zan"></i> {{article.thumbUpNumStr}}</p>
+       <p style="font-size:1.4rem;margin-left:1.5rem;">
+        <span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>浏览</span></span>
+        <span>
+          &nbsp;&nbsp;<i :class="{'iconfont':true,'icon-zan':true,'active':article.isUp}" @click="zan"></i> <span>{{article.thumbUpNumStr}}</span>
+        </span>
+        </p>
       </div>
       <div class="wk-panel">
           <spread :title="article.title" :articleId="articleId" />
@@ -17,7 +22,7 @@
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
-            <input type="text" v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0"> 
+            <input type="text" placeholder="写下你的评论..." v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0;padding-left:.4rem"> 
             <div class="operate">
               <button class="btn" @click="cancel">取消</button><button class="btn confirm" @click="commit" :disabled="commentText.length===0||commiting">评论</button>
             </div>
@@ -205,6 +210,10 @@
             $(ele).css('font-size',$(ele)[0].style.fontSize.replace('px','')/10  + 'rem');          
           });
         },
+        removeBlankAttr:function(){
+          $('.article-content a[target=_blank]').removeAttr('target');
+          console.log('hahahahh');
+        },
         onInfinite(){         
           this.fetchComments();        
         },
@@ -258,13 +267,14 @@
         //处理视频
         self.convertVideo();*/
 
-        Vue.nextTick(()=>{
-          self.setArticleFont();
-          self.convertLink();
-          self.convertVideo();
-        })
+                Vue.nextTick(()=>{
+                  self.setArticleFont();
+                  self.convertLink();
+                  self.convertVideo();
+                  self.removeBlankAttr();
+                })
               }
-          });
+            });
         },
         fetchComments(){//获取评论数据
             let self = this;                    
@@ -366,5 +376,13 @@
 
 input{
   border: 1px solid #ccc;
+}
+
+// .bubble{
+//   display:block !important;
+// }
+
+#app .assistant .bubble{
+  display: block;
 }
 </style>
