@@ -382,7 +382,7 @@ input{
 //   display:block !important;
 // }
 
-#app .assistant .bubble{
+#app .article .assistant .bubble{
   display: block;
 }
 </style>
