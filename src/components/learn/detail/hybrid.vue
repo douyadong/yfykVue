@@ -7,7 +7,7 @@
             <h1 class="article-title">{{article.title}}</h1>
             <h2 class="article-description"><span class="source">{{article.articleSource}}</span><span class="date">{{article.publishTime}}</span></h2>
             <div class="article-content" v-html="article.content"></div>
-            <div class="panel-body lr-padding tb-padding"><img  src="../../../assets/spread.png" class="img-responsive"></div>   
+            <!-- <div class="panel-body lr-padding tb-padding"><img  src="../../../assets/spread.png" class="img-responsive"></div>   --> 
             <div class="article-statistics">
               <span class="share-num" v-if="article.shareCountStr">
                 <span class="num">{{article.shareCountStr}}</span> <span>分享</span>&nbsp;&nbsp;
