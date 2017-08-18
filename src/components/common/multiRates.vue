@@ -1,5 +1,5 @@
 <template>
-    <dl class="multi-rates">
+    <dl class="multi-rates" v-if="score">
         <dt>
             <span>综合得分：</span>
             <i class="iconfont icon-star-10" v-for="n in shi"></i>

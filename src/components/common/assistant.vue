@@ -1,6 +1,6 @@
 <template>
     <ul class="assistant" :class="{ 'no-weixin' : agent.agentWChatId === null }">
-        <li class="bubble">
+        <li :class="{bubble:true,hidden:bubbleHidden}">
             <div class="content">
                 点击查看经纪人详情
             </div>
@@ -10,7 +10,7 @@
         <li class="portrait">
             <router-link :to="'/space/detail/share/' + agent.agentId+'?cityId='+cityId" :data-bigdata="portraitBigDataParams">
                 <dl>
-                    <dt><img :src="agent.agentHeadImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
+                    <dt><img :src="agent.headRoundImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
                     <dd class="agent-name">{{ agent.agentName }}</dd>
                     <dd class="agent-tel">{{ agent.agentBelongToCompanyName }}</dd>
                 </dl>
@@ -45,11 +45,13 @@
             });
         },
         data () {
+            let hidden = !!localStorage.bubbleHidden;
+            localStorage.bubbleHidden = true;            
             return {
-                
+                bubbleHidden: hidden
             }
         } ,             
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId" ],
+        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId" ],        
         methods:{
             showWX(){
                 let self = this;

@@ -2,7 +2,7 @@
 	<router-link class="business-card" :to="'/space/detail/share/'+agent.agentId+'?cityId='+cityId" v-if="agent.agentVerifiedStatus==1">		
 		<div>			
 			<div class="photo">
-				<img :src="agent.agentHeadImgUrl">
+				<img :src="agent.headRoundImgUrl">
 			</div>
 			<div class="detail">
 				<p class="name"><span>{{agent.agentName}}</span> &nbsp;<span class="icon-good" v-if="agent.isWellAgent==1">好</span><span href="" class="more-house">查看更多好房 &gt;</span></p>

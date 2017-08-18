@@ -3,7 +3,7 @@
         <assistant :cityId="cityId" :agent="apiData.agentDetail" :callBigDataParams="getUvParamsString({ eventName : 2065008 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065009 })" />
         <div class="wk-panel card">
             <dl class="outline">
-                <dt><img :src="apiData.agentDetail.agentHeadImgUrl" class="img-responsive"></dt>
+                <dt><img :src="apiData.agentDetail.headRoundImgUrl" class="img-responsive"></dt>
                 <dd>
                     <div class="agent-name">
                         <span class="name">{{ apiData.agentDetail.agentName }}</span>
@@ -66,8 +66,8 @@
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
             <ul class="wk-panel tabs-handle">
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">推荐二手房</a></li>
-                <li><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">推荐新房</a></li>
+                <li v-if="pageStates.hasEsf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">推荐二手房</a></li>
+                <li v-if="pageStates.hasXf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">推荐新房</a></li>
                 <li v-if="pageStates.hasPress"><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
             </ul>
             <!--tabs-frame部分-->            
