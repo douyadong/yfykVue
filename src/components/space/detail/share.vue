@@ -124,8 +124,8 @@
           return {
               pageStates : {
                   optionsVisibility : false ,  //熟悉商圈，自我介绍，成交故事这块可选显示区域的显示状态
-                  activeTab : "esf" ,  //停留在哪个tab上 ,
-                  activeTabContent : "esf" ,  //tab内容停留在哪个上
+                  activeTab : "" ,  //停留在哪个tab上 ,
+                  activeTabContent : "" ,  //tab内容停留在哪个上
                   introduceExtendable : false ,  //自我介绍文本内容是否可展开
                   storyExtendable : false ,  //成交故事内容是否可展开 ,
                   esfPageIndex : 0 , // 二手房源当前页数据起始条数
@@ -147,7 +147,8 @@
                   presses : []  //房产资讯
               },
               agentId : "" ,
-              cityId : ""             
+              cityId : "" ,
+              readyTabCount:0            
           }
       } ,
       methods : {
@@ -256,8 +257,25 @@
                       }
                   }
               }) ;              
+          },
+          calcTab(){
+            this.readyTabCount++;
+            if(this.readyTabCount == 3){
+              console.log('ready 333');              
+              if(this.pageStates.hasEsf){
+                this.pageStates.activeTab = this.pageStates.activeTabContent = "esf";
+                return;
+              }
+              if(this.pageStates.hasXf){
+                this.pageStates.activeTab = this.pageStates.activeTabContent = "xf";
+                return;
+              }
+              if(this.pageStates.hasPress){
+                this.pageStates.activeTab = this.pageStates.activeTabContent = "press";
+                return;
+              }
+            }
           }
-         
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
@@ -302,6 +320,8 @@
                   let result = res.body.data.agentRecmdArticleDetailModels ;
                   if(result && result.length > 0) this.pageStates.hasPress = true ;
                   else this.pageStates.hasPress = false ;
+
+                  this.calcTab();
               }
           }) ; 
 
@@ -312,6 +332,8 @@
               successCallback : res => {                      
                   let result = res.body.data.newHouseSummaryModels ;
                   this.pageStates.hasXf = !!(result && result.length>0);  
+
+                  this.calcTab();
               }              
           }) ;  
 
@@ -322,6 +344,8 @@
               successCallback : res => {
                   let result = res.body.data.secondHouseSummaryModels ; 
                   this.pageStates.hasEsf = !!(result && result.length>0);
+
+                  this.calcTab();
               }
           }) ;
 
