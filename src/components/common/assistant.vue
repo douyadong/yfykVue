@@ -45,13 +45,17 @@
             });
         },
         data () {
-            let hidden = !!localStorage.bubbleHidden;
-            localStorage.bubbleHidden = true;            
+            let  hidden = true;
+            if(this.showBubble){
+                hidden = !!localStorage.bubbleHidden;
+                localStorage.bubbleHidden = true; 
+            }
+                       
             return {
                 bubbleHidden: hidden
             }
         } ,             
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId" ],        
+        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId","showBubble" ],        
         methods:{
             showWX(){
                 let self = this;
