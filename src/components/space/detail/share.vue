@@ -59,7 +59,7 @@
             <div class="panel-body lr-padding">
                 <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
                 <rate :score="rate.score" :content="rate.content" :rater="rate.customerName" :date="rate.createTimeStr"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />
-                <a class="wk-btn wk-btn-block rate-btn top-gap" @click="redirectToRate">我来评价</a>
+                <a class="wk-btn wk-btn-block rate-btn top-gap" :data-bigdata="getUvParamsString({eventName:'2065004'})" @click="redirectToRate">我来评价</a>
             </div>
         </div>
         <!--三个tabs部分-->
