@@ -50,7 +50,7 @@
         <div class="wk-panel top-gap rates-panel">
             <div class="panel-header">
                 <h2>用户评价</h2>
-                <router-link class="count" :to="'/space/rate/list/' + agentId" v-if="apiData.agentDetail.agentCommentCount>0">
+                <router-link :data-bigdata="getUvParamsString({eventName:'2065012'})" class="count" :to="'/space/rate/list/' + agentId" v-if="apiData.agentDetail.agentCommentCount>0">
                     <span>{{ apiData.agentDetail.agentCommentCount }}</span>
                     <i class="iconfont icon-arrowR"></i>
                 </router-link>
@@ -104,6 +104,10 @@
             </div>
             <!--tabs内容结束-->         
         </div>
+
+        <!-- <div :class="{overlay:true,hidden:previewImgHidden}">
+          <img :src="previewImgUrl">
+        </div> -->
     </div>    
 </template>
 
@@ -148,7 +152,9 @@
               },
               agentId : "" ,
               cityId : "" ,
-              readyTabCount:0            
+              readyTabCount:0,
+              // previewImgUrl:"",
+              // previewImgHidden:true            
           }
       } ,
       methods : {
@@ -275,7 +281,12 @@
                 return;
               }
             }
-          }
+          },          
+          // previewImg(e){
+          //   var url = e.target.src;            
+          //   this.previewImgUrl = url;
+          //   this.previewImgHidden = false;
+          // }
       } ,
       created() {            
           let agentId = this.$route.params.agentId ; 
@@ -375,4 +386,22 @@
 
 <style lang="less" scoped>
     @import "../../../../src/less/space/detail.less" ;
+    // .overlay{
+    //   position: fixed;
+    //   background-color: rgba(0,0,0,.4);
+    //   left:0;
+    //   right:0;
+    //   top:0;
+    //   bottom:0;
+    //   z-index:10000;
+    //   img{
+    //     width:80%;
+    //     height:auto;
+    //     display:block;
+    //     margin:auto auto;
+    //   }
+    //   &.hidden{
+    //     display:none;
+    //   }      
+    // }
 </style>
