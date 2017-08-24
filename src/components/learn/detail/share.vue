@@ -199,9 +199,9 @@
               $item.after($video)
               $item.remove()
             }
-            $('.weixinAudio').wechatAudio({
-              autoplay: false
-            });
+            // $('.weixinAudio').wechatAudio({
+            //   autoplay: false
+            // });
           })
         },
         setArticleFont:function(){

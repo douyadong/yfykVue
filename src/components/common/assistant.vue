@@ -74,8 +74,7 @@
                     "cancelInterface" : function() { 
                         if(self.copyWechatBigDataParams){
                             let data = JSON.parse(decodeURIComponent(self.copyWechatBigDataParams));
-                            data.type = 1;
-                            console.log(data);
+                            data.type = 2;                            
                             self.$bigData(data);
                         }
                         
