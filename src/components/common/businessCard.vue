@@ -5,7 +5,7 @@
 				<img :src="agent.headRoundImgUrl">
 			</div>
 			<div class="detail">
-				<p class="name"><span>{{agent.agentName}}</span> &nbsp;<span class="icon-good" v-if="agent.isWellAgent==1">好</span><span href="" class="more-house">查看更多好房 &gt;</span></p>
+				<p class="name"><span>{{agent.agentName}}</span> &nbsp;<span class="icon-good" v-if="agent.isWellAgent==1">好</span><span href="" class="more-house">查看更多好房 <i class="iconfont icon-arrowR"></i></span></p>
 				<p class="company-name">{{agent.agentBelongToCompanyName}} | 悟空找房</p>				
 			</div>			
 			<div style="clear:both"></div>
