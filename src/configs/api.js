@@ -11,7 +11,7 @@ export default {
         "dev" : "//10.0.18.78:8107" ,
         "test" : "//m.test.wkzf" ,
         "sim" : "//m.sim.wkzf" ,
-        "prod" : "//m.wkzf.com"
+        "prod" : "https://m.wkzf.com"
     } ,
     "suffix": { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
         "common" : {
@@ -39,6 +39,9 @@ export default {
             "press" : "yfyk/agentRecmdArticleList.rest" ,
             "rate" : "yfyk/queryAgentCommentList.rest",
             "addComment":"commentAgent/h5AddComment.rest"
+        },
+        "esf":{
+           "detail": "yfyk/getOldHouseDetailInfo.rest"
         }
     }
 } ;

@@ -18,13 +18,13 @@
         </li>    
         <li class="tools wx">
             <a :data-bigdata="wechatBigDataParams" @click="showWX">
-                <span><i class="iconfont icon-weixinkefu"></i></span>
+                <!-- <span><i class="iconfont icon-weixinkefu"></i></span> -->
                 <span>添加微信</span>
             </a>
         </li> 
         <li class="tools phone-consult">
             <a :href="'tel:' + agent.agentMobile" class="bigdata-btn" :data-bigdata="callBigDataParams">
-                <span><i class="iconfont icon-kefurexian"></i></span>
+                <!-- <span><i class="iconfont icon-kefurexian"></i></span> -->
                 <span>电话咨询</span>
             </a>
         </li>                    
@@ -109,7 +109,7 @@
             font-size: 1.6rem;
             border-left:none;
         }
-    }    
+    }        
 
     .wkzf-tips{
         z-index:9999;

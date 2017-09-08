@@ -19,6 +19,7 @@ import spaceRateWrite from "@/components/space/rate/write" ;
 import spaceRateList from "@/components/space/rate/list" ;
 import weixinAdd from "@/components/weixin/add" ;
 import login from "@/components/login/index" ;
+import esfDetailShare from "@/components/esf/detail/share";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -93,6 +94,10 @@ export default new Router({
             path : "/login" ,
             name : "login",
             component : login
+        },{
+            path: "/esf/detail/share/:houseId/:agentId",
+            name: "esfDetailShare",
+            component: esfDetailShare
         }
     ]
 }) ;

@@ -16,7 +16,7 @@
      width : 100% ;
      z-index : 9900 ;
      &>li {
-         border-right : 1px solid @light-line-gray-color ;
+         // border-right : 1px solid @light-line-gray-color ;
          float : left ;
          height : 50px ;
          text-align : center ;
@@ -64,11 +64,15 @@
      .tools {
          a {
              color : @primary-color ;
-             display : block ;             
-             margin-top : 8px ;
+             display : block ;    
+             font-size: 1.4rem;         
+             //margin-top : 8px ;
+             margin-top: 0;
+             line-height: 50px;
              span {
                 display : block ;
                 text-align : center ;
+                line-height: 50px;
             }
          }
      }
@@ -78,9 +82,18 @@
             color:white;
         }        
      }
+     
+     .wx{
+        background-color:#FC4C5A;
+        color: #fff;
+        a{
+            color:#fff
+        }
+     }
+     
      &.no-weixin {
          .wx{
-            display:none;
+            display:none;            
          }
          .phone-consult {
              width : 66.6% ;

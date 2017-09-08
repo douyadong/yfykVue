@@ -6,7 +6,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import $ from 'jquery';
 import apiDataFilter from '@/libraries/apiDataFilter';
-import utils from '@/libraries/utils';
+//import utils from '@/libraries/utils';
 
 export default {
 	install(Vue,options){
@@ -51,23 +51,14 @@ export default {
 
 		//发送埋点请求
 		let send = function(item){
-			//item.cookieId = utils.getCookieId();
-			//console.log("send...",item);
-			let total = getTotal();
-			//item.pCount = total - 1;
+			let total = getTotal();			
 			apiDataFilter.request({
 				apiPath:"common.bigData",
 				data:item,
 				successCallback:function(){
 					traverse();
 				},
-				errorCallback:function(res,res2){
-					//失败时插入localStorage
-					/*if(!res2){
-						insertBigData(item);
-					}else{
-						traverse();
-					}*/
+				errorCallback:function(res,res2){					
 					insertBigData(item);
 				}
 			});
@@ -84,39 +75,29 @@ export default {
 		};
 
 		let bigData = function(data){
-			data.cookieId = utils.getCookieId();
-			let total = getTotal();
-			data.pNum = total;
-			setTotal(total+1);
-			send(data);
-			//insertBigData(data);
-			//traverse();
-			/*apiDataFilter.request({
-				apiPath:"common.bigData",
-				data:data,
-				successCallback:function(){
-					//console.log(data,"埋点成功！");					
-				},
-				errorCallback:function(){
-					
-				}
-			});*/
+			//data.cookieId = utils.getCookieId();
+			Vue.getDeviceIdFromNative(function(deviceId){
+				data.cookieId = deviceId;
+				let total = getTotal();
+				data.pNum = total;
+				setTotal(total+1);
+				send(data);
+			});
+			
 		};
 
 		window.document.body.addEventListener("click",function(event){
 			//判断是否埋点元素
 			let $target = $(event.target);
 			let data = $target.data('bigdata');
-			if(data){				
-				//alert('bigdata');
+			if(data){								
 				data = JSON.parse(decodeURIComponent(data));
 				data.type = 2;				
 				bigData(data);
 			}else{
 				let $parents = $target.parents('[data-bigdata]');
 				
-				if($parents.length>0){
-					//alert('bigdata');
+				if($parents.length>0){					
 					data = $parents.data('bigdata');
 					data = JSON.parse(decodeURIComponent(data));
 					data.type = 2;
