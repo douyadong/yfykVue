@@ -95,7 +95,7 @@ export default new Router({
             name : "login",
             component : login
         },{
-            path: "/esf/detail/share/:houseId/:agentId",
+            path: "/esf/detail/share/:houseId/:agentId/:cityId",
             name: "esfDetailShare",
             component: esfDetailShare
         }
