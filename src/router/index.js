@@ -21,7 +21,7 @@ import weixinAdd from "@/components/weixin/add" ;
 import login from "@/components/login/index" ;
 import esfDetailShare from "@/components/esf/detail/share"
 import estateDetailDetail from "@/components/estate/detail/detail"
-import houseDetail from "@/components/xf/detail";
+import xfDetail from "@/components/xf/detail";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -107,7 +107,7 @@ export default new Router({
         },{
         path: "/newHouseDetail",
         name: "newHouseDetail",
-        component: houseDetail
+        component: xfDetail
       }
     ]
 }) ;

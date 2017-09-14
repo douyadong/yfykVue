@@ -1,34 +1,41 @@
-.house-detail{
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> xf ->detail.less (新房详情)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less";
+.xf-detail{
+  padding-bottom: 2.5rem;
   .top-swiper{
     width: 100%;
     height: 21.1rem;
   }
+  /*房产简介*/
   >.description-box{
-     width: 100%;
-     padding-left: 1.5rem;
-     padding-right: 1.5rem;
-     padding-top: 2.5rem;
-     background-color: #ffffff;
+    width: 100%;
+    padding:2.5rem 1.5rem 1.5rem ;
+    background-color: @default-color;
     >.description{
+      padding-bottom: 1.35rem;
       >.house-name{
         font-size: 2rem;
-        color: #4E4E4E;
+        color: @default-font-color;
         line-height: 2rem;
       }
-      >p:first-child{
+      >p{
         font-size: 1.2rem;
-        color: #999999;
-        line-height: 1.2rem;
+        color: @light-font-color;
       }
       >.house-price{
         font-size: 2.4rem;
-        color: #F95355;
+        color: @danger-color;
         line-height: 2.4rem;
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
         >span{
           font-size: 1.2rem;
-          color: #999999;
+          color: @light-font-color;
           line-height: 2.4rem;
           display: inline-block;
           margin-left: 1rem;
@@ -38,10 +45,193 @@
         > li {
           font-size: 1rem;
           letter-spacing: -0.15px;
-          border-radius: 5px;
+          .border-radius(6px);
           padding: 0.35rem;
           display: inline-block;
           margin-right: 0.9rem;
+        }
+      }
+      >.time{
+        margin-top: 0.5rem;
+        >span:first-child{
+          margin-right: 1.5rem;
+        }
+      }
+    }
+    >.favourable:before{
+      position: absolute;
+      top:0;
+      left: 0;
+      right: 0;
+      content: '';
+      width: 97%;
+      height: 1px;
+      margin: 0 auto;
+      border-top: 1px solid @line-gray-color;
+      -webkit-transform: scaleY(0.5);
+    }
+    >.favourable{
+      position: relative;
+      padding-top: 0.5rem;
+      flex-direction: row;
+      display: -webkit-flex;
+      >ul{
+        flex: 8;
+        >li{
+          font-size: 1.6rem;
+          color: @default-font-color;
+          letter-spacing: 0;
+          line-height: 1.6rem;
+          margin-top: 1.5rem;
+          >.icon-hui{
+            color:@danger-color;
+            margin-right: 1rem;
+          }
+        }
+      }
+      >.more{
+        flex: 2;
+        text-align: right;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        -webkit-box-align: Center;
+        -ms-flex-align: Center;
+        align-items: Center;
+        >p{
+          display: inline-block;
+          width: 2.5rem;
+          height: 2rem;
+          line-height: 2rem;
+          .border-radius(6px);
+          color: #92a7c3;
+          margin-top: 1rem;
+          background-color:@title-background-color ;
+          >i{
+            display: inline-block;
+            line-height: 2rem;
+            margin-left: -1.25rem;
+          }
+        }
+
+      }
+    }
+  }
+  /*楼盘动态*/
+  >.building-status{
+    width: 100%;
+    margin-top: 1rem;
+    background-color: @default-color;
+    >.status-article{
+      padding:2.3rem 1.5rem ;
+      >.single-article{
+        margin-bottom: 2.7rem;
+        >h3{
+          font-size: 1.6rem;
+          color: @default-font-color;
+          letter-spacing: 0;
+          line-height: 1.6rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-bottom: 0.75rem;
+        }
+        >p{
+          font-size: 1.6rem;
+          color: #333;
+          letter-spacing: 0;
+          line-height: 2.6rem;
+        }
+        >span{
+          font-size: 1.3rem;
+          color: @light-font-color;
+          letter-spacing: 0;
+          line-height: 1.3rem;
+        }
+      }
+      >.more-building-status{
+        width: 100%;
+        height: 4.5rem;
+        line-height: 4.5rem;
+        font-size: 1.4rem;
+        color: #92A7C3;
+        text-align: center;
+        display: block;
+        background: @title-background-color;
+        .border-radius(6px);
+      }
+    }
+  }
+  /*在售楼盘*/
+  >.on-sell-building{
+    width: 100%;
+    margin-top: 1rem;
+    background-color: @default-color;
+    >.onSell-building{
+      width: 100%;
+      max-height: 17.6rem;
+      padding-top: 2rem;
+      padding-left: 1.5rem;
+      overflow-x: scroll;
+      >ul{
+        >li{
+          display: inline-block;
+          margin-bottom: 2rem;
+          margin-right: 2.5rem;
+          >.pic{
+            width: 12.4rem;
+            height: 9.2rem;
+            margin-bottom: 0.75rem;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            >img{
+              max-width: 14.4rem;
+              max-height: 9.2rem;
+            }
+          }
+          >.description{
+            >.description-first{
+              font-size: 1.3rem;
+              letter-spacing: 0;
+              flex-direction: row;
+              display: -webkit-flex;
+              line-height: 1.85rem;
+              >span:first-child{
+                color: #636363;
+                flex: 1;
+                text-align: left;
+                display: inline-block;
+              }
+              >span:not(:first-child){
+                color: @danger-color;
+                display: inline-block;
+                flex: 1;
+                text-align: right;
+              }
+            }
+            >.description-second{
+              font-size: 1.2rem;
+              color: #7C7C7C;
+              letter-spacing: 0;
+              line-height: 1.65rem;
+              flex-direction: row;
+              display: -webkit-flex;
+              >span:first-child{
+                flex: 1;
+                text-align: left;
+                display: inline-block;
+              }
+              >span:not(:first-child){
+                flex: 1;
+                text-align: right;
+                display: inline-block;
+              }
+            }
+          }
         }
       }
     }
@@ -49,7 +239,40 @@
 }
 
 
-.listItemColor{
+.list-open-color{
   background-color: #CEE3FF;
-  color: #4081D6;
+  color: @primary-color;
+}
+.list-metro-color{
+  background-color: #FFE795;
+  color: #D28310;
+}
+.list-benefit-color{
+  background-color: #FFE5CF;
+  color: #DB792A;
+}
+.list-video-color{
+  background-color: #C4E9C7 ;
+  color: #3F8D46;
+}
+
+/*
+公用标题*/
+
+.status-name{
+  font-size: 1.6rem;
+  color: @default-font-color;
+  line-height: 4.5rem;
+  padding:0 1.5rem ;
+  position: relative;
+}
+.status-name:after{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 1px;
+  border-top: 1px solid @line-gray-color;
+  -webkit-transform: scaleY(0.5);
 }
