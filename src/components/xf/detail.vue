@@ -45,7 +45,7 @@
       <div class="onSell-building">
         <ul :style="{ width: getSellBuLenth() + 'rem' }">
           <li v-for="(onSellBuildingItem , index) in getInfoData.onSellBuilding">
-            <div class="pic"><img :src="onSellBuildingItem.img_640_776"/></div>
+            <div class="pic"><img :src="onSellBuildingItem.thumbnail"/></div>
             <div class="description">
               <p class="description-first"><span>{{onSellBuildingItem.name}}</span><span>{{onSellBuildingItem.price}}万起</span></p>
               <p class="description-second"><span>{{onSellBuildingItem.bedRoomSum}}室{{onSellBuildingItem.balconySum}}厅{{onSellBuildingItem.wcSum}}卫</span><span>{{onSellBuildingItem.spaceArea}}㎡</span></p>
@@ -53,6 +53,11 @@
           </li>
         </ul>
       </div>
+    </div>
+    <!--楼盘特色-->
+    <div class="building-character">
+      <p class="status-name">项目特色</p>
+
     </div>
     <!--<assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>-->
   </div>
