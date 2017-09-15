@@ -245,7 +245,7 @@ module.exports = {
             "propertyRight": "70",
             "planRoom": 100,
             "buildDecoration": 2,
-            "propertyTypeStr": "住宅、别墅、商用",
+            "propertyTypeStr": "住宅住宅",
             "parkingSpace": "",
             "initName": "萨顶顶撒大飒飒",
             "developers": "万达集团",
