@@ -39,7 +39,9 @@
     <div class="comment">
         <div><span>用户评论</span><span><span>{{estateInfo.comment.amount}}</span><a href="#"><i class="iconfont icon-arrowR"></i></a></span></div>
         <hr>
-        <div ></div>
+        <div v-for="(item,index) in estateInfo.comment.commentList" :key="index">
+            <div><img src="item.guest.avatar.url" alt=""> <span>{{item.guest.guestPhoneNum}}</span><i class="iconfont icon-youpingsvg"></i></div>
+        </div>
     </div>
   </div>
 </template>
@@ -89,7 +91,7 @@ import estate from "../../../../mock/estate/detail.json"
 </script>
 
 <style lang="less"scoped>
-@import "../../../../src/less/estate/detail.less";
+@import "../../../../src/less/estate/share.less";
 </style>
 
      

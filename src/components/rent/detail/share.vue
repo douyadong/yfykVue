@@ -73,6 +73,7 @@
                     <p><i class="iconfont icon-dingwei"></i>地址：{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</p>            
                 </div>
                 <div class="mark"><i class="iconfont icon-dingwei"></i></div>
+                
             </div>    
         </div>
         <!--结束-->
