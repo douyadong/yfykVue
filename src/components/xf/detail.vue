@@ -57,7 +57,9 @@
     <!--楼盘特色-->
     <div class="building-character">
       <p class="status-name">项目特色</p>
+      <div class="single-character">
 
+      </div>
     </div>
     <!--<assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>-->
   </div>
@@ -65,7 +67,7 @@
 
 <script>
   import assistant from "@/components/common/assistant";
-  let data = require('../../../mock/xf/detail');
+  import data from '../../../mock/xf/detail'
 
   export default {
     name: "xfDetail",
@@ -97,7 +99,6 @@
       getSellBuLenth() {
         let lengthNum = this.getInfoData.onSellBuilding.length ;
         let withNum = lengthNum * 15;
-        console.log(withNum);
         return withNum
       }
     }
