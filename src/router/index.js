@@ -105,7 +105,7 @@ export default new Router({
             name:"estateDetailDetail",
             component:estateDetailDetail
         },{
-        path: "/newHouseDetail",
+        path: "/xf/detail",
         name: "newHouseDetail",
         component: xfDetail
       }
