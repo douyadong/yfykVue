@@ -20,7 +20,7 @@ import spaceRateList from "@/components/space/rate/list" ;
 import weixinAdd from "@/components/weixin/add" ;
 import login from "@/components/login/index" ;
 import esfDetailShare from "@/components/esf/detail/share"
-import estateDetailDetail from "@/components/estate/detail/detail"
+import estateDetailShare from "@/components/estate/detail/share"
 import xfDetail from "@/components/xf/detail";
 import xfStatus from "@/components/xf/status";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -102,9 +102,9 @@ export default new Router({
             name: "esfDetailShare",
             component: esfDetailShare
         },{
-            path:"/estate/detail/detail",
-            name:"estateDetailDetail",
-            component:estateDetailDetail
+            path:"/estate/detail/share",
+            name:"estateDetailShare",
+            component:estateDetailShare
         },{
         path: "/xf/detail",
         name: "xfDetail",

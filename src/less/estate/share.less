@@ -1,0 +1,196 @@
+/*-----------------------------------------------------------------------------
+1.项目名称：yfyk2h5
+2.文件名称：src->less->estate>detail.less(小区详情)
+3.作者：douyadong
+-------------------------------------------------------------------------------*/
+@import "../variables.less";
+@import "../mixins.less";
+
+// 轮播视频
+.photo-loop{
+    height: 210px;
+    background-color: pink;
+}
+// 经纪人
+.agent{
+    padding: 1.5rem;
+    .clearfix();
+    .agent-img{
+        img{
+            width: 4rem;
+            height: 4rem;
+            .border-radius(50%)   
+        }
+    };
+    .agent-name{
+        font-size: 1.6rem;
+        color: @default-font-color;
+        margin-left: 1rem;
+    };
+    .agent-post{
+        font-size: 1.6rem;
+        color: @light-font-color;
+        margin-left: 0.75rem;
+    }
+     i{
+        color: #4081d6;
+        font-size: 1.6rem;
+        float:right;
+        line-height: 4rem;
+    
+    }
+}
+
+// 小区信息介绍
+.estate-info{
+    ul{
+        padding: 0 1.5rem;
+        li {
+            padding-top: 2rem;
+            position: relative;
+            span:nth-child(1){
+                font-size: 1.6rem;
+                color: @light-font-color;
+                letter-spacing: 0;
+                line-height: 1.6rem;
+            }
+            span:nth-child(2){
+                font-size: 1.6rem;
+                color: @default-font-color;
+                line-height: 1.6rem;
+            }
+        }
+        .base-info{
+            position: relative;
+            .estate-kind-info{
+                position: absolute;
+                left: 8.1rem;
+            }
+        }   
+        .nearby{
+                position: absolute;
+                left: 4.6rem;
+        }
+        
+    }
+}
+// 在售房源
+.selling{
+    padding: @gap-dimension 1.5rem;
+    margin-bottom:1rem;
+    .clearfix();
+    .house-source{
+        font-size: 1.6rem;
+        color: @default-font-color;
+    }
+    .house-amount{
+        float:right;
+        span{
+            font-size: 1.6rem;
+            color: @default-font-color;
+        }
+       i{
+           padding-top: 0.4rem;
+       }
+    }    
+}
+// 用户评论
+.comment{
+    .panel-header{
+        font-size: 1.6rem;
+        color: @default-font-color;
+        .clearfix();
+        .comment-amount{
+            float: right;
+        }
+    }
+    .no-date{
+        font-size: 1.6rem;
+        color: @default-font-color;
+        text-align: center;
+    }
+    .comment-all-info{
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        .comment-phone{
+            position: relative;
+            img{
+                width:3rem;
+                height:3rem;
+                .border-radius(50%);
+                margin-right: .5rem;
+            }
+            span{
+                margin-right: 0.85rem;
+            }
+            i{
+                color: @danger-color;
+                position: absolute;
+                top:0.7rem;
+            }
+        }
+        .comment-time-like{
+            .clearfix();
+            .click-like{
+                float:right;
+            }
+        }
+        
+    }
+    .all-comment{
+        .comment-all-info:last-child{
+            .panel-item{
+                border: none;
+            }
+        }
+    }   
+}
+
+// 我来评价
+.my-comment{
+    height:4.5rem;
+    line-height: 4.5rem;
+    text-align: center;
+    background-color: @title-background-color;
+    font-size: 1.5rem;
+    color: @light-font-color;
+    .border-radius(0.3rem);
+}
+// 位置及周边
+.nearby-map{
+    .map{
+        border: none;
+        color: @default-font-color;
+        font-size: 1.6rem;
+    }
+    .position{
+        position: relative;
+        .center-icon{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            color: @danger-color;
+            font-size: 3rem;
+        }
+        .search{
+            position:absolute;
+            bottom: 1rem;
+            // height: 3.5rem;
+            background-color: #fff;
+            line-height: 2.5rem;
+            width:90%;
+            // margin:0 1.5rem;
+            left: 50%;
+            transform: translate(-50%,0);
+            .border-radius(0.4rem);
+            font-size: 1.4rem;
+            .icon-position{
+                padding-left: 1.4rem;
+            }
+            i{
+                color: @danger-color;
+            }
+        }
+    }
+}
