@@ -29,7 +29,8 @@
                     <li>
                     	<dl>
                     		<dt>户型</dt>
-                    		<dd>{{apiData.house.houseChild}}</dd></dl>
+                    		<dd>{{apiData.house.houseChild}}</dd>
+                        </dl>
                     </li>
                     <li>
                     	<dl>
