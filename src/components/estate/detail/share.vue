@@ -2,14 +2,20 @@
   <div class="estate-detail">
     <!--相册内容-->
     <div class="photo-loop">
-        
+        <swiper :options="pageConfs.swiperOption">            
+            <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
+                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
+                <img :src="slide.imageSrc" class="img-responsive" v-else>
+                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
+            </swiper-slide>            
+        </swiper>
     </div>
     <!--经纪人-->
     <div class="wk-panel" style="margin-bottom:1rem">
         <div class="agent">
             <span class="agent-img"><img src="https://img.wkzf.com/fd6d670aa99b4ad58e531f1d8496e623" alt=""></span>
             <span class="agent-name">{{agent.agentName}}</span>
-            <span class="agent-post">小区专家</span><a href="#"><i class="iconfont icon-dianhua"></i></a>
+            <span class="agent-post">小区专家</span><a :href="'tel:'+agent.agentMobile"><i class="iconfont icon-dianhua"></i></a>
         </div>
     </div>
     <!--小区信息介绍-->
@@ -18,7 +24,7 @@
             <li class="base-info"><span class="estate-kind">所属板块</span><span class="estate-kind-info">{{estateInfo.district}}</span></li>
             <li class="base-info"><span class="estate-kind">产权年限</span><span class="estate-kind-info">{{estateInfo.propertyRight}}</span></li>
             <li class="base-info"><span class="estate-kind">竣工年代</span><span class="estate-kind-info">{{estateInfo.completed}}</span></li>
-            <li class="base-info"><span class="estate-kind">房屋总数</span><span class="estate-kind-info">{{estateInfo.historicalTransactionAmount}}</span></li>
+            <li class="base-info"><span class="estate-kind">房屋总数</span><span class="estate-kind-info">{{estateInfo.totalHouseCount}}</span></li>
             <li class="base-info"><span class="estate-kind">物业类型</span><span class="estate-kind-info">{{estateInfo.propertyType}}</span></li>
             <li class="base-info"><span class="estate-kind">物业费</span><span class="estate-kind-info">{{estateInfo.propertyCharges}}</span></li>
             <li class="base-info"><span class="estate-kind">绿化率</span><span class="estate-kind-info">{{estateInfo.greenRate}}</span></li>
@@ -35,7 +41,7 @@
     <div class="selling wk-panel">
         <span class="house-source">在售房源</span>
         <span class="house-amount">
-            <span>{{estateInfo.sellhouseCount}}套</span>
+            <span>{{estateInfo.sameEstateHouseAmount}}套</span>
             <a href="#"><i class="iconfont icon-arrowR"></i></a>
         </span>
     </div>
@@ -49,27 +55,24 @@
             </span>
         </div>
         <!--用户评论内容-->
-        <div class="all-comment">
+        <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">
+	            暂无评论，快来抢沙发吧~
+	    </p>
+        <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
             <div class="panel-item">
                 <p class="comment-phone">
                     <img src="../../../assets/volume.png" alt="">
                     <span>{{item.guest.guestPhoneNum}}</span>
                     <i class="iconfont icon-youpingsvg"></i>
+                    <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
                 </p>
-                <h4>评论内容还包括图片</h4>
-                <p>
-                    <ul class="house-img">
-                        <li v-for="(val,index) in item.imgList" :key="index">
-                            <img src="val" alt="">
-                        </li>
-                </ul>
-                </p>
+                <h4>{{item.comment}}</h4>
                 <p class="comment-time-like">
                     <span class="comment-time">{{item.createTimeStr}}</span>
                     <span class="click-like">
-                        <i class="comment-like iconfont icon-8"></i>
-                        <span class="comment-like-amount">{{item.downAmount}}</span>
+                        <i class="comment-like iconfont icon-zan"></i>
+                        <span class="comment-like-amount">{{item.upAmount}}</span>
                     </span>
                 </p>
             </div>
@@ -107,18 +110,45 @@ import estate from "../../../../mock/estate/detail.json"
         name:"estateDetailShare",
         data(){
             return {
-                
+                 pageStates : {
+                  swiperActiveIndex : 1 //相册当前在第几帧
+                 } ,
+                 pageConfs : {                                
+                  swiperOption : {  // 整个相册 swiper插件的选项                     
+                      name : "currentSwiper" ,
+                      // 所有配置均为可选（同Swiper配置）
+                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换  
+                      grabCursor : true ,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
+                      setWrapperSize : true ,
+                      autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化                      
+                      //定义几个回调函数
+                      onInit : swiper => {
+                          this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
+                      } ,
+                      onSlideChangeEnd : swiper => {
+                        this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
+                      }       
+                  }
+              } ,
+                 apiData : {
+                  simpleHouseRentDetailInfo : {} ,
+                  simpleAgentModel : {}
+              },  
                 agent:estate.data.agent,//经济人信息
                 estateInfo:estate.data.estateInfo //小区房源信息
             }
         },
         created(){
          console.log(estate);
-        }
+        },
+         components : {
+          swiper,
+          swiperSlide
+      }
     }
 </script>
 
-<style lang="less"scoped>
+<style lang="less" scoped>
 @import "../../../../src/less/estate/share.less";
 </style>
 
