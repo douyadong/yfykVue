@@ -2,7 +2,14 @@
   <div class="xf-detail">
     <!--滚动图部分-->
     <div class="top-swiper">
-      站位
+      <!--相册内容-->
+      <swiper :options="pageConfs.swiperOption">
+        <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
+          <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>
+          <img :src="slide.imageSrc" class="img-responsive" v-else>
+          <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
+        </swiper-slide>
+      </swiper>
     </div>
     <!--房产简介-->
     <div class="wk-panel description-box">
@@ -19,24 +26,19 @@
         <ul>
           <li v-for="(benefitItem , index) in getInfoData.benefitInfo" v-if="index < 3"><i class="iconfont icon-hui"></i>{{benefitItem.title}}</li>
         </ul>
-        <div class="more"><p><i class="iconfont ">&#xe622;</i></p></div>
+        <div class="more"><p @click='showHide()'><i class="iconfont ">&#xe622;</i></p></div>
       </div>
     </div>
     <!--楼盘动态-->
     <div class="wk-panel building-status">
       <p class="status-name">楼盘动态</p>
       <div class="status-article">
-        <div class="single-article">
-          <h3>静安府样板间已开放，预计 7 月中下旬开预计 7 月中下旬开盘</h3>
-          <p>7月4日最新消息：静安府样板间已开放，预计7月中下旬开盘。首开产品为95、118 平三房，138 平四房具体价格、优惠待定。</p>
-          <span>2016-07-07</span>
+        <div class="single-article" v-for="(item , index) in getInfoData.buildingStatus" :key="item.id" v-if="index < 2">
+          <h3>{{item.title}}</h3>
+          <p>{{item.content}}</p>
+          <span>{{item.publishTimeStr}}</span>
         </div>
-        <div class="single-article">
-          <h3>静安府样板间已开放，预计 7 月中下旬开预计 7 月中下旬开盘</h3>
-          <p>7月4日最新消息：静安府样板间已开放，预计7月中下旬开盘。首开产品为95、118 平三房，138 平四房具体价格、优惠待定。</p>
-          <span>2016-07-07</span>
-        </div>
-        <a class="more-status">查看更多</a>
+        <router-link to="/xf/status"><a class="more-status">查看更多</a></router-link>
       </div>
     </div>
     <!--在售户型-->
@@ -134,22 +136,73 @@
     </div>
     <!--位置及周边-->
     <div class="wk-panel location">
-      <p class="status-name">楼盘信息</p>
+      <p class="status-name">位置及周边</p>
       <div class="location-pic">
-
+        <img  :src="locationUrl()"/>
+        <div class="address">
+          <p><i class=" iconfont icon-dingwei"></i>地址：{{getInfoData.locationData.initName}}</p>
+          <p><i class=" iconfont icon-ditie"></i>地铁：{{getInfoData.locationData.subwayLabel}}</p>
+        </div>
       </div>
     </div>
-    <!--<assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>-->
+    <!--周边楼盘-->
+    <div class="wk-panel nearby">
+      <p class="status-name">周边楼盘</p>
+      <div class="nearby-list">
+        <div class="single-nearby" v-for="(singleNearby , index ) in getInfoData.nearbyData" :key="singleNearby.id">
+          <div class="nearby-pic">
+            <img :src="singleNearby.imageUrl" alt="">
+          </div>
+          <div class="nearby-content">
+            <p class="name">{{singleNearby.estateName || '--'}}</p>
+            <p class="space">{{singleNearby.startSpace}}㎡ - {{singleNearby.endSpace}}㎡ <span>{{singleNearby.avgPriceWou}}元/㎡</span></p>
+            <p class="districtName">{{singleNearby.districtName}} {{singleNearby.townName}}</p>
+            <ul>
+              <li v-if="singleNearby.isSoonOpen == 1"><p>即将开盘</p></li>
+              <li v-if="singleNearby.hasActivity == 1"><p>地铁</p></li>
+              <li v-if="singleNearby.isSubwayEstate == 1"><p>有优惠</p></li>
+              <li v-if="singleNearby.hasVideo == 1"><p>有视频</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>
+    <div class="benefit-more"  :class="{normalHide : moduleShow} ">
+      <div class="benefit-top">
+        <div class="benefit-top-title">
+          <h3>优惠说明</h3>
+        </div>
+        <div class="benefit-top-content">
+          <div class="single-content" v-for="(benefitItem , index) in getInfoData.benefitInfo">
+            <div class="icon">
+              <i class="iconfont icon-hui1"> </i>
+            </div>
+            <div class="content">
+              <h3>{{benefitItem.title}}</h3>
+              <p>{{benefitItem.details}}每付 1000 可抵 5000 税费，更可现场获得返现机会。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="benefit-down">
+        <p @click='showHide()'><i class="iconfont icon-close"></i></p>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
   import assistant from "@/components/common/assistant";
-  import data from '../../../mock/xf/detail'
+  import data from '../../../mock/xf/detail';
+  import { swiper , swiperSlide } from "vue-awesome-swiper" ;
 
   export default {
     name: "xfDetail",
-    components: { assistant },
+    components: { assistant, swiper , swiperSlide },
     data() {
       return {
         cityId: this.$route.query.cityId,
@@ -160,13 +213,40 @@
         getInfoData:{
           buildingInformation:['即将开盘','地铁','有优惠','有视频'],
           benefitInfo: data.data.newHouseDetail.activityList,
+          buildingStatus: data.data.newHouseDetail.newHouseDynamicList,
           onSellBuilding: data.data.newHouseDetail.houseTypeImages,
           buildingCharacter: data.data.newHouseDetail.projectFeatureList,
           buildingInfoDec: data.data.newHouseDetail,
           posterData: data.data.newHouseDetail.newHouseMagazineList[0],
           commentsData: data.data.comment,
-          locationData: data.data.newHouseDetail
+          locationData: data.data.newHouseDetail,
+          nearbyData: data.data.aroundNewHouseList
         },
+        pageStates : {
+          swiperActiveIndex : 1 //相册当前在第几帧
+        } ,
+        pageConfs : {
+          swiperOption : {  // 整个相册 swiper插件的选项
+            name : "currentSwiper" ,
+            // 所有配置均为可选（同Swiper配置）
+            autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换
+            grabCursor : true ,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
+            setWrapperSize : true ,
+            autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化
+            //定义几个回调函数
+            onInit : swiper => {
+              this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
+            } ,
+            onSlideChangeEnd : swiper => {
+              this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
+            }
+          }
+        } ,
+        apiData: {
+          simpleHouseRentDetailInfo: {},
+          simpleAgentModel: {}
+        },
+        moduleShow: true
       }
     },
     methods:{
@@ -191,6 +271,13 @@
           'sprite-brand':(featureType == 11 ? 'sprite-hz':(featureType == 12 ? 'sprite-wuye':(featureType == 13 ? 'sprite-sence':(featureType == 14 ?
             'sprite-bxg':'sprite-yl')))))))))))) );
         return CharacterType
+      },
+      locationUrl() {
+      let locationUrl = `http://apis.map.qq.com/ws/staticmap/v2/?center=${this.getInfoData.locationData.latitude},${this.getInfoData.locationData.longitude}&zoom=12&scale=2&size=${window.screen.width}*${window.screen.width*250/375}&maptype=roadmap&markers=size:large|${this.getInfoData.locationData.latitude},${this.getInfoData.locationData.longitude}&key=${this.qqmapkey}`;
+      return locationUrl
+      },
+      showHide() {
+        this.moduleShow = ! this.moduleShow ;
       }
     }
   }

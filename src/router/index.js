@@ -22,6 +22,7 @@ import login from "@/components/login/index" ;
 import esfDetailShare from "@/components/esf/detail/share"
 import estateDetailDetail from "@/components/estate/detail/detail"
 import xfDetail from "@/components/xf/detail";
+import xfStatus from "@/components/xf/status";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -106,8 +107,12 @@ export default new Router({
             component:estateDetailDetail
         },{
         path: "/xf/detail",
-        name: "newHouseDetail",
+        name: "xfDetail",
         component: xfDetail
+      },{
+        path: "/xf/status",
+        name: "xfStatus",
+        component: xfStatus
       }
     ]
 }) ;

@@ -1,0 +1,54 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> xf ->status.less (楼盘动态)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+@import "../variables.less" ;
+.xf-status{
+  >.base{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background-color: @default-color;
+  }
+  >.building-status{
+    z-index: 2;
+    width: 100%;
+    padding: 0 1.5rem 1.5rem;
+    >.single-status:after{
+      position: absolute;
+      bottom: 0;
+      content: '';
+      width: 100%;
+      height: 1px;
+      border-top: 1px solid @line-gray-color;
+      -webkit-transform: scaleY(0.5);
+    }
+    >.single-status{
+      position: relative;
+      padding-bottom: 2rem;
+      margin-top: 1.5rem;
+     >h3{
+       font-size: 1.4rem;
+       color: @default-font-color;
+       letter-spacing: 0;
+       margin-bottom: 1rem;
+     }
+      >p.content{
+        font-size: 1.4rem;
+        color: @default-font-color;
+        letter-spacing: 0;
+        line-height: 2.1rem;
+      }
+      >.time{
+        font-size: 1.2rem;
+        color: @light-font-color;
+        letter-spacing: 0;
+        margin-top: 1rem;
+      }
+    }
+  }
+}

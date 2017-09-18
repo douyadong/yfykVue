@@ -31,14 +31,16 @@ module.exports = {
             "launchTimeStr": "2017-09-08",
             "activityList": [
                 { "endTimeStr" : "2017-5-8" , "id" : 2 , "title" : "悟空优惠，付 1000 抵 5000 税费" , "details" : "" , "endTime" : "" } ,
-                { "endTimeStr" : "2017-5-9" , "id" : 3 , "title" : "悟空优惠，付 5000 抵 20000 税费" , "details" : "" , "endTime" : "" }
+                { "endTimeStr" : "2017-5-9" , "id" : 3 , "title" : "悟空优惠，付 5000 抵 20000 税费" , "details" : "" , "endTime" : "" },
+              { "endTimeStr" : "2017-5-9" , "id" : 4 , "title" : "悟空优惠，付 5000 抵 20000 税费" , "details" : "" , "endTime" : "" },
+              { "endTimeStr" : "2017-5-9" , "id" : 5 , "title" : "悟空优惠，付 5000 抵 20000 税费" , "details" : "" , "endTime" : "" },
             ] ,
             "activityDescList": null,
             "newHouseDynamicList": [
                 {
                     "id": 59,
                     "title": "测试1909",
-                    "content": "测试189",
+                    "content": "7 月 4 日最新消息：静安府样板间已开放，预计 7 月中下旬开盘。首开产品为 95、118 平三房，138 平四房具体价格、优惠待定。",
                     "publishTime": 1472115056000,
                     "enabled": 1,
                     "estateSubId": 113408,
@@ -52,7 +54,43 @@ module.exports = {
                     "enabled": 1,
                     "estateSubId": 113408,
                     "publishTimeStr": "2016-08-17"
-                }
+                },
+              {
+                "id": 7,
+                "title": "多福多寿",
+                "content": "尽快发的是科技化工股份就好看了就立",
+                "publishTime": 1471423945000,
+                "enabled": 1,
+                "estateSubId": 113408,
+                "publishTimeStr": "2016-08-17"
+              },
+              {
+                "id": 6,
+                "title": "多福多寿",
+                "content": "尽快发的是科技化工股份就好看了就立",
+                "publishTime": 1471423945000,
+                "enabled": 1,
+                "estateSubId": 113408,
+                "publishTimeStr": "2016-08-17"
+              },
+              {
+                "id": 59,
+                "title": "测试1909",
+                "content": "7 月 4 日最新消息：静安府样板间已开放，预计 7 月中下旬开盘。首开产品为 95、118 平三房，138 平四房具体价格、优惠待定。",
+                "publishTime": 1472115056000,
+                "enabled": 1,
+                "estateSubId": 113408,
+                "publishTimeStr": "2016-08-25"
+              },
+              {
+                "id": 59,
+                "title": "测试1909",
+                "content": "7 月 4 日最新消息：静安府样板间已开放，预计 7 月中下旬开盘。首开产品为 95、118 平三房，138 平四房具体价格、优惠待定。",
+                "publishTime": 1472115056000,
+                "enabled": 1,
+                "estateSubId": 113408,
+                "publishTimeStr": "2016-08-25"
+              }
             ],
             "newHouseDynamicCount": 11,
             "houseTypeImages": [
