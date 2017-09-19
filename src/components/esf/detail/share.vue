@@ -23,7 +23,7 @@
                     <li>
                     	<dl>
                     		<dt>总价</dt>
-                    		<dd>{{apiData.house.totalPrice}}元</dd>
+                    		<dd>{{apiData.house.totalPrice}}万</dd>
                     	</dl>
                     </li>
                     <li>
