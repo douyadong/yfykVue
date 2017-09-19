@@ -171,7 +171,7 @@
 
     </div>
 
-    <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
+    <infiniteLoading @infinite="onInfinite" ref="infiniteLoading">
       <span slot="no-more"></span>
     </infiniteLoading>
 
@@ -324,6 +324,5 @@
   }
 </script>
 <style lang="less">
-  @import "../../assets/css/swiper-3.4.2.min.css" ;
   @import "../../../src/less/xf/detail.less" ;
 </style>
