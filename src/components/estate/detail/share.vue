@@ -5,14 +5,14 @@
         <swiper :options="pageConfs.swiperOption">            
             <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
                 <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
-                <img :src="slide.imageSrc" class="img-responsive" v-else>
+                <img src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
             </swiper-slide>            
         </swiper>
     </div>
     <!--经纪人-->
-    <div class="wk-panel" style="margin-bottom:1rem">
-        <div class="agent">
+    <div class="wk-panel bottom-gap">
+        <div class="agent">         
             <span class="agent-img"><img src="https://img.wkzf.com/fd6d670aa99b4ad58e531f1d8496e623" alt=""></span>
             <span class="agent-name">{{agent.agentName}}</span>
             <span class="agent-post">小区专家</span><a :href="'tel:'+agent.agentMobile"><i class="iconfont icon-dianhua"></i></a>
@@ -20,22 +20,44 @@
     </div>
     <!--小区信息介绍-->
     <div class="estate-info wk-panel">
-        <ul>
-            <li class="base-info"><span class="estate-kind">所属板块</span><span class="estate-kind-info">{{estateInfo.district}}</span></li>
-            <li class="base-info"><span class="estate-kind">产权年限</span><span class="estate-kind-info">{{estateInfo.propertyRight}}</span></li>
-            <li class="base-info"><span class="estate-kind">竣工年代</span><span class="estate-kind-info">{{estateInfo.completed}}</span></li>
-            <li class="base-info"><span class="estate-kind">房屋总数</span><span class="estate-kind-info">{{estateInfo.totalHouseCount}}</span></li>
-            <li class="base-info"><span class="estate-kind">物业类型</span><span class="estate-kind-info">{{estateInfo.propertyType}}</span></li>
-            <li class="base-info"><span class="estate-kind">物业费</span><span class="estate-kind-info">{{estateInfo.propertyCharges}}</span></li>
-            <li class="base-info"><span class="estate-kind">绿化率</span><span class="estate-kind-info">{{estateInfo.greenRate}}</span></li>
-            <li class="base-info"><span class="estate-kind">容积率</span><span class="estate-kind-info">{{estateInfo.volumeRate}}</span></li>
-            <li class="base-info"><span class="estate-kind">物业公司</span><span class="estate-kind-info">{{estateInfo.propertyCompany}}</span></li>
-            <li class="base-info"><span class="estate-kind">开发商</span><span class="estate-kind-info">{{estateInfo.developers}}</span></li>
-            <li class="panel-header" style="margin-left:0;padding-bottom:0"> </li>
-            <li><span>地铁</span><span class="nearby">{{estateInfo.subwayName}}</span></li>
-            <li><span>学校</span><span class="nearby">{{estateInfo.schoolList}}</span></li>
-            <li class="panel-header" style="margin-left:0;padding-bottom:0"></li>
-        </ul>
+        <div class="estate-static1">
+            <ul class="estate-kind1">
+                <li>所属板块</li>
+                <li>产权年限</li>
+                <li>竣工年代</li>
+                <li>房屋总数</li>
+                <li>物业类型</li>
+                <li>物业费</li>
+                <li>绿化率</li>
+                <li>容积率</li>
+                <li>物业公司</li>
+                <li>开发商</li>
+            </ul>
+            <ul class="estate-kind-info1">
+                <li>{{estateInfo.district}}</li>
+                <li>{{estateInfo.propertyRight}}</li>
+                <li>{{estateInfo.completed}}</li>
+                <li>{{estateInfo.totalHouseCount}}</li>
+                <li>{{estateInfo.propertyType}}</li>
+                <li>{{estateInfo.propertyCharges}}</li>
+                <li>{{estateInfo.greenRate}}</li>
+                <li>{{estateInfo.volumeRate}}</li>
+                <li>{{estateInfo.propertyCompany}}</li>
+                <li>{{estateInfo.developers}}</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="estate-static2">
+            <ul class="estate-kind2">
+                <li>地铁</li>
+                <li>学校</li>
+            </ul>
+            <ul class="estate-kind-info2">
+                <li>{{estateInfo.subwayName}}</li>
+                <li>{{estateInfo.schoolName}}</li>
+            </ul>
+        </div>
+        <hr>
     </div>
     <!--在售房源-->
     <div class="selling wk-panel">
@@ -55,9 +77,7 @@
             </span>
         </div>
         <!--用户评论内容-->
-        <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">
-	            暂无评论，快来抢沙发吧~
-	    </p>
+        <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
         <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
             <div class="panel-item">
@@ -94,8 +114,9 @@
             <div class="search">
                 <div class="icon-position">
                     <i class="iconfont icon-dingwei"></i>
-                    <span class="detail-address">地址：{{estateInfo.estateAddr}}</span>
+                    <span class="detail-address">地址：</span>
                 </div>
+                <div class="estate-addr">{{estateInfo.estateAddr}}</div>
             </div>
        </div>
     </div>
