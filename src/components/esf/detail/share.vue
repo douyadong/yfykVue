@@ -5,7 +5,7 @@
 		<!--相册内容-->
        <swiper :options="pageConfs.swiperOption">            
             <swiper-slide v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
-                <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
+                <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video>                
                 <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
             </swiper-slide>            
