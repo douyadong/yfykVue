@@ -1,5 +1,5 @@
 <template>
-  <div id="app">    
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -10,6 +10,7 @@ export default {
 }
 </script>
 
-<style lang="less"> 
+<style lang="less">
+    @import "./assets/css/swiper-3.4.2.min.css" ;
     @import "../src/less/app.less" ;
 </style>
