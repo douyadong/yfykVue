@@ -295,7 +295,7 @@ module.exports = {
                     "type": 1,
                     "publishTime": 1477534315000,
                     "showSort": 1,
-                    "fileKey": "https://imgpri-test.oss.aliyuncs.com/a8e5bfcc76324d0588c2baca0b2debb3?Expires=1494387754&OSSAccessKeyId=1CRqgHNJuy4lL6Wj&Signature=4pWVNWekqWT3ukeYeVC9f2itLOg%3D",
+                    "fileKey": "http://pic29.photophoto.cn/20131104/0017030021375972_b.jpg",
                     "fileName": "下载.jpg",
                     "estateSubId": 113408,
                     "enabled": 1,
@@ -596,6 +596,32 @@ module.exports = {
             "agentWChatId": null,
             "weChatQRImgKey": null,
             "agentWChartQRImgUrl": null
-        }
+        },
+        "houseImageAndVideoList":[
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://imgwater-test.oss.aliyuncs.com/06e392b523874979bd004ccafdaa34cb.I640_360",
+            "isVideo": false,
+
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://imgwater-test.oss.aliyuncs.com/87e7f9bb14ad49b5bd0067d5c73cf0e2.I500_280",
+            "isVideo": false,
+
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://imgwater-test.oss.aliyuncs.com/b6ef6c7944ef4f09b8058a866e0bb051.I500_280",
+            "isVideo": false,
+
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://imgwater-test.oss.aliyuncs.com/06e392b523874979bd004ccafdaa34cb.I640_360",
+            "isVideo": false,
+
+          }
+        ]
     }
 } ;

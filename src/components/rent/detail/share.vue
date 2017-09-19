@@ -3,12 +3,12 @@
         <assistant :cityId="cityId" :agent="apiData.simpleAgentModel" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
        <download-app />
        <!--相册内容-->
-       <swiper :options="pageConfs.swiperOption">            
+       <swiper :options="pageConfs.swiperOption">
             <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
-                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
+                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>
                 <img :src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
-            </swiper-slide>            
+            </swiper-slide>
         </swiper>
        <!--房源概要部分-->
        <div class="wk-panel summary">
@@ -33,7 +33,7 @@
                 <hr>
                 <ul class="subway-school">
                     <li><dl><dt>地铁</dt><dd>{{ apiData.simpleHouseRentDetailInfo.subwayStr }}</dd></dl></li>
-                    <li><dl><dt>学校</dt><dd>{{ apiData.simpleHouseRentDetailInfo.schoolStr }}</dd></dl></li>           
+                    <li><dl><dt>学校</dt><dd>{{ apiData.simpleHouseRentDetailInfo.schoolStr }}</dd></dl></li>
                 </ul>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasFridge }">冰箱</li>
                 <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasMicrowave }">微波炉</li>
                 <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWaterHeater }">热水器</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }">空调</li>       
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }">空调</li>
                 <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasTV }">电视机</li>
                 <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasInternet }">宽带</li>
             </ul>
@@ -70,14 +70,14 @@
             <div class="location-container">
                 <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.simpleHouseRentDetailInfo.longitude + ',' + apiData.simpleHouseRentDetailInfo.latitude + '&zoom=18'" class="img-responsive">
                 <div class="cover">
-                    <p><i class="iconfont icon-dingwei"></i>地址：{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</p>            
+                    <p><i class="iconfont icon-dingwei"></i>地址：{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</p>
                 </div>
                 <div class="mark"><i class="iconfont icon-dingwei"></i></div>
-                
-            </div>    
+
+            </div>
         </div>
         <!--结束-->
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -92,27 +92,27 @@
               pageStates : {
                   swiperActiveIndex : 1 //相册当前在第几帧
               } ,
-              pageConfs : {                                
-                  swiperOption : {  // 整个相册 swiper插件的选项                     
+              pageConfs : {
+                  swiperOption : {  // 整个相册 swiper插件的选项
                       name : "currentSwiper" ,
                       // 所有配置均为可选（同Swiper配置）
-                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换  
+                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换
                       grabCursor : true ,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
                       setWrapperSize : true ,
-                      autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化                      
+                      autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化
                       //定义几个回调函数
                       onInit : swiper => {
                           this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
                       } ,
                       onSlideChangeEnd : swiper => {
                         this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
-                      }       
+                      }
                   }
               } ,
               apiData : {
                   simpleHouseRentDetailInfo : {} ,
                   simpleAgentModel : {}
-              }            
+              }
           }
       } ,
       methods : {
@@ -121,31 +121,31 @@
               let eventParam = { house_id : this.apiData.simpleHouseRentDetailInfo.houseId } ;
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
-              }              
-              return encodeURIComponent(JSON.stringify({ 
-                  eventName : eventName , 
+              }
+              return encodeURIComponent(JSON.stringify({
+                  eventName : eventName ,
                   eventParam : eventParam ,
                   type : 2
               })) ;
           }
-      } ,      
-      created() {          
+      } ,
+      created() {
           let houseId = this.$route.params.houseId ;
-          let agentId = this.$route.params.agentId ;  
-          this.cityId = this.$route.query.cityId;       
+          let agentId = this.$route.params.agentId ;
+          this.cityId = this.$route.query.cityId;
           apiDataFilter.request({
               apiPath : "rent.detail" ,
-              data : { "houseId" : houseId , "agentId" : agentId } ,              
-              successCallback : res => {                 
+              data : { "houseId" : houseId , "agentId" : agentId } ,
+              successCallback : res => {
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
-                  //定制页面微信分享参数                  
+                  //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
                   this.$wechatShare({
                       "title" : wechatShare.title ,
                       "timelineTitle" : wechatShare.timelineTitle ,
                       "content" : wechatShare.content ,
-                      "imgUrl" : wechatShare.picUrl ,                      
+                      "imgUrl" : wechatShare.picUrl ,
                       "success" : function() { console.log("分享成功！") ;  } ,
                       "fail" : function() { console.log("分享失败！") ;  } ,
                       "cancel" : function() { console.log("您取消了分享！") ; } ,
@@ -162,7 +162,7 @@
                   type : 1
                 }) ;
               }
-          }) ;          
+          }) ;
       } ,
       components : {
           downloadApp ,
@@ -174,5 +174,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../../src/less/rent/detail.less" ;   
+    @import "../../../../src/less/rent/detail.less" ;
 </style>
