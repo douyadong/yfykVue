@@ -1,0 +1,47 @@
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> xf ->poster.less (新房详情)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less";
+/*楼盘画报*/
+.building-poster{
+  width: 100%;
+  margin-bottom: 1rem;
+  >.poster-info{
+    padding: 1.85rem 1.5rem 2rem 1.5rem;
+    >.title{
+      font-size: 1.6rem;
+      color: @default-font-color;
+      letter-spacing: 0;
+      line-height: 2rem;
+    }
+    >.time{
+      font-size: 1.3rem;
+      color: #C3C3C3;
+      letter-spacing: 0;
+      line-height: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    >.poster-pic{
+      width: 100%;
+      height: 18.8rem;
+      >img{
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    >.poster-content{
+      font-size: 1.6rem;
+      color: @light-font-color;
+      letter-spacing: 0;
+      line-height: 2.35rem;
+      margin-top: 1rem;
+    }
+  }
+}
+
+
+

@@ -300,7 +300,20 @@ module.exports = {
                     "estateSubId": 113408,
                     "enabled": 1,
                     "publishTimeStr": "2016-10-27 10:11:55"
-                }
+                }, {
+                "id": 45,
+                "title": "楼盘画报TET",
+                "content": "楼盘画报顶顶顶顶",
+                "type": 1,
+                "publishTime": 1477534315000,
+                "showSort": 1,
+                "fileKey": "http://pic29.photophoto.cn/20131104/0017030021375972_b.jpg",
+                "fileName": "下载.jpg",
+                "estateSubId": 113408,
+                "enabled": 1,
+                "publishTimeStr": "2016-10-27 10:11:55"
+              }
+
             ],
             "newHouseMagazineCount": 12,
             "longitude": "121.467026",

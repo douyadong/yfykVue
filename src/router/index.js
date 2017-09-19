@@ -23,6 +23,7 @@ import esfDetailShare from "@/components/esf/detail/share"
 import estateDetailShare from "@/components/estate/detail/share"
 import xfDetail from "@/components/xf/detail";
 import xfStatus from "@/components/xf/status";
+import xfPoster from "@/components/xf/poster";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -113,6 +114,10 @@ export default new Router({
         path: "/xf/status",
         name: "xfStatus",
         component: xfStatus
-        }
+        },{
+        path: "/xf/poster",
+        name: "xfPoster",
+        component: xfPoster
+      }
     ]
 }) ;

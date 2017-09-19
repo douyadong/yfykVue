@@ -112,7 +112,7 @@
         <p class="time">{{getInfoData.posterData.publishTimeStr}}</p>
         <div class="poster-pic"><img :src="getInfoData.posterData.fileKey" :alt="getInfoData.posterData.fileName"></div>
         <p class="poster-content">{{getInfoData.posterData.content}}</p>
-        <a class="more-status">查看更多</a>
+        <router-link to="/xf/poster"><a class="more-status">查看更多</a></router-link>
       </div>
     </div>
     <!--用户评论-->
