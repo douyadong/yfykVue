@@ -83,7 +83,7 @@
                     <li class="full">
                     	<dl>
                     		<dt>地铁</dt>
-                    		<dd>{{apiData.estate.subwayName}}</dd>
+                    		<dd>{{apiData.estate.subwayName || '--'}}</dd>
                     	</dl>
                     </li>
                 </ul>
@@ -152,8 +152,8 @@
 						<i class="iconfont icon-arrowR"></i>
 					</a>					
 				</div>
-				<h4>价格走势</h4>				
-				<div id="price" style="height:200px">
+				<h4 v-if="chartVisible">价格走势</h4>				
+				<div v-if="chartVisible" id="price" style="height:200px">
 
 				</div>
 				<ul class='list-info'>
@@ -220,6 +220,7 @@
               cityId:"",
               isExpanded: false,
               extHouseDesc:"",
+              chartVisible:false,
 			  pageStates : {
                   swiperActiveIndex : 1 //相册当前在第几帧
               } ,
@@ -357,8 +358,7 @@
                 data.data.estate.historicalTransactionListUrl = prefix + "/estate/historicalTransactionList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
-                // data.data.house.extHouseDesc = "这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流";
-
+                
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
@@ -415,6 +415,7 @@
                 var datatmp = [], unitprice = [],realPrice=[];
                 var unSortPrice,maxPrice,tmpPrice;                 
                 if (data.data.estate.estateHistoricalPrice && data.data.estate.estateHistoricalPrice.length > 1)  {
+                        self.chartVisible = true;
                         for (var i = 0; i < data.data.estate.estateHistoricalPrice.length; i++) {
                             if (data.data.estate.estateHistoricalPrice[i] && data.data.estate.estateHistoricalPrice[i].date && data.data.estate.estateHistoricalPrice[i].unitPrice) {
                                 tmpPrice=parseFloat(data.data.estate.estateHistoricalPrice[i].unitPrice) == 0 ? null : parseFloat(data.data.estate.estateHistoricalPrice[i].unitPrice);
@@ -556,10 +557,11 @@
                         };
                         // 使用刚指定的配置项和数据显示图表。
                         myChart.setOption(option);
+
                     }else{
                         console.log('price hide');
-                        $('#price').hide().prev().hide();
-
+                        //$('#price').hide().prev().hide();
+                        self.chartVisible = false;
                     }
                 }
             });						
