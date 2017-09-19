@@ -170,7 +170,8 @@ import estate from "../../../../mock/estate/detail.json"
 </script>
 
 <style lang="less" scoped>
-@import "../../../../src/less/estate/share.less";
+@import "../../../assets/css/swiper-3.4.2.min.css";
+@import "../../../less/estate/share.less";
 </style>
 
      
