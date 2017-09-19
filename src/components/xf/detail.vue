@@ -1,13 +1,13 @@
 <template>
   <div class="xf-detail">
     <!--滚动图部分-->
-    <div class="top-swiper">
+    <div class="top-swiper container">
       <!--相册内容-->
       <swiper :options="pageConfs.swiperOption">
-        <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
+        <swiper-slide v-for="(slide , index) in getInfoData.simpleHouseRentDetailInfo" :key="slide.imgKey">
           <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>
           <img :src="slide.imageSrc" class="img-responsive" v-else>
-          <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
+          <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ getInfoData.simpleHouseRentDetailInfo.length }}</div>
         </swiper-slide>
       </swiper>
     </div>
@@ -148,26 +148,32 @@
     <!--周边楼盘-->
     <div class="wk-panel nearby">
       <p class="status-name">周边楼盘</p>
-      <div class="nearby-list">
-        <div class="single-nearby" v-for="(singleNearby , index ) in getInfoData.nearbyData" :key="singleNearby.id">
-          <div class="nearby-pic">
-            <img :src="singleNearby.imageUrl" alt="">
-          </div>
-          <div class="nearby-content">
-            <p class="name">{{singleNearby.estateName || '--'}}</p>
-            <p class="space">{{singleNearby.startSpace}}㎡ - {{singleNearby.endSpace}}㎡ <span>{{singleNearby.avgPriceWou}}元/㎡</span></p>
-            <p class="districtName">{{singleNearby.districtName}} {{singleNearby.townName}}</p>
-            <ul>
-              <li v-if="singleNearby.isSoonOpen == 1"><p>即将开盘</p></li>
-              <li v-if="singleNearby.hasActivity == 1"><p>地铁</p></li>
-              <li v-if="singleNearby.isSubwayEstate == 1"><p>有优惠</p></li>
-              <li v-if="singleNearby.hasVideo == 1"><p>有视频</p></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <!--<div class="nearby-list">-->
+        <xf-sources :cityId="cityId" :agentId="getInfoData.agentDetail.agentId" :items="getInfoData.nearbyData" eventName="2065006" :otherParams="{ agent_id : getInfoData.agentDetail.agentId }" />
+
+        <!--<div class="single-nearby" v-for="(singleNearby , index ) in getInfoData.nearbyData" :key="singleNearby.id">-->
+          <!--<div class="nearby-pic">-->
+            <!--<img :src="singleNearby.imageUrl" alt="">-->
+          <!--</div>-->
+          <!--<div class="nearby-content">-->
+            <!--<p class="name">{{singleNearby.estateName || '&#45;&#45;'}}</p>-->
+            <!--<p class="space">{{singleNearby.startSpace}}㎡ - {{singleNearby.endSpace}}㎡ <span>{{singleNearby.avgPriceWou}}元/㎡</span></p>-->
+            <!--<p class="districtName">{{singleNearby.districtName}} {{singleNearby.townName}}</p>-->
+            <!--<ul>-->
+              <!--<li v-if="singleNearby.isSoonOpen == 1"><p>即将开盘</p></li>-->
+              <!--<li v-if="singleNearby.hasActivity == 1"><p>地铁</p></li>-->
+              <!--<li v-if="singleNearby.isSubwayEstate == 1"><p>有优惠</p></li>-->
+              <!--<li v-if="singleNearby.hasVideo == 1"><p>有视频</p></li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
     </div>
+
+    <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
+      <span slot="no-more"></span>
+    </infiniteLoading>
 
     <assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>
     <!--楼盘优惠弹出层-->
@@ -198,12 +204,15 @@
 
 <script>
   import assistant from "@/components/common/assistant";
+  import apiDataFilter from "@/libraries/apiDataFilter";
   import data from '../../../mock/xf/detail';
   import { swiper , swiperSlide } from "vue-awesome-swiper" ;
+  import xfSources from "@/components/common/xfSources" ;
+  import infiniteLoading from "vue-infinite-loading";
 
   export default {
     name: "xfDetail",
-    components: { assistant, swiper , swiperSlide },
+    components: { assistant, swiper , swiperSlide, xfSources,infiniteLoading },
     data() {
       return {
         cityId: this.$route.query.cityId,
@@ -221,7 +230,14 @@
           posterData: data.data.newHouseDetail.newHouseMagazineList[0],
           commentsData: data.data.comment,
           locationData: data.data.newHouseDetail,
-          nearbyData: data.data.aroundNewHouseList
+          nearbyData: data.data.aroundNewHouseList,
+          agentDetail : data.data.agent,
+          simpleHouseRentDetailInfo: data.data.houseImageAndVideoList,
+        },
+        pageInfo:{
+          pageIndex:0,
+          pageSize:10,
+          total:0
         },
         pageStates : {
           swiperActiveIndex : 1 //相册当前在第几帧
@@ -279,10 +295,35 @@
       },
       showHide() {
         this.moduleShow = ! this.moduleShow ;
+      },
+      onInfinite(){
+        this.fetchComments();
+      },
+      fetchComments(){//获取评论数据
+        let self = this;
+        apiDataFilter.request({
+          apiPath:"learn.comments",
+          data:{
+            articleId:this.articleId,
+            pageIndex:this.pageInfo.pageIndex,
+            pageSize:this.pageInfo.pageSize,
+          },
+          successCallback:function(res){
+            let data = res.body;
+            self.pageInfo.pageIndex += (data.data && data.data.length || 0);
+            self.comments = self.comments.concat(data.data);
+            self.pageInfo.total = data.count;
+            self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+            if(self.comments.length === data.count){
+              self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+            }
+          }
+        });
       }
     }
   }
 </script>
 <style lang="less">
+  @import "../../assets/css/swiper-3.4.2.min.css" ;
   @import "../../../src/less/xf/detail.less" ;
 </style>

@@ -109,10 +109,10 @@ export default new Router({
         path: "/xf/detail",
         name: "xfDetail",
         component: xfDetail
-      },{
+        },{
         path: "/xf/status",
         name: "xfStatus",
         component: xfStatus
-      }
+        }
     ]
 }) ;
