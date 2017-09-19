@@ -128,6 +128,30 @@
             "agentWChatId": null,
             "weChatQRImgKey": null,
             "agentWChartQRImgUrl": null
-        }
+        },
+        "houseImageAndVideoList":[
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://img.wkzf.com/78e1ef9b0844418ca453897939068eba.DL",
+            "isVideo": true
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://img.wkzf.com/bcb25161e86d48dcb064dec4c9ab04f0.DL",
+            "isVideo": false
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://img.wkzf.com/bcb25161e86d48dcb064dec4c9ab04f0.DL",
+            "isVideo": false
+
+          },
+          {
+            "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
+            "imageSrc":"https://imgwater-test.oss.aliyuncs.com/06e392b523874979bd004ccafdaa34cb.I640_360",
+            "isVideo": false
+          }
+        ]
+        
     }
 }

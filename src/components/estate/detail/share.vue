@@ -3,10 +3,10 @@
     <!--相册内容-->
     <div class="photo-loop">
         <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
+            <swiper-slide v-for="(slide , index) in houseImageAndVideoList" :key="slide.imgKey">
                 <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
-                <img src="slide.imageSrc" class="img-responsive" v-else>
-                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
+                <img :src="slide.imageSrc" class="img-responsive" v-else>
+                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
             </swiper-slide>            
         </swiper>
     </div>
@@ -68,16 +68,17 @@
         </span>
     </div>
     <!--用户评论-->
-    <div class="comment wk-panel">
+    <guestComment :estateInfo="estateInfo"></guestComment>
+    <!--<div class="comment wk-panel">
         <div class="panel-header" style="margin-left:0;padding:1rem 1.5rem">
             <span>用户评论</span>
             <span class="comment-amount">
                 <span>{{estateInfo.comment.amount}}</span>
                 <a href="#"><i class="iconfont icon-arrowR"></i></a>
             </span>
-        </div>
+        </div>-->
         <!--用户评论内容-->
-        <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
+        <!--<p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
         <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
             <div class="panel-item">
@@ -95,12 +96,12 @@
                         <span class="comment-like-amount">{{item.upAmount}}</span>
                     </span>
                 </p>
-            </div>
+            </div>-->
             <!--<div><img src="item.guest.avatar.url" alt=""> -->
             <!--<span>{{item.guest.guestPhoneNum}}</span><i class="iconfont icon-youpingsvg"></i></div>-->
+        <!--</div>
         </div>
-        </div>
-    </div>
+    </div>-->
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
         <div class="my-comment">我来评价</div>
@@ -126,6 +127,7 @@
 <script>
 import $ from "jquery";
 import {swiper,swiperSlide} from "vue-awesome-swiper";
+import guestComment from "@/components/common/guestComment";
 import estate from "../../../../mock/estate/detail.json"
     export default{
         name:"estateDetailShare",
@@ -156,7 +158,8 @@ import estate from "../../../../mock/estate/detail.json"
                   simpleAgentModel : {}
               },  
                 agent:estate.data.agent,//经济人信息
-                estateInfo:estate.data.estateInfo //小区房源信息
+                estateInfo:estate.data.estateInfo, //小区房源信息
+                houseImageAndVideoList:estate.data.houseImageAndVideoList //轮播图信息
             }
         },
         created(){
@@ -164,13 +167,13 @@ import estate from "../../../../mock/estate/detail.json"
         },
          components : {
           swiper,
-          swiperSlide
+          swiperSlide,
+          guestComment
       }
     }
 </script>
 
 <style lang="less" scoped>
-@import "../../../assets/css/swiper-3.4.2.min.css";
 @import "../../../less/estate/share.less";
 </style>
 
