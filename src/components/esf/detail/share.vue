@@ -683,6 +683,7 @@
 
     .swiper-wrapper{
         img{
+            width:100%;
             height:210px;
         }
     }
