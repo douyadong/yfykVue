@@ -620,52 +620,52 @@
         computed:{
             houseImageAndVideoList:function(){
                 let result = [];
-                // if(this.apiData.house.houseVideoResponse){
-                //     result.push({
-                //         isVideo: true,
-                //         video: encodeURIComponent({
-                //             videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
-                //             videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
-                //         }),
-                //         url:this.apiData.house.houseVideoResponse.videoUrl,
-                //         videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
-                //         videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
-                //     });
-                // }
+                if(this.apiData.house.houseVideoResponse){
+                    result.push({
+                        isVideo: true,
+                        video: encodeURIComponent({
+                            videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
+                            videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
+                        }),
+                        url:this.apiData.house.houseVideoResponse.videoUrl,
+                        videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
+                        videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
+                    });
+                }
 
                 //https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL
                 //http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4
 
-                result.push({
-                    isVideo: true,
-                    video: encodeURIComponent(JSON.stringify({
-                        videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
-                        videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
-                    })),
-                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL",
-                    videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
-                    videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
-                });
+                // result.push({
+                //     isVideo: true,
+                //     video: encodeURIComponent(JSON.stringify({
+                //         videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                //         videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                //     })),
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL",
+                //     videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                //     videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
 
-                result.push({
-                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
-                });
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
 
-                result.push({
-                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
-                });
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
 
-                result.push({
-                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
-                });
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
 
-                // if(this.apiData.house.imgList){
-                //     this.apiData.house.imgList.forEach(function(img){
-                //         result.push({
-                //             url:img                         
-                //         });
-                //     });
-                // }
+                if(this.apiData.house.imgList){
+                    this.apiData.house.imgList.forEach(function(img){
+                        result.push({
+                            url:img                         
+                        });
+                    });
+                }
 
                 return result;
             },
