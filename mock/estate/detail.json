@@ -70,7 +70,11 @@
                                 "imgType": 1
                             }
                         },
-                        "imgList": null,
+                        "imgList": [
+                            "https://imgwater.oss.aliyuncs.com/3ae2582211304e398e7a5dac0d4fd68a",
+                            "https://imgwater.oss.aliyuncs.com/5ef511539cf240e4afbb1bbb058b2c8f",
+                            "https://imgwater.oss.aliyuncs.com/c25e493b61b34e7282e9649d0f907d00"
+                        ],
                         "landlord": 0
                     },
                     {
@@ -101,7 +105,7 @@
                                 "imgType": null
                             }
                         },
-                        "imgList": null,
+                        "imgList": [],
                         "landlord": 0
                     }
                 ]

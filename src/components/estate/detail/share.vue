@@ -69,39 +69,6 @@
     </div>
     <!--用户评论-->
     <guestComment :estateInfo="estateInfo"></guestComment>
-    <!--<div class="comment wk-panel">
-        <div class="panel-header" style="margin-left:0;padding:1rem 1.5rem">
-            <span>用户评论</span>
-            <span class="comment-amount">
-                <span>{{estateInfo.comment.amount}}</span>
-                <a href="#"><i class="iconfont icon-arrowR"></i></a>
-            </span>
-        </div>-->
-        <!--用户评论内容-->
-        <!--<p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
-        <div class="all-comment" v-else>
-            <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
-            <div class="panel-item">
-                <p class="comment-phone">
-                    <img src="../../../assets/volume.png" alt="">
-                    <span>{{item.guest.guestPhoneNum}}</span>
-                    <i class="iconfont icon-youpingsvg"></i>
-                    <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
-                </p>
-                <h4>{{item.comment}}</h4>
-                <p class="comment-time-like">
-                    <span class="comment-time">{{item.createTimeStr}}</span>
-                    <span class="click-like">
-                        <i class="comment-like iconfont icon-zan"></i>
-                        <span class="comment-like-amount">{{item.upAmount}}</span>
-                    </span>
-                </p>
-            </div>-->
-            <!--<div><img src="item.guest.avatar.url" alt=""> -->
-            <!--<span>{{item.guest.guestPhoneNum}}</span><i class="iconfont icon-youpingsvg"></i></div>-->
-        <!--</div>
-        </div>
-    </div>-->
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
         <div class="my-comment">我来评价</div>
