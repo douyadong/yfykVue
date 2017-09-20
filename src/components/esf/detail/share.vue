@@ -47,7 +47,7 @@
                     <li class="left">
                     	<dl>
                     		<dt>单价</dt>
-                    		<dd>{{apiData.house.unitPrice}} 元/m2</dd>
+                    		<dd>{{apiData.house.unitPrice}} 元/㎡</dd>
                     	</dl>
                     </li>
                     <li class="right">
@@ -212,6 +212,8 @@
             this.houseId = this.$route.params.houseId;
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
+
+            document.title = "二手房详情";
         },
 		data(){
 			return {
@@ -358,6 +360,8 @@
                 data.data.estate.historicalTransactionListUrl = prefix + "/estate/historicalTransactionList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
+                
+                document.title = data.data.house.houseTitle;
                 
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
@@ -563,7 +567,7 @@
                         //$('#price').hide().prev().hide();
                         self.chartVisible = false;
                     }
-                }
+                }            
             });						
 		},
 		methods : {
