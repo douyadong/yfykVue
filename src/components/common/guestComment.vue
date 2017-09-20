@@ -8,11 +8,9 @@
            </div>
       </div>
       <!--客户评论内容-->
-<<<<<<< HEAD
+
       <p class="no-data" v-if="!review.comment.commentList||!review.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
-=======
-      <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>
->>>>>>> ec729e9e4af50ed8c1e11970b4ffcf3a1332e000
+
       <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in review.comment.commentList" :key="index">
                 <div class="panel-item">
