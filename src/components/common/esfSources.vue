@@ -49,7 +49,7 @@ export default {
           })) ;
       } ,
       getRedirectUrl : function(url) {
-          return '/share/' + url + '/' + this.agentId + '/' + this.cityId;
+          return '/esf/share/' + url + '/' + this.agentId + '/' + this.cityId;
           //return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+this.cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
       }
   } ,
