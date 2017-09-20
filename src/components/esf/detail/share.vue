@@ -420,7 +420,7 @@
                     self.apiData.house.tagList.push({className:"tt",name:"南北通透"});
                 }
 
-                if(house.houseId > 10000/*1000000000*/){
+                if(house.houseId > 1000000000){
                     self.apiData.house.isExternal  = true;
                 }else{
                     self.apiData.house.isExternal  = false;
