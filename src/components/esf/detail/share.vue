@@ -1,11 +1,22 @@
 <template>
 	<div id="esfDetailShare">
-		<assistant :cityId="cityId" :agent="apiData.agent" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
+		<assistant :cityId="cityId" :agent="apiData.agent"/>
 		<download-app />
 		<!--相册内容-->
        <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
-                <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video>                
+            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
+                <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
+                <template  v-if="slide.isVideo">
+                    <div style="position:relative" @click="playVideo(slide.video)">                    
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoSmallImage" class="img-responsive"> 
+                        <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
+                            <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                               
                 <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
             </swiper-slide>            
@@ -362,7 +373,7 @@
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
                 
                 document.title = data.data.house.houseTitle;
-                
+
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
@@ -592,6 +603,11 @@
                 $('html').css("overflow","hidden");
           	}
           },
+          playVideo(video){
+            this.$router.push({
+                path:"/videoPlay?video=" + video
+            });
+          },
           toggleExpand(){
             this.isExpanded = !this.isExpanded;
             if(this.isExpanded){//展开
@@ -604,22 +620,52 @@
         computed:{
             houseImageAndVideoList:function(){
                 let result = [];
-                if(this.apiData.house.houseVideoResponse){
-                    result.push({
-                        isVideo: true,
-                        url:this.apiData.house.houseVideoResponse.videoUrl,
-                        videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
-                        videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
-                    });
-                }
+                // if(this.apiData.house.houseVideoResponse){
+                //     result.push({
+                //         isVideo: true,
+                //         video: encodeURIComponent({
+                //             videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
+                //             videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
+                //         }),
+                //         url:this.apiData.house.houseVideoResponse.videoUrl,
+                //         videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
+                //         videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
+                //     });
+                // }
 
-                if(this.apiData.house.imgList){
-                    this.apiData.house.imgList.forEach(function(img){
-                        result.push({
-                            url:img                         
-                        });
-                    });
-                }
+                //https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL
+                //http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4
+
+                result.push({
+                    isVideo: true,
+                    video: encodeURIComponent(JSON.stringify({
+                        videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                        videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                    })),
+                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL",
+                    videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                    videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                });
+
+                result.push({
+                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                });
+
+                result.push({
+                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                });
+
+                result.push({
+                    url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                });
+
+                // if(this.apiData.house.imgList){
+                //     this.apiData.house.imgList.forEach(function(img){
+                //         result.push({
+                //             url:img                         
+                //         });
+                //     });
+                // }
 
                 return result;
             },

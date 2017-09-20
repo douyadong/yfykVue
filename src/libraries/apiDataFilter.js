@@ -80,7 +80,7 @@ let apiDataFilter =  {
                 env = "prod" ;
                 break ;
             default :
-                env = "prod" ;
+                env = "sim" ;
                 break ;
         }        
         return env ;

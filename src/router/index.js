@@ -20,6 +20,7 @@ import spaceRateList from "@/components/space/rate/list" ;
 import weixinAdd from "@/components/weixin/add" ;
 import login from "@/components/login/index" ;
 import esfDetailShare from "@/components/esf/detail/share";
+import videoPlay from "@/components/common/videoPlay";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -98,6 +99,10 @@ export default new Router({
             path: "/esf/detail/share/:houseId/:agentId/:cityId",
             name: "esfDetailShare",
             component: esfDetailShare
+        },{
+            path: "/videoPlay",
+            name: "videoPlay",
+            component: videoPlay
         }
     ]
 }) ;
