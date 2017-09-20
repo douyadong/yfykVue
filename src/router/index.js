@@ -24,6 +24,8 @@ import estateDetailShare from "@/components/estate/detail/share"
 import xfDetail from "@/components/xf/detail";
 import xfStatus from "@/components/xf/status";
 import xfPoster from "@/components/xf/poster";
+import xfComments from "@/components/xf/comments";
+import xfInfo from "@/components/xf/information";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -107,17 +109,25 @@ export default new Router({
             name:"estateDetailShare",
             component:estateDetailShare
         },{
-        path: "/xf/detail",
-        name: "xfDetail",
-        component: xfDetail
+            path: "/xf/detail",
+            name: "xfDetail",
+            component: xfDetail
         },{
-        path: "/xf/status",
-        name: "xfStatus",
-        component: xfStatus
+            path: "/xf/status",
+            name: "xfStatus",
+            component: xfStatus
         },{
-        path: "/xf/poster",
-        name: "xfPoster",
-        component: xfPoster
+            path: "/xf/poster",
+            name: "xfPoster",
+            component: xfPoster
+        },{
+        path: "/xf/comments",
+        name: "xfComments",
+        component: xfComments
+      },{
+        path: "/xf/info",
+        name: "xfInfo",
+        component: xfInfo
       }
     ]
 }) ;

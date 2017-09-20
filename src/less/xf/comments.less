@@ -1,0 +1,77 @@
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> xf ->comments.less (新房详情)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+@import "../variables.less" ;
+@import "../mixins.less";
+/*用户评论*/
+.xf-comments{
+>.base{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top:0;
+  bottom: 0;
+  background-color: @default-color;
+}
+.comments{
+  width: 100%;
+  >.comments-detail{
+    padding:0 1.5rem 2rem 1.5rem;
+    >.first-comment:after{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: '';
+      width: 100%;
+      height: 1px;
+      border-top: 1px solid @line-gray-color;
+      -webkit-transform: scaleY(0.5);
+    }
+    > .single-comment {
+      margin-top: 2rem;
+      padding-bottom: 1.5rem;
+      position: relative;
+      > .comments-top {
+        >img{
+          width: 3rem;
+          height: 3rem;
+        }
+        >span{
+          font-size: 1.6rem;
+          color: @light-font-color;
+          display:inline-block ;
+          margin-right: 0.85rem;
+        }
+        >.icon-youpingsvg{
+          color: @danger-color;
+        }
+        >.icon-yezhu{
+          color: @primary-color;
+        }
+      }
+      >.comment-content{
+        font-size: 1.6rem;
+        color: @default-font-color;
+        line-height: 2.6rem;
+      }
+      >.time{
+        font-size: 1.4rem;
+        color: @light-font-color;
+        letter-spacing: 0;
+        clear: both;
+        >span{
+          float: right;
+          >i{
+            margin-right: 0.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+}

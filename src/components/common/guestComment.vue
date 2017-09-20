@@ -8,7 +8,7 @@
            </div>
       </div>
       <!--客户评论内容-->
-      <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
+      <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>
       <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
                 <div class="panel-item">
@@ -19,7 +19,7 @@
                         <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
                     </p>
                     <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
-                    <ul v-if="item.imgList.length">
+                    <ul v-if="item.imgList">
                         <li v-for="(val,index) in item.imgList" :key="index">
                             <img :src="val" alt="" class="img-responsive">
                         </li>
@@ -31,7 +31,7 @@
                             <span class="comment-like-amount">{{item.upAmount}}</span>
                         </span>
                     </p>
-                </div>           
+                </div>
             </div>
       </div>
   </div>
@@ -43,8 +43,8 @@
         props:["estateInfo"]
     }
 </script>
- 
- <style lang="less" scoped> 
+
+ <style lang="less" scoped>
     @import "../../../src/less/components/guestComment.less" ;
  </style>
- 
+

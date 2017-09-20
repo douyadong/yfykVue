@@ -101,7 +101,7 @@
             <p>{{getInfoData.buildingInfoDec.developers || "--"}}</p>
           </div>
         </div>
-        <a class="more-status">查看更多</a>
+        <router-link to="/xf/info"><a class="more-status">查看更多</a></router-link>
       </div>
     </div>
     <!--楼盘画报-->
@@ -116,8 +116,9 @@
       </div>
     </div>
     <!--用户评论-->
+
     <div class="wk-panel  comments">
-      <p class="status-name">用户评论 <span>{{getInfoData.commentsData.amount}} <i class=" iconfont icon-arrowR"></i></span></p>
+ <!--     <p class="status-name">用户评论 <span>{{getInfoData.commentsData.amount}} <i class=" iconfont icon-arrowR"></i></span></p>
       <div class="comments-detail">
         <div class="single-comment" v-for="(singleComment , index ) in getInfoData.commentsData.commentList" :key="singleComment.id" v-if="index < 2" :class="{'first-comment': index == 0} ">
           <div class="comments-top">
@@ -131,8 +132,10 @@
           </div>
           <p class="time">{{singleComment.createTimeStr}} <span><i class="iconfont icon-zan "></i>{{singleComment.upAmount}}</span></p>
         </div>
-        <a class="more-status">我来点评</a>
-      </div>
+
+      </div>-->
+      <guestComment :estateInfo="getInfoData.commentsData"></guestComment>
+      <div class="status"><a class="more-status">我来点评</a></div>
     </div>
     <!--位置及周边-->
     <div class="wk-panel location">
@@ -209,10 +212,11 @@
   import { swiper , swiperSlide } from "vue-awesome-swiper" ;
   import xfSources from "@/components/common/xfSources" ;
   import infiniteLoading from "vue-infinite-loading";
+  import guestComment from "@/components/common/guestComment";
 
   export default {
     name: "xfDetail",
-    components: { assistant, swiper , swiperSlide, xfSources,infiniteLoading },
+    components: { assistant, swiper , swiperSlide, xfSources,infiniteLoading,guestComment },
     data() {
       return {
         cityId: this.$route.query.cityId,
@@ -228,7 +232,7 @@
           buildingCharacter: data.data.newHouseDetail.projectFeatureList,
           buildingInfoDec: data.data.newHouseDetail,
           posterData: data.data.newHouseDetail.newHouseMagazineList[0],
-          commentsData: data.data.comment,
+          commentsData: data.data,
           locationData: data.data.newHouseDetail,
           nearbyData: data.data.aroundNewHouseList,
           agentDetail : data.data.agent,
