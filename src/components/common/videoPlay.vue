@@ -12,7 +12,8 @@ export default{
 			videoSmallImage:""
 		}
 	},
-	created(){		
+	created(){	
+		document.title = "";	
 		let video = JSON.parse(decodeURIComponent(this.$route.query.video));		
 		this.videoUrl = video.videoUrl;
         this.videoSmallImage = video.videoSmallImage;        

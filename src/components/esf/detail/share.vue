@@ -623,10 +623,10 @@
                 if(this.apiData.house.houseVideoResponse){
                     result.push({
                         isVideo: true,
-                        video: encodeURIComponent({
+                        video: encodeURIComponent(JSON.stringify({
                             videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
                             videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
-                        }),
+                        })),
                         url:this.apiData.house.houseVideoResponse.videoUrl,
                         videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
                         videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
