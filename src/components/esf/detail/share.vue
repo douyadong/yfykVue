@@ -3,6 +3,7 @@
 		<assistant :cityId="cityId" :agent="apiData.agent"/>
 		<download-app />
 		<!--相册内容-->
+        
        <swiper :options="pageConfs.swiperOption">            
             <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
