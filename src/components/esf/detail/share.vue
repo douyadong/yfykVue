@@ -193,7 +193,7 @@
 		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" >
 			<h4 class="panel-header">相似房源推荐</h4>
 			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
-			<a class="more" :href="apiData.house.similarListUrl">查看更多</a>
+			<a class="more" :href="apiData.house.similarListUrl" v-if="!apiData.house.isExternal">查看更多</a>
 		</div>	
 
 		<div id="cover">
