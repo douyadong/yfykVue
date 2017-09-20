@@ -1,6 +1,6 @@
 <template>	
 	<div style="width:100%;display:flex;align-items:center;height:100%;">
-	<video :src="videoUrl" :poster="videoSmallImage" controls="controls" autoplay="true" preload="none" style="width:100%;"></video>	
+	<video :src="videoUrl" :poster="videoSmallImage" controls="controls" autoplay="autoplay" preload="none" style="width:100%;"></video>	
 	</div>
 </template>
 <script>
