@@ -595,13 +595,13 @@
               })) ;
           },
           previewImage(hide){          	
-          	if(hide){
-          		$('#cover').hide();
-                $('html').css("overflow","auto");
-          	}else{
-          		$('#cover').show();
-                $('html').css("overflow","hidden");
-          	}
+          	// if(hide){
+          	// 	$('#cover').hide();
+           //      $('html').css("overflow","auto");
+          	// }else{
+          	// 	$('#cover').show();
+           //      $('html').css("overflow","hidden");
+          	// }
           },
           playVideo(video){
             this.$router.push({
@@ -680,4 +680,10 @@
 </script>
 <style lang="less">
 	@import "../../../less/esf/detail.less"; 
+
+    .swiper-wrapper{
+        img{
+            height:210px;
+        }
+    }
 </style>
