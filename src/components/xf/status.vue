@@ -17,8 +17,10 @@
 
   export default {
     name: "xfStatus",
+
     data() {
       return {
+
         getInfoData:{
           buildingStatus: data.data.newHouseDetail.newHouseDynamicList
         }
