@@ -21,7 +21,7 @@
                         <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
                     </p>
                     <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
-                    <ul v-if="item.imgList">
+                    <ul v-if="item.imgList.length">
                         <li v-for="(val,index) in item.imgList" :key="index">
                             <img :src="val" alt="" class="img-responsive">
                         </li>
