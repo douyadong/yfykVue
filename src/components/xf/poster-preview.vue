@@ -87,14 +87,6 @@
     },
     directives: {
       focus: {
-        data(){
-          return {
-            distance:{
-              firstTouchX : 0,
-              firstTouchY : 0
-            }
-          }
-        },
         checkTouch(e) {
           let touchAction;
           if (e.touches) {
@@ -109,7 +101,7 @@
             console.log("niho ");
             console.log(this);
             console.log(this.clientHeight);
-//            console.log(checkTouch(e).pageX,checkTouch(e).pageY);
+            console.log(e);
           })
         },
       }
