@@ -779,7 +779,7 @@ module.exports = {
           {
             "videoSrc":"http://7xkvzb.com5.z0.glb.qiniucdn.com/5085474bacab4d5087e9d371a3ea5709WV.mp4",
             "imageSrc":"https://imgwater-test.oss.aliyuncs.com/87e7f9bb14ad49b5bd0067d5c73cf0e2.I500_280",
-            "isVideo": false,
+            "isVideo": true,
 
           },
           {

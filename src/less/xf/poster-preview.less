@@ -1,0 +1,46 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> xf ->information.less (新房详情)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less";
+
+.xf-poster-preview{
+  >.base{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background-color: @default-color;
+  }
+  >.swiper-container {
+    .swiper-slide {
+      position : relative ;
+      >.pagination-num{
+        height: 5.4rem;
+        width: 100%;
+        padding-right: 1.5rem;
+        .box-end();
+        >.pagination {
+          display: inline-block;
+          .border-radius(100px) ;
+          background-color : @tag-background-color ;
+          color : @default-font-color ;
+          font-size : 1.2rem ;
+          height : 2.4rem;
+          width: 6.25rem;
+          line-height: 2.4rem;
+          text-align: center;
+          z-index : 2000 ;
+        }
+      }
+      >.videoImg{
+        width: 100%;
+        height: 37.8rem;
+        .box-center
+      }
+    }
+  }
+}
