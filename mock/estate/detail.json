@@ -80,7 +80,7 @@
                     {
                         "pkid": 1038,
                         "subEstateId": 0,
-                        "upAmount": 0,
+                        "upAmount": 5,
                         "downAmount": 0,
                         "comment": "WRF",
                         "createTimeStr": "2017-03-17 16:57:31",

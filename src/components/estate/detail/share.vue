@@ -68,7 +68,7 @@
         </span>
     </div>
     <!--用户评论-->
-    <guestComment :estateInfo="estateInfo"></guestComment>
+    <guestComment :commentInfo="estateInfo"></guestComment>
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
         <div class="my-comment">我来评价</div>
