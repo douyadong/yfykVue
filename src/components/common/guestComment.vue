@@ -4,7 +4,10 @@
            <span>用户评论</span>
            <div class="comment-amount">
                <span>{{review.comment.amount}}</span>
-                <a href="#"><i class="iconfont icon-arrowR"></i></a>
+                <!--<a href="#"><i class="iconfont icon-arrowR"></i></a>-->
+                <router-link to="/common/guestAllComments" class="skip">
+                    <i class="iconfont icon-arrowR"></i>
+                </router-link>
            </div>
       </div>
       <!--客户评论内容-->
@@ -30,7 +33,7 @@
                         <span class="comment-time">{{item.createTimeStr}}</span>
                         <span class="click-like">
                             <i class="comment-like iconfont icon-zan" @click="clickZan($event)"></i>
-                            <span class="comment-like-amount" :data-number="zanNumber">{{item.upAmount}}</span>
+                            <span class="comment-like-amount" data-zan="0">{{item.upAmount}}</span>
                         </span>
                     </p>
                 </div>
@@ -47,22 +50,29 @@
         data(){
             return{
                 review:this.commentInfo,//将父组件传递给子组件的数据初始化给review，用于更改点赞次数信息；
-                zanNumber:0//为点赞做准备；
+                // zanNumber:0//为点赞做准备；
             }
         },
         methods:{
             clickZan(e){
                 let count=$('.comment-like').index($(e.target));//获取点击哪个元素的事件源在所有该元素的下标；
-                let numberString=$('.comment-like-amount:eq('+count+')').data(number);
-                console.log($('.comment-like-amount').eq(count))
-                console.log(number); 
-                let number=parseInt(numberString);  
-                console.log(number);        
-                if(!number){
+                // let numberString=$('.comment-like-amount:eq('+count+')').data("number");
+                // console.log(numberString)
+                // let number=parseInt(numberString);  
+                // let zanNumber=0; 
+                let zanAmount=$('.comment-like-amount').eq(count).data("zan");
+                if(!zanAmount){
+                    // 实现点赞功能；
                     this.review.comment.commentList[count].upAmount++;
-                    // number++;//为只能做一次点赞做准备；
-                    this.zanNumber++;
-                }
+                    zanAmount++;
+                    $('.comment-like-amount').eq(count).data("zan",1);
+                }else{
+                    // 取消点赞功能；
+                     this.review.comment.commentList[count].upAmount--;
+                     zanAmount--;
+                     $('.comment-like-amount').eq(count).data("zan",0);
+                };
+                
             }
         }
     }

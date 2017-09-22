@@ -26,6 +26,7 @@ import xfStatus from "@/components/xf/status";
 import xfPoster from "@/components/xf/poster";
 import xfComments from "@/components/xf/comments";
 import xfInfo from "@/components/xf/information";
+import guestAllComments from "@/components/common/guestAllComments"
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -128,6 +129,10 @@ export default new Router({
         path: "/xf/info",
         name: "xfInfo",
         component: xfInfo
+      },{
+          path:"/common/guestAllComments",
+          name:"guestAllComments",
+          component:guestAllComments
       }
     ]
 }) ;
