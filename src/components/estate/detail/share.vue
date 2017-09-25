@@ -68,7 +68,56 @@
         </span>
     </div>
     <!--用户评论-->
-    <guestComment :commentInfo="estateInfo"></guestComment>
+     <!--<div class="panel-header comment">
+           <span>用户评论</span>
+           <div class="comment-amount">
+               <span>{{estateInfo.comment.amount}}</span>
+                <router-link to="/common/guestAllComments" class="skip">
+                    <i class="iconfont icon-arrowR"></i>
+                </router-link>
+           </div>
+      </div>
+    <guestComment :commentInfo="estateInfo"></guestComment>-->
+    <div class="guest-comment wk-panel">
+      <div class="panel-header comment">
+           <span>用户评论</span>
+           <div class="comment-amount">
+               <span>{{estateInfo.comment.amount}}</span>
+                <router-link to="/estate/detail/comment/:subEstateId" class="skip">
+                    <i class="iconfont icon-arrowR"></i>
+                </router-link>
+           </div>
+      </div>
+      <!--客户评论内容-->
+
+      <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
+
+      <div class="all-comment" v-else>
+            <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
+                <div class="panel-item">
+                    <p class="comment-phone">
+                        <img src="https://imgwater.oss.aliyuncs.com/a791b7e705ed42139ae13fd4b594aa24" alt="">
+                        <span>{{item.guest.guestPhoneNum}}</span>
+                        <i class="iconfont icon-youpingsvg"></i>
+                        <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
+                    </p>
+                    <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
+                    <ul v-if="item.imgList.length">
+                        <li v-for="(val,index) in item.imgList" :key="index">
+                            <img :src="val" alt="" class="img-responsive">
+                        </li>
+                    </ul>
+                    <p class="comment-time-like">
+                        <span class="comment-time">{{item.createTimeStr}}</span>
+                        <span class="click-like">
+                            <i class="comment-like iconfont icon-zan" @click="clickZan($event)"></i>
+                            <span class="comment-like-amount" :data-zan="zan[index]">{{item.upAmount}}</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+      </div>
+  </div>
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
         <div class="my-comment">我来评价</div>
@@ -119,18 +168,41 @@ import estate from "../../../../mock/estate/detail.json"
                         this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
                       }       
                   }
-              } ,
+                 } ,
                  apiData : {
                   simpleHouseRentDetailInfo : {} ,
                   simpleAgentModel : {}
-              },  
+                 },  
                 agent:estate.data.agent,//经济人信息
                 estateInfo:estate.data.estateInfo, //小区房源信息
-                houseImageAndVideoList:estate.data.houseImageAndVideoList //轮播图信息
+                houseImageAndVideoList:estate.data.houseImageAndVideoList, //轮播图信息
+                zan:[]//为了实现点赞dom元素的data-zan属性值实时改变；
             }
         },
         created(){
          console.log(estate);
+        //  为zan数组每个值赋值为0，为点赞功能实现做准备；
+         if(this.estateInfo.comment.commentList.length){
+            for(let i=0;i<this.estateInfo.comment.commentList.length;i++){
+                this.zan[i]=0;
+            }
+         }
+
+        },
+        methods:{
+            clickZan(e){
+                let count=$('.comment-like').index($(e.target));//获取点击哪个元素的事件源在所有该元素的下标；
+                if(!this.zan[count]){
+                    // 实现点赞功能；
+                    this.estateInfo.comment.commentList[count].upAmount++;
+                    this.zan[count]=1;
+                }else{
+                    // 取消点赞功能；
+                     this.estateInfo.comment.commentList[count].upAmount--;
+                     this.zan[count]=0;
+                };
+                
+            }
         },
          components : {
           swiper,

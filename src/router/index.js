@@ -27,7 +27,7 @@ import xfPoster from "@/components/xf/poster";
 import xfComments from "@/components/xf/comments";
 import xfInfo from "@/components/xf/information";
 import xfPosterPreview from "@/components/xf/poster-preview";
-import guestAllComments from "@/components/common/guestAllComments"
+import comments from "@/components/estate/detail/comments"
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -135,9 +135,9 @@ export default new Router({
         name: "xfPosterPreview",
         component: xfPosterPreview
       },{
-          path:"/common/guestAllComments",
-          name:"guestAllComments",
-          component:guestAllComments
+          path:"/estate/detail/comment/:subEstateId?",
+          name:"comments",
+          component:comments
       }
     ]
 }) ;

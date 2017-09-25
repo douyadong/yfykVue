@@ -4,7 +4,6 @@
            <span>用户评论</span>
            <div class="comment-amount">
                <span>{{review.comment.amount}}</span>
-                <!--<a href="#"><i class="iconfont icon-arrowR"></i></a>-->
                 <router-link to="/common/guestAllComments" class="skip">
                     <i class="iconfont icon-arrowR"></i>
                 </router-link>
@@ -51,7 +50,11 @@
             return{
                 review:this.commentInfo,//将父组件传递给子组件的数据初始化给review，用于更改点赞次数信息；
                 // zanNumber:0//为点赞做准备；
+                zan:[]
             }
+        },
+        created(){
+
         },
         methods:{
             clickZan(e){
