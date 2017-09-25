@@ -26,6 +26,9 @@
                 i{
                     color: @danger-color;
                 }
+                .yezhu{
+                    color: @primary-color;
+                }
             }
             .comment-time-like{
                 .clearfix();
@@ -33,7 +36,10 @@
                     float:right;
                 }
                 .isUp{
-                    color: @info-color;
+                    color: @primary-color;
+                    &+.comment-like-amount{
+                        color: @primary-color;
+                    }
                 }
             }   
             ul{

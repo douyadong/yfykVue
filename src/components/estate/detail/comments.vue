@@ -6,7 +6,7 @@
                     <img src="https://imgwater.oss.aliyuncs.com/a791b7e705ed42139ae13fd4b594aa24" alt="">
                     <span>{{item.guest.guestPhoneNum}}</span>
                     <i class="iconfont icon-youpingsvg"></i>
-                    <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
+                    <i class="iconfont icon-yezhu yezhu" v-if="item.landlord== 1"></i>
                 </p>
                 <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
                 <ul v-if="item.imgList.length">
@@ -17,8 +17,8 @@
                 <p class="comment-time-like">
                     <span class="comment-time">{{item.createTimeStr}}</span>
                     <span class="click-like">
-                        <i class="comment-like iconfont icon-zan" @click="clickZan($event)"></i>
-                        <span :class="{commentLikeAmount:true,isUp:item.isUp}"  :data-zan="zan[index]">{{item.upAmount}}</span>
+                        <i class="comment-like iconfont icon-zan" :class="{isUp:item.isUp}" @click="clickZan($event)"></i>
+                        <span class="comment-like-amount"  :data-zan="zan[index]">{{item.upAmount}}</span>
                     </span>
                 </p>
             </div>
@@ -63,7 +63,7 @@
                     // 取消点赞功能；
                      this.commentsList[count].upAmount--;
                      this.zan[count]=0;
-                     this.commentsList[count].isUp=0
+                     this.commentsList[count].isUp=0;
                 };
                 
             },
