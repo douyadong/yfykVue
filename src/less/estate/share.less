@@ -118,23 +118,30 @@
     }    
 }
 // 用户评论
-.comment{
-    .panel-header{
-        font-size: 1.6rem;
-        color: @default-font-color;
+.guest-comment{
+    .comment{
         .clearfix();
+        margin-left: 0;
+        padding:@gap-dimension 1.5rem;
         .comment-amount{
-            float: right;
+            float:right;
+            .skip{
+                color: @default-font-color;
+            }
         }
     }
-    .no-date{
+    .no-data{
         font-size: 1.6rem;
-        color: @default-font-color;
+        color: @light-font-color;
         text-align: center;
+        line-height: 3rem;
     }
     .comment-all-info{
         padding-left: 1.5rem;
         padding-right: 1.5rem;
+        .panel-item{
+            border-bottom: 1px solid  @light-line-gray-color;
+        }
         .comment-phone{
             position: relative;
             img{
@@ -148,8 +155,6 @@
             }
             i{
                 color: @danger-color;
-                position: absolute;
-                top:0.7rem;
             }
         }
         .comment-time-like{
@@ -161,14 +166,27 @@
         
     }
     .all-comment{
+         ul{
+            .clearfix();
+            padding: @gap-dimension 0;
+            li{
+                float:left;
+                margin-right : 3.5%;
+                overflow : hidden;
+                width : 31% ;
+                &:last-child{
+                    margin-right:0;
+                }
+            }
+        }
         .comment-all-info:last-child{
             .panel-item{
                 border: none;
+               
             }
         }
-    }   
+    }  
 }
-
 // 我来评价
 .my-comment{
     height:4.5rem;

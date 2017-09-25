@@ -1,0 +1,59 @@
+/*-----------------------------------------------------------------------------
+1.项目名称：yfyk2h5
+2.文件名称：src->less->estate>comment.less(小区评论列表)
+3.作者：douyadong
+-------------------------------------------------------------------------------*/
+@import "../variables.less";
+@import "../mixins.less";
+    .comments-list{
+        .comment-list-info{
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            .panel-item{
+                border-bottom: 1px solid  @light-line-gray-color;
+            }
+            .comment-phone{
+                position: relative;
+                img{
+                    width:3rem;
+                    height:3rem;
+                    .border-radius(50%);
+                    margin-right: .5rem;
+                }
+                span{
+                    margin-right: 0.85rem;
+                }
+                i{
+                    color: @danger-color;
+                }
+            }
+            .comment-time-like{
+                .clearfix();
+                .click-like{
+                    float:right;
+                }
+                .isUp{
+                    color: @info-color;
+                }
+            }   
+            ul{
+                .clearfix();
+                padding: @gap-dimension 0;
+                li{
+                    float:left;
+                    margin-right : 3.5%;
+                    overflow : hidden;
+                    width : 31% ;
+                    &:last-child{
+                        margin-right:0;
+                    }
+                }
+            }
+        }
+        .comment-all-info:last-child{
+            .panel-item{
+                border: none;
+               
+            }
+        }    
+    }
