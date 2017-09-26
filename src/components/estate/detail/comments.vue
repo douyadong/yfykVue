@@ -32,14 +32,20 @@
 <script>
     import commentsList from "../../../../mock/estate/comment.json";
     import infiniteLoading from "vue-infinite-loading";
+    import apiDataFilter from "@/libraries/apiDataFilter"; 
     import $ from "jquery";
     export default{
-        name:"comments",
+        name:"estateDetailComments",
         components:{infiniteLoading},
         data(){
             return{
                 commentsList:commentsList,//评论信息列表
-                zan:[]
+                zan:[],//实时显示data-zan属性值得变化;
+                pageInfo:{
+                    pageIndex:0,//评论的起始条数
+                    pageSize:10,//评论信息每次加载多少条
+                    total:0
+                }
             }
         },
         created(){
@@ -49,7 +55,7 @@
                 for(let i=0;i<this.commentsList.length;i++){
                     this.zan[i]=0;
                 }
-            }
+            };
         },
         methods:{
             clickZan(e){
@@ -67,7 +73,30 @@
                 };
                 
             },
-            onInfinite(){}
+            onInfinite(){
+                this.fetchComments();
+            }, 
+            fetchComments(){//获取评论数据
+                let self = this;
+                apiDataFilter.request({
+                    apiPath:"learn.comments",
+                    data:{
+                        articleId:this.articleId,
+                        pageIndex:this.pageInfo.pageIndex,
+                        pageSize:this.pageInfo.pageSize,
+                    }, 
+                    successCallback:function(res){
+                        let data = res.body;                
+                        self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
+                        self.comments = self.comments.concat(data.data);
+                        self.pageInfo.total = data.count;
+                        self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
+                        if(self.comments.length === data.count){
+                            self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                        }             
+                    } 
+                });
+            }   
         }
     }
 </script>

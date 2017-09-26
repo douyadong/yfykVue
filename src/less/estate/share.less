@@ -153,8 +153,11 @@
             span{
                 margin-right: 0.85rem;
             }
-            i{
+            .youping{
                 color: @danger-color;
+            }
+            .yezhu{
+                color: @primary-color;
             }
         }
         .comment-time-like{
@@ -162,6 +165,12 @@
             .click-like{
                 float:right;
             }
+            .isUp{
+                    color: @primary-color;
+                    &+.comment-like-amount{
+                        color: @primary-color;
+                    }
+                }
         }
         
     }
@@ -188,7 +197,8 @@
     }  
 }
 // 我来评价
-.my-comment{
+.evaluate{
+    display: block;
     height:4.5rem;
     line-height: 4.5rem;
     text-align: center;
