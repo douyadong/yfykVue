@@ -7,10 +7,13 @@
       <swiper-slide v-for="(slide , index) in simpleHouseRentDetailInfo" :key="slide.imgKey">
         <div class="pagination-num"><span class="pagination">{{ pageStates.swiperActiveIndex }} / {{ simpleHouseRentDetailInfo.length }}</span></div>
         <div class="videoImg" v-focus>
-          <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive"  v-if="slide.isVideo"></video>
-          <img :src="slide.imageSrc" class="img-responsive" v-else>
+          <!--<video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive"  v-if="slide.isVideo"></video>-->
+          <img :src="slide.fileKey" :alt="slide.fileName" class="img-responsive" >
         </div>
-        <div></div>
+        <div class="description">
+          <h3>{{slide.title}}</h3>
+          <p>{{slide.content}}</p>
+        </div>
       </swiper-slide>
     </swiper>
 
@@ -18,7 +21,7 @@
 </template>
 
 <script>
-  import data from '../../../mock/xf/detail';
+  import data from '../../../mock/xf/poster-preview';
   import { swiper , swiperSlide } from "vue-awesome-swiper" ;
   import Vue from 'vue';
   export default {
@@ -46,7 +49,7 @@
             }
           }
         } ,
-        simpleHouseRentDetailInfo: data.data.houseImageAndVideoList,
+        simpleHouseRentDetailInfo: data.data,
       }
     },
     methods:{
@@ -87,29 +90,26 @@
     },
     directives: {
       focus: {
-        data(){
-          return {
-            distance:{
-              firstTouchX : 0,
-              firstTouchY : 0
+        inserted: function (el) {
+          function data() {
+            return {
+              firstX:0
             }
           }
-        },
-        checkTouch(e) {
-          let touchAction;
-          if (e.touches) {
-            touchAction = e.targetTouches[0]
-          } else {
-            touchAction = e;
+          function checkTouch (e) {
+            let touchAction;
+            if (e.touches) {
+              touchAction = e.targetTouches[0]
+            } else {
+              touchAction = e;
+            }
+            return touchAction;
           }
-          return touchAction ;
-        },
-        inserted: function (el) {
-          el.addEventListener('touchstart',function (e) {
+          el.addEventListener('touchstart', function (e) {
             console.log("niho ");
             console.log(this);
             console.log(this.clientHeight);
-//            console.log(checkTouch(e).pageX,checkTouch(e).pageY);
+            console.log(checkTouch(e).pageX);
           })
         },
       }
