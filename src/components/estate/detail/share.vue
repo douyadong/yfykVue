@@ -68,22 +68,12 @@
         </span>
     </div>
     <!--用户评论-->
-     <!--<div class="panel-header comment">
-           <span>用户评论</span>
-           <div class="comment-amount">
-               <span>{{estateInfo.comment.amount}}</span>
-                <router-link to="/common/guestAllComments" class="skip">
-                    <i class="iconfont icon-arrowR"></i>
-                </router-link>
-           </div>
-      </div>
-    <guestComment :commentInfo="estateInfo"></guestComment>-->
     <div class="guest-comment wk-panel">
       <div class="panel-header comment">
            <span>用户评论</span>
            <div class="comment-amount">
                <span>{{estateInfo.comment.amount}}</span>
-                <router-link to="/estate/detail/comment/:subEstateId" class="skip">
+                <router-link to="/estate/detail/comments/:subEstateId" class="skip">
                     <i class="iconfont icon-arrowR"></i>
                 </router-link>
            </div>
@@ -98,8 +88,8 @@
                     <p class="comment-phone">
                         <img src="https://imgwater.oss.aliyuncs.com/a791b7e705ed42139ae13fd4b594aa24" alt="">
                         <span>{{item.guest.guestPhoneNum}}</span>
-                        <i class="iconfont icon-youpingsvg"></i>
-                        <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
+                        <i class="iconfont icon-youpingsvg youping"></i>
+                        <i class="iconfont icon-yezhu yezhu" v-if="item.landlord== 1"></i>
                     </p>
                     <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
                     <ul v-if="item.imgList.length">
@@ -110,7 +100,7 @@
                     <p class="comment-time-like">
                         <span class="comment-time">{{item.createTimeStr}}</span>
                         <span class="click-like">
-                            <i class="comment-like iconfont icon-zan" @click="clickZan($event)"></i>
+                            <i class="comment-like iconfont icon-zan" :class="{isUp:item.isUp}"  @click="clickZan($event)"></i>
                             <span class="comment-like-amount" :data-zan="zan[index]">{{item.upAmount}}</span>
                         </span>
                     </p>
@@ -120,7 +110,10 @@
   </div>
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
-        <div class="my-comment">我来评价</div>
+        <!--<div class="my-comment">我来评价</div>-->
+        <router-link to="/estate/detail/addComment/:subEstateId?" class="evaluate">
+                    我来评价
+        </router-link>
     </div>
     <!--位置及周边-->
     <div class="wk-panel nearby-map">
@@ -196,10 +189,12 @@ import estate from "../../../../mock/estate/detail.json"
                     // 实现点赞功能；
                     this.estateInfo.comment.commentList[count].upAmount++;
                     this.zan[count]=1;
+                    this.estateInfo.comment.commentList[count].isUp=1;
                 }else{
                     // 取消点赞功能；
                      this.estateInfo.comment.commentList[count].upAmount--;
                      this.zan[count]=0;
+                     this.estateInfo.comment.commentList[count].isUp=0;
                 };
                 
             }

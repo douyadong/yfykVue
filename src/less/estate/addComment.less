@@ -1,0 +1,88 @@
+/*-----------------------------------------------------------------------------
+1.项目名称：yfyk2h5
+2.文件名称：src->less->estate>addComment.less(小区评论列表)
+3.作者：douyadong
+-------------------------------------------------------------------------------*/
+@import "../variables.less";
+@import "../mixins.less";
+.add-comment{
+    .clearfix();
+    .comment-area{
+        padding:1.5rem;
+        textarea{
+            outline: none;
+            border: none;
+            background-color: @tag-background-color;
+            padding: @gap-dimension;
+            height: 8rem;
+            width: 100%;
+            color: @default-font-color;
+        }
+    };
+    .add{
+        .clearfix();
+        padding-bottom: 1.5rem;
+        .photo{
+            float: left;
+            padding-left: 1.5rem;
+            .add-photo{
+                width:7rem;
+                height:7rem;
+                position: relative;
+                background-color: @title-background-color;
+                i{
+                    position: absolute;
+                    top:1.7rem;
+                    left:50%;
+                    transform: translate(-50%,0)
+                }
+                span{
+                    position: absolute;
+                    top:3.9rem;
+                    left:50%;
+                    white-space: nowrap;//为了不让span里面的内容换行;
+                    transform: translate(-50%,0);
+                    font-size:1.2rem;
+                    color: @light-font-color;
+                }
+            }
+        }
+        ul{
+            float: left;
+            .clearfix();
+            li{
+                float: left;
+                margin-left: 1rem;
+                width:7rem;
+                height: 7rem;
+                position: relative;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+                i{
+                    position: absolute;
+                    top:0.2rem;
+                    right: 0.2rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    .border-radius(50%);
+                    background-color: @default-font-color;
+                    color: white;
+                    font-size: 0.5rem;
+                    text-align: center;
+                    line-height: 1.5rem;
+                }
+            }
+        }
+    };
+    hr{
+        margin: 0;
+    }
+    .commit{
+        text-align: center;
+        line-height: 4.4rem;
+        font-size: 1.4rem;
+        color: @primary-color;
+    }
+}

@@ -6,7 +6,7 @@
                     <img src="https://imgwater.oss.aliyuncs.com/a791b7e705ed42139ae13fd4b594aa24" alt="">
                     <span>{{item.guest.guestPhoneNum}}</span>
                     <i class="iconfont icon-youpingsvg"></i>
-                    <i class="iconfont icon-yezhu" v-if="item.landlord== 1"></i>
+                    <i class="iconfont icon-yezhu yezhu" v-if="item.landlord== 1"></i>
                 </p>
                 <h4 :data-orderLevel="item.orderLevel">{{item.comment}}</h4>
                 <ul v-if="item.imgList.length">
@@ -17,8 +17,8 @@
                 <p class="comment-time-like">
                     <span class="comment-time">{{item.createTimeStr}}</span>
                     <span class="click-like">
-                        <i class="comment-like iconfont icon-zan" @click="clickZan($event)"></i>
-                        <span :class="{commentLikeAmount:true,isUp:item.isUp}"  :data-zan="zan[index]">{{item.upAmount}}</span>
+                        <i class="comment-like iconfont icon-zan" :class="{isUp:item.isUp}" @click="clickZan($event)"></i>
+                        <span class="comment-like-amount"  :data-zan="zan[index]">{{item.upAmount}}</span>
                     </span>
                 </p>
             </div>
@@ -32,14 +32,20 @@
 <script>
     import commentsList from "../../../../mock/estate/comment.json";
     import infiniteLoading from "vue-infinite-loading";
+    import apiDataFilter from "@/libraries/apiDataFilter"; 
     import $ from "jquery";
     export default{
-        name:"comments",
+        name:"estateDetailComments",
         components:{infiniteLoading},
         data(){
             return{
                 commentsList:commentsList,//评论信息列表
-                zan:[]
+                zan:[],//实时显示data-zan属性值得变化;
+                pageInfo:{
+                    pageIndex:0,//评论的起始条数
+                    pageSize:10,//评论信息每次加载多少条
+                    total:0
+                }
             }
         },
         created(){
@@ -49,7 +55,7 @@
                 for(let i=0;i<this.commentsList.length;i++){
                     this.zan[i]=0;
                 }
-            }
+            };
         },
         methods:{
             clickZan(e){
@@ -63,11 +69,34 @@
                     // 取消点赞功能；
                      this.commentsList[count].upAmount--;
                      this.zan[count]=0;
-                     this.commentsList[count].isUp=0
+                     this.commentsList[count].isUp=0;
                 };
                 
             },
-            onInfinite(){}
+            onInfinite(){
+                this.fetchComments();
+            }, 
+            fetchComments(){//获取评论数据
+                let self = this;
+                apiDataFilter.request({
+                    apiPath:"learn.comments",
+                    data:{
+                        articleId:this.articleId,
+                        pageIndex:this.pageInfo.pageIndex,
+                        pageSize:this.pageInfo.pageSize,
+                    }, 
+                    successCallback:function(res){
+                        let data = res.body;                
+                        self.pageInfo.pageIndex += (data.data&& data.data.length || 0);
+                        self.comments = self.comments.concat(data.data);
+                        self.pageInfo.total = data.count;
+                        self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');  
+                        if(self.comments.length === data.count){
+                            self.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                        }             
+                    } 
+                });
+            }   
         }
     }
 </script>

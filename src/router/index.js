@@ -27,7 +27,8 @@ import xfPoster from "@/components/xf/poster";
 import xfComments from "@/components/xf/comments";
 import xfInfo from "@/components/xf/information";
 import xfPosterPreview from "@/components/xf/poster-preview";
-import comments from "@/components/estate/detail/comments"
+import estateDetailComments from "@/components/estate/detail/comments";
+import estateDetailAddComment from "@/components/estate/detail/addComment"
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -52,6 +53,9 @@ Vue.use(Router) ;
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default new Router({
     mode : "history" ,
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    },//route-link页面跳转时跳转到新页面顶部;
     routes : [
         {
             path : "/learn/detail/hybrid/:id" ,
@@ -135,9 +139,13 @@ export default new Router({
         name: "xfPosterPreview",
         component: xfPosterPreview
       },{
-          path:"/estate/detail/comment/:subEstateId?",
-          name:"comments",
-          component:comments
+          path:"/estate/detail/comments/:subEstateId?",
+          name:"estateDetailComments",
+          component:estateDetailComments
+      },{
+          path:"/estate/detail/addComment/:subEstateId?",
+          name:"estateDetailAddComment",
+          component:estateDetailAddComment
       }
     ]
 }) ;
