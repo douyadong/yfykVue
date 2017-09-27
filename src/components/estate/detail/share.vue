@@ -111,9 +111,7 @@
     <!--我来评价-->
     <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
         <!--<div class="my-comment">我来评价</div>-->
-        <router-link to="/estate/detail/addComment/:subEstateId?" class="evaluate">
-                    我来评价
-        </router-link>
+        <router-link to="/estate/detail/addComment/:subEstateId?" class="evaluate">我来评价</router-link>        
     </div>
     <!--位置及周边-->
     <div class="wk-panel nearby-map">
@@ -137,7 +135,8 @@
 import $ from "jquery";
 import {swiper,swiperSlide} from "vue-awesome-swiper";
 import guestComment from "@/components/common/guestComment";
-import estate from "../../../../mock/estate/detail.json"
+import estate from "../../../../mock/estate/detail.json";
+import "@/libraries/jquery.tips.js";
     export default{
         name:"estateDetailShare",
         data(){
@@ -179,8 +178,7 @@ import estate from "../../../../mock/estate/detail.json"
             for(let i=0;i<this.estateInfo.comment.commentList.length;i++){
                 this.zan[i]=0;
             }
-         }
-
+         };
         },
         methods:{
             clickZan(e){
