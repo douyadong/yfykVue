@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import data from '../../../mock/xf/detail';
+  import data from '../../../mock/xf/posters';
 
   export default {
     name: "xfPoster",
@@ -23,7 +23,7 @@
       return {
         getInfoData:{
           buildingStatus: data.data.newHouseDetail.newHouseDynamicList,
-          posterData: data.data.newHouseDetail.newHouseMagazineList,
+          posterData: data.data,
         }
       }
     },
