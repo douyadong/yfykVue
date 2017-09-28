@@ -206,9 +206,12 @@
 </template>
 
 <script>
+  import data from '../../../mock/xf/detail';
+  import promotions from '../../../mock/xf/promotions';
+
   import assistant from "@/components/common/assistant";
   import apiDataFilter from "@/libraries/apiDataFilter";
-  import data from '../../../mock/xf/detail';
+
   import { swiper , swiperSlide } from "vue-awesome-swiper" ;
   import xfSources from "@/components/common/xfSources" ;
   import infiniteLoading from "vue-infinite-loading";
@@ -226,7 +229,7 @@
         qqmapkey: 'FJ6BZ-QZG3P-LASD7-VHLJJ-AG5FT-4KB2U',
         getInfoData:{
           buildingInformation:['即将开盘','地铁','有优惠','有视频'],
-          benefitInfo: data.data.newHouseDetail.activityList,
+          benefitInfo: promotions.data,
           buildingStatus: data.data.newHouseDetail.newHouseDynamicList,
           onSellBuilding: data.data.newHouseDetail.houseTypeImages,
           buildingCharacter: data.data.newHouseDetail.projectFeatureList,
