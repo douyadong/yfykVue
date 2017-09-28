@@ -22,7 +22,6 @@
     data() {
       return {
         getInfoData:{
-          buildingStatus: data.data.newHouseDetail.newHouseDynamicList,
           posterData: data.data,
         }
       }
