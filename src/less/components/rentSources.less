@@ -1,0 +1,82 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> components ->rentSources.less (楼盘动态)
+ 3. 作者：liyang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@import "../variables.less" ;
+@import "../mixins.less" ;
+
+.rent-sources{
+  >.single-source{
+    width: 100%;
+    height: 12.3rem;
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    .flex-box();
+    >.pic{
+      width: 37.97%;
+      height: 8.685rem;
+      .box-center();
+      //border:1px solid ;
+      >img{
+       max-width: 100%;
+       max-height: 8.685rem;
+      }
+    }
+    >.desc{
+      padding-left: 1rem;
+      width: 62.03%;
+      >h3{
+        font-size: 1.6rem;
+        color: @default-font-color;
+        letter-spacing: -0.2px;
+        line-height: 1.6rem;
+      }
+      >p{
+        font-size: 1.1rem;
+        color: #7C7C7C;
+        letter-spacing: 0;
+        line-height: 1.1rem;
+        clear: both;
+      }
+      >.position{
+        margin-top: 1rem;
+        margin-bottom: 3.8rem;
+  /*      >span{
+          display: inline-block;
+          width: 2rem;
+          text-align: center;
+          border-left: 1px solid #7C7C7C;
+          border-right: 1px solid #7C7C7C;
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+          padding: 0 0.5rem;
+        }*/
+      }
+      >.price{
+        >span{
+          display: inline-block;
+          font-size: 1.6rem;
+          color: #FC4C5A;
+          letter-spacing: 0;
+          float: right;
+        }
+      }
+    }
+  }
+  >.space{
+    margin-bottom: 1rem;
+  }
+  >.underline:not(:first-child):before{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: 0 auto;
+    content: '';
+    width: 91%;
+    height: 1px;
+    border-top: 1px solid @line-gray-color;
+    -webkit-transform: scaleY(0.5);
+  }
+}
