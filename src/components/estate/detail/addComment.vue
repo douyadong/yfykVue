@@ -24,8 +24,10 @@
          <div class="photo-select-source" :class="{active:active}">
              <div class="photo-way wk-panel">
                  <div class="take-photo" @click="takePhoto">拍照</div>
+                  <input type="file" accept="image/*" capture="camera" name="cameraPhoto" class="camera-photo" @click="takePhoto"> 
                  <hr>
                  <div class="mobile" @click="photoAlbum">从手机相册中选取</div>
+                 <input type="file" name="photoAlbum" class="photo-album" accept="image/*" multiple @click="photoAlbum">
              </div>
              <div class="cancel wk-panel" @click="cancel">取消</div>
          </div>
@@ -54,28 +56,56 @@
                     return;
                 };
                 this.active=true;//显示遮罩层;
-                this.imgList.push("https://imgwater.oss.aliyuncs.com/c25e493b61b34e7282e9649d0f907d00")
+                // this.imgList.push("https://imgwater.oss.aliyuncs.com/c25e493b61b34e7282e9649d0f907d00")
+            },
+            takePhoto(){
+                // 调用手机拍照功能
+                let self=this
+                // 取消上传头像遮罩层
+                this.active=false;
+                // unbind解决多次点击input标签一次上传多个重复图片问题;
+                $('.camera-photo').unbind().change(function(){
+                    let file=this.files[0];
+                    let r=new FileReader();
+                    let a=r.readAsDataURL(file);
+                // 此处只能用on绑定，jquery3删除了.load();
+                    $(r).on('load',function(){         
+                        self.imgList.push(this.result);
+                    })
+                })   
+            },
+            photoAlbum(){
+                // 调用手机相册  
+                let self=this;
+                // 取消上传头像遮罩层
+                this.active=false;          
+                $('.photo-album').unbind().change(function(){
+                    let count1=self.imgList.length;//已经存在的图片个数;
+                    let count2=this.files.length;//从相册中选中的图片个数;
+                    let count3=count1+count2;
+                    if(count3>3){
+                        $.tips("最多只能上传三张图片",2);
+                        return;
+                    }
+                    for(let i=0;i<this.files.length;i++){
+                        let file=this.files[i];
+                        let r=new FileReader();
+                        r.readAsDataURL(file);
+                        $(r).on('load',function(){
+                            self.imgList.push(this.result)
+                        })
+                    }
+                    
+                })
+            },
+            cancel(){
+                // 取消上传头像遮罩层
+                this.active=false;
             },
             remove(e){
                 // 删除评论图片;
                 let count=$('.error').index($(e.target));
                 this.imgList.splice(count,1)
-            },
-            takePhoto(){
-                // 调用手机拍照功能
-
-                // 取消上传头像遮罩层
-                this.active=false;
-            },
-            photoAlbum(){
-                // 调用手机相册
-
-                // 取消上传头像遮罩层
-                this.active=false;
-            },
-            cancel(){
-                // 取消上传头像遮罩层
-                this.active=false;
             },
             commentSuccess(){
                 apiDataFilter.request({

@@ -13,20 +13,37 @@
        <!--房源概要部分-->
        <div class="wk-panel summary">
             <div class="panel-header">
-                <h1>{{ apiData.simpleHouseRentDetailInfo.subEstateName }}</h1>
-                <div class="money">{{ apiData.simpleHouseRentDetailInfo.rentPrice }} 元 / 月</div>
+                <div class="message">
+                    <h1>{{ apiData.simpleHouseRentDetailInfo.subEstateName }}</h1>
+                    <div class="money">{{ apiData.simpleHouseRentDetailInfo.rentPrice }} 元 / 月</div>
+                </div>
+                <ul>
+                    <li><span>带看</span><span>20</span></li>
+                    <li><span>浏览</span><span>140</span></li>
+                    <li><span>分享</span><span>88</span></li>
+                </ul>
             </div>
-            <div  class="panel-body lr-padding tb-padding">
+            <div class="update-time">
+                <ul>
+                    <li><dl><dt>房源编号：</dt><dd>{{apiData.simpleHouseRentDetailInfo.houseId}}</dd></dl></li>
+                    <li><dl><dt>更新：</dt><dd>{{apiData.simpleHouseRentDetailInfo.publishHouseTime.slice(5)}}</dd></dl></li>
+                    <li><dl><dt>发布：</dt><dd>{{apiData.simpleHouseRentDetailInfo.updateHouseTime.slice(5)}}</dd></dl></li>
+                </ul>
+            </div>
+        </div>
+        <!--房子简介-->
+        <div class="wk-panel house-info">
+            <div  class=" panel-body lr-padding tb-padding ">
                 <ul class="column-3">
-                    <li><dl><dt>付款方式</dt><dd>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dd></dl></li>
-                    <li><dl><dt>户型</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dd></dl></li>
-                    <li><dl><dt>面积</dt><dd>{{ apiData.simpleHouseRentDetailInfo.spaceArea }} m&sup2;</dd></dl></li>
+                    <li v-if="apiData.simpleHouseRentDetailInfo.payTypeStr"><dl><dt>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dt><dd>付款方式</dd></dl></li>
+                    <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dt><dd>户型</dd></dl></li>
+                    <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.spaceArea }} m&sup2;</dt><dd>面积 </dd></dl></li>
                 </ul>
                 <hr>
                 <ul class="outline">
                     <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseChildTypeStr }}</dd></dl></li>
                     <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.simpleHouseRentDetailInfo.renovationStr }}</dd></dl></li>
-                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.simpleHouseRentDetailInfo.floor }}/{{ apiData.simpleHouseRentDetailInfo.totalfloor }}层</dd></dl></li>
+                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseFloor}}</dd></dl></li>
                     <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.simpleHouseRentDetailInfo.orientationStr }}</dd></dl></li>
                     <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</dd></dl></li>
                 </ul>
@@ -137,6 +154,7 @@
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
               successCallback : res => {
+                  console.log(res)
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
                   //定制页面微信分享参数
