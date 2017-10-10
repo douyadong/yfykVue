@@ -17,19 +17,19 @@
                     <h1>{{ apiData.simpleHouseRentDetailInfo.subEstateName }}</h1>
                     <div class="money">{{ apiData.simpleHouseRentDetailInfo.rentPrice }} 元 / 月</div>
                 </div>
-                <ul>
+                <!--<ul>
                     <li><span>带看</span><span>20</span></li>
                     <li><span>浏览</span><span>140</span></li>
                     <li><span>分享</span><span>88</span></li>
-                </ul>
+                </ul>-->
             </div>
-            <div class="update-time">
+            <!--<div class="update-time">
                 <ul>
                     <li><dl><dt>房源编号：</dt><dd>{{apiData.simpleHouseRentDetailInfo.houseId}}</dd></dl></li>
                     <li><dl><dt>更新：</dt><dd>{{apiData.simpleHouseRentDetailInfo.publishHouseTime.slice(5)}}</dd></dl></li>
                     <li><dl><dt>发布：</dt><dd>{{apiData.simpleHouseRentDetailInfo.updateHouseTime.slice(5)}}</dd></dl></li>
                 </ul>
-            </div>
+            </div>-->
         </div>
         <!--房子简介-->
         <div class="wk-panel house-info">
@@ -58,18 +58,18 @@
         <div class="wk-panel support top-gap">
             <div class="panel-header">房源配套</div>
             <ul  class="panel-body  lr-padding tb-padding">
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBad }">床</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWardrobe }">衣柜</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBalcony }">阳台</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasHeating }">暖气</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasGas }">煤气</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWashMachine }">洗衣机</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasFridge }">冰箱</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasMicrowave }">微波炉</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWaterHeater }">热水器</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }">空调</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasTV }">电视机</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasInternet }">宽带</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBad }" class="iconfont icon-chuang3 ">床</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasTV }" class="iconfont icon-dianshi3 left">电视</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasInternet }" class="iconfont icon-kuandai3 middle">宽带</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }" class="iconfont icon-kongdiao3 right">空调</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWashMachine }" class="iconfont icon-xiyiji3">洗衣机</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWardrobe }" class="iconfont icon-yigui3 left">衣柜</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWaterHeater }" class="iconfont icon-reshuiqi3 middle">热水器</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasHeating }" class="iconfont icon-nuanqi3 right">暖气</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBalcony }" class="iconfont icon-yangtai3">阳台</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasGas }" class="iconfont icon-meiqi3 left">煤气</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasMicrowave }" class="iconfont icon-weibolu3 middle">微波炉</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasFridge }" class="iconfont icon-bingxiang3 right">冰箱</li>       
             </ul>
         </div>
         <!--房源描述部分-->
@@ -87,10 +87,9 @@
             <div class="location-container">
                 <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.simpleHouseRentDetailInfo.longitude + ',' + apiData.simpleHouseRentDetailInfo.latitude + '&zoom=18'" class="img-responsive">
                 <div class="cover">
-                    <p><i class="iconfont icon-dingwei"></i>地址：{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</p>
+                    <i class="iconfont icon-arrowTS"></i><span>{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</span>
                 </div>
-                <div class="mark"><i class="iconfont icon-dingwei"></i></div>
-
+                <div class="mark"></div>
             </div>
         </div>
         <!--结束-->
