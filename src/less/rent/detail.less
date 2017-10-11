@@ -153,31 +153,35 @@
                 font-size:1.4rem;
                 margin-right: 0.25rem;
             }
+            &.right{
+                text-align: center;
+            }
         }
-        // li.left{
-        //     padding-left: 1rem;
-        // }
-        // li.middle{
-        //     padding-left: 1.7rem;
-        // }
-        // li.right{
-        //     // padding-left: 2.8rem;
-        //     text-align: right;
-        // }
     }
 }
 
 .description {
-    .panel-body {
-        dl {            
-            dt, dd {
-                font-size : 1.6rem ;
-                line-height : 2.0rem ;
-            }
-            dt {
+    .self-house{
+        .panel-body {
+            dl {            
+                dt, dd {
+                    font-size : 1.6rem ;
+                    line-height : 2.0rem ;
+                }
+                dt {
                 color : @light-font-color ;
                 line-height : 2.5rem ;
+                }
             }
+        }
+    }
+    .outside-house{
+        .outside-info{
+            line-height: 25px;
+            font-size: 1.6rem;
+        }
+        .moreInfo{
+            overflow: hidden;
         }
     }
 }
@@ -223,7 +227,7 @@
             }
             i{
                 position: absolute;
-                top:-23px;
+                top:-20px;
                 font-size:30px;
                 left: 50%;
                 transform: translate(-50%,0);
