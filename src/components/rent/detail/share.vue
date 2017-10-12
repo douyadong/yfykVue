@@ -13,20 +13,37 @@
        <!--房源概要部分-->
        <div class="wk-panel summary">
             <div class="panel-header">
-                <h1>{{ apiData.simpleHouseRentDetailInfo.subEstateName }}</h1>
-                <div class="money">{{ apiData.simpleHouseRentDetailInfo.rentPrice }} 元 / 月</div>
+                <div class="message">
+                    <h1>{{ apiData.simpleHouseRentDetailInfo.subEstateName }}</h1>
+                    <div class="money">{{ apiData.simpleHouseRentDetailInfo.rentPrice }} 元 / 月</div>
+                </div>
+                <!--<ul>
+                    <li><span>带看</span><span>20</span></li>
+                    <li><span>浏览</span><span>140</span></li>
+                    <li><span>分享</span><span>88</span></li>
+                </ul>-->
             </div>
-            <div  class="panel-body lr-padding tb-padding">
+            <!--<div class="update-time">
+                <ul>
+                    <li><dl><dt>房源编号：</dt><dd>{{apiData.simpleHouseRentDetailInfo.houseId}}</dd></dl></li>
+                    <li><dl><dt>更新：</dt><dd>{{apiData.simpleHouseRentDetailInfo.publishHouseTime.slice(5)}}</dd></dl></li>
+                    <li><dl><dt>发布：</dt><dd>{{apiData.simpleHouseRentDetailInfo.updateHouseTime.slice(5)}}</dd></dl></li>
+                </ul>
+            </div>-->
+        </div>
+        <!--房子简介-->
+        <div class="wk-panel house-info">
+            <div  class=" panel-body lr-padding tb-padding ">
                 <ul class="column-3">
-                    <li><dl><dt>付款方式</dt><dd>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dd></dl></li>
-                    <li><dl><dt>户型</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dd></dl></li>
-                    <li><dl><dt>面积</dt><dd>{{ apiData.simpleHouseRentDetailInfo.spaceArea }} m&sup2;</dd></dl></li>
+                    <li v-if="apiData.simpleHouseRentDetailInfo.houseId<10000"><dl><dt>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dt><dd>付款方式</dd></dl></li>
+                    <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dt><dd>户型</dd></dl></li>
+                    <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.spaceArea }} m&sup2;</dt><dd>面积 </dd></dl></li>
                 </ul>
                 <hr>
                 <ul class="outline">
                     <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseChildTypeStr }}</dd></dl></li>
                     <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.simpleHouseRentDetailInfo.renovationStr }}</dd></dl></li>
-                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.simpleHouseRentDetailInfo.floor }}/{{ apiData.simpleHouseRentDetailInfo.totalfloor }}层</dd></dl></li>
+                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.simpleHouseRentDetailInfo.houseFloor}}</dd></dl></li>
                     <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.simpleHouseRentDetailInfo.orientationStr }}</dd></dl></li>
                     <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</dd></dl></li>
                 </ul>
@@ -41,27 +58,36 @@
         <div class="wk-panel support top-gap">
             <div class="panel-header">房源配套</div>
             <ul  class="panel-body  lr-padding tb-padding">
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBad }">床</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWardrobe }">衣柜</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBalcony }">阳台</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasHeating }">暖气</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasGas }">煤气</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWashMachine }">洗衣机</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasFridge }">冰箱</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasMicrowave }">微波炉</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWaterHeater }">热水器</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }">空调</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasTV }">电视机</li>
-                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasInternet }">宽带</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBad }" class="iconfont icon-bed ">床</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasTV }" class="iconfont icon-tv ">电视</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasInternet }" class="iconfont icon-internet ">宽带</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasAirConditioning }" class="iconfont icon-airconditioner right">空调</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWashMachine }" class="iconfont icon-washer">洗衣机</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWardrobe }" class="iconfont icon-wardrobe ">衣柜</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasWaterHeater }" class="iconfont icon-heater ">热水器</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasHeating }" class="iconfont icon-heating right">暖气</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasBalcony }" class="iconfont icon-balcony">阳台</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasGas }" class="iconfont icon-gas ">煤气</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasMicrowave }" class="iconfont icon-microwave ">微波炉</li>
+                <li :class=" { no : ! apiData.simpleHouseRentDetailInfo.houseSupporting.hasFridge }" class="iconfont icon-refrigerator right">冰箱</li>       
             </ul>
         </div>
         <!--房源描述部分-->
         <div class="wk-panel description top-gap">
-            <div class="panel-header">房源描述</div>
-            <div  class="panel-body  lr-padding tb-padding">
-                <dl><dt>主要卖点</dt><dd>{{ apiData.simpleHouseRentDetailInfo.sellPoint || "暂无描述" }}</dd></dl>
-                <dl><dt>业主心态</dt><dd>{{ apiData.simpleHouseRentDetailInfo.ownerMotivation || "暂无描述" }}</dd></dl>
-                <dl><dt>周边配套</dt><dd>{{ apiData.simpleHouseRentDetailInfo.aroundSupport || "暂无描述" }}</dd></dl>
+            <!--自有房源房源描述-->
+            <div v-if="apiData.simpleHouseRentDetailInfo.houseId<10000" class="self-house">
+                <div class="panel-header">房源描述</div>
+                <div  class="panel-body  lr-padding tb-padding">
+                    <dl><dt>主要卖点</dt><dd>{{ apiData.simpleHouseRentDetailInfo.sellPoint || "暂无描述" }}</dd></dl>
+                    <dl><dt>业主心态</dt><dd>{{ apiData.simpleHouseRentDetailInfo.ownerMotivation || "暂无描述" }}</dd></dl>
+                    <dl><dt>周边配套</dt><dd>{{ apiData.simpleHouseRentDetailInfo.aroundSupport || "暂无描述" }}</dd></dl>
+                </div>
+            </div>
+            <!--外来房源房源描述-->
+            <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>10000&&text.length>30" class="outside-house ">
+                <div class="panel-header">房源描述</div>
+                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="aa">{{text}}</div>
+                <div>查看更多</div>
             </div>
         </div>
         <!--位置及周边部分-->
@@ -70,10 +96,9 @@
             <div class="location-container">
                 <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.simpleHouseRentDetailInfo.longitude + ',' + apiData.simpleHouseRentDetailInfo.latitude + '&zoom=18'" class="img-responsive">
                 <div class="cover">
-                    <p><i class="iconfont icon-dingwei"></i>地址：{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</p>
+                    <i class="iconfont icon-arrowTS"></i><span>{{ apiData.simpleHouseRentDetailInfo.subEstateInitName }}</span>
                 </div>
-                <div class="mark"><i class="iconfont icon-dingwei"></i></div>
-
+                <div class="mark"></div>
             </div>
         </div>
         <!--结束-->
@@ -83,6 +108,7 @@
 <script>
     import downloadApp from "@/components/common/downloadApp" ;
     import assistant from "@/components/common/assistant" ;
+    import $ from "jquery";
     import { swiper , swiperSlide } from "vue-awesome-swiper" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     export default {
@@ -112,7 +138,9 @@
               apiData : {
                   simpleHouseRentDetailInfo : {} ,
                   simpleAgentModel : {}
-              }
+              },
+              text:'耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯我if将诶',
+              moreInfo:true
           }
       } ,
       methods : {
@@ -137,8 +165,13 @@
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
               successCallback : res => {
+                  console.log(res)
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
+                  this.$nextTick(function(){
+                      console.log(this.$refs.aa)
+                      this.$refs.aa.style.color="red" 
+                  });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
                   this.$wechatShare({
@@ -164,6 +197,9 @@
               }
           }) ;
       } ,
+      mounted(){
+        // console.log(this.$refs.cc)
+      },
       components : {
           downloadApp ,
           assistant ,

@@ -11,13 +11,13 @@
         </swiper>
     </div>
     <!--经纪人-->
-    <div class="wk-panel bottom-gap">
+    <!--<div class="wk-panel bottom-gap">
         <div class="agent">         
             <span class="agent-img"><img src="https://img.wkzf.com/fd6d670aa99b4ad58e531f1d8496e623" alt=""></span>
             <span class="agent-name">{{agent.agentName}}</span>
             <span class="agent-post">小区专家</span><a :href="'tel:'+agent.agentMobile"><i class="iconfont icon-dianhua"></i></a>
         </div>
-    </div>
+    </div>-->
     <!--小区信息介绍-->
     <div class="estate-info wk-panel">
         <div class="estate-static1">
@@ -57,18 +57,17 @@
                 <li>{{estateInfo.schoolName}}</li>
             </ul>
         </div>
-        <hr>
     </div>
     <!--在售房源-->
-    <div class="selling wk-panel">
+    <!--<div class="selling wk-panel">
         <span class="house-source">在售房源</span>
         <span class="house-amount">
             <span>{{estateInfo.sameEstateHouseAmount}}套</span>
             <a href="#"><i class="iconfont icon-arrowR"></i></a>
         </span>
-    </div>
+    </div>-->
     <!--用户评论-->
-    <div class="guest-comment wk-panel">
+    <!--<div class="guest-comment wk-panel">
       <div class="panel-header comment">
            <span>用户评论</span>
            <div class="comment-amount">
@@ -78,10 +77,7 @@
                 </router-link>
            </div>
       </div>
-      <!--客户评论内容-->
-
       <p class="no-data" v-if="!estateInfo.comment.commentList||!estateInfo.comment.commentList.length">暂无评论，快来抢沙发吧~</p>	    
-
       <div class="all-comment" v-else>
             <div class="comment-all-info panel-body" v-for="(item,index) in estateInfo.comment.commentList" :key="index">
                 <div class="panel-item">
@@ -107,25 +103,21 @@
                 </div>
             </div>
       </div>
-  </div>
+    </div>-->
     <!--我来评价-->
-    <div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
-        <!--<div class="my-comment">我来评价</div>-->
-        <router-link to="/estate/detail/addComment/:subEstateId?" class="evaluate">我来评价</router-link>        
-    </div>
+    <!--<div class="wk-panel" style="padding:1rem 1.5rem 2rem;margin-bottom:1rem">
+        <router-link :to="'/estate/detail/addComment/:subEstateId?'" class="evaluate">我来评价</router-link>        
+    </div>-->
     <!--位置及周边-->
-    <div class="wk-panel nearby-map">
-       <div class="map panel-header">位置及周边</div>
-       <div class="position">
+    <div class="wk-panel location">
+       <div class="panel-header">位置及周边</div>
+       <div class="location-container">
             <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + estateInfo.longitude + ',' + estateInfo.latitude + '&zoom=18'" class="img-responsive">
-            <i class="iconfont icon-dingwei center-icon"></i>
-            <div class="search">
-                <div class="icon-position">
-                    <i class="iconfont icon-dingwei"></i>
-                    <span class="detail-address">地址：</span>
-                </div>
-                <div class="estate-addr">{{estateInfo.estateAddr}}</div>
+            <div class="cover">
+                <i class="iconfont icon-arrowTS"></i>
+                <span class="estate-addr">{{estateInfo.estateAddr}}</span>
             </div>
+            <div class="mark"></div>
        </div>
     </div>
   </div>
