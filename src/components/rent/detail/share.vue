@@ -120,6 +120,13 @@
                 <div class="mark"></div>
             </div>
         </div>
+        <!--相似房源推荐-->
+        <div class="alike-house top-gap wk-panel">
+            <div class="house-recommend panel-header">相似房源推荐</div>
+            <rent-sources :statusStyle="styleStatus" :dataItems="rent.data.rentList" :agentId="agentId"></rent-sources>
+            <div class="look-most lr-padding" v-if="outsideHouseAccount">查看更多</div>
+            <!--<router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>-->
+        </div>
         <!--结束-->
     </div>
 </template>
@@ -127,6 +134,8 @@
 <script>
     import downloadApp from "@/components/common/downloadApp" ;
     import assistant from "@/components/common/assistant" ;
+    import rentSources from "@/components/common/rentSources";
+    import rent from "../../../../mock/rent/detail.json";
     import $ from "jquery";
     import { swiper , swiperSlide } from "vue-awesome-swiper" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
@@ -177,7 +186,11 @@
                   year:'1993年竣工',
                   total:'150户',
                   address:'虹桥路996弄'
-              }
+              },
+              styleStatus:false,//控制相似房源公共组件样式；
+              agentId:'',
+              rent:rent,
+              outsideHouseAccount:true//相似房源处是否显示更多;
           }
       } ,
       methods : {
@@ -209,6 +222,7 @@
           let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;
           this.cityId = this.$route.query.cityId;
+          this.agentId=agentId;
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
@@ -217,11 +231,8 @@
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
                   this.$nextTick(function(){
-                    //   console.log(this.$refs.sansInfo)
-                    //   this.$refs.sansInfo.style.color="red";
                       let houseInfo=this.$refs.sansInfo.clientHeight;
                       this.textHeight=this.$refs.sansInfo.clientHeight;
-                    //   console.log(this.$refs.sansInfo.clientHeight);
                     //   超出控制高度;
                       if(houseInfo/25>5){
                         this.$refs.sansInfo.style.height=25*5+'px';
@@ -255,6 +266,7 @@
       components : {
           downloadApp ,
           assistant ,
+          rentSources,
           swiper ,
           swiperSlide
       }
