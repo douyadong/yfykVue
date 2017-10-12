@@ -96,7 +96,7 @@
             <div  v-if="pageStates.activeTab=='rent'">
             <transition  name="slide-fade">
               <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :dataItems="apiData.rentSources"></rent-sources>
+                <rent-sources :statusStyle="styleStatus" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
                 <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
                   <div slot="no-more" class="no-more">没有更多了！</div>
                 </infinite-loading>
@@ -266,7 +266,7 @@
             apiPath : "space.rent" ,
             data : { "agentId" : agentId , "pageIndex" : this.pageStates.rentPageIndex , "pageSize" : this.pageConfs.pageSize } ,
             successCallback : res => {
-              let result = res.body.data.newHouseSummaryModels ;
+              let result = res.body.data.rentHouseList ;
               this.$data.apiData.rentSources = this.$data.apiData.rentSources.concat(result) ;  //将房源数据累加
               this.pageStates.rentPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
               this.$refs.infiniteLoadingRent.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成
@@ -389,7 +389,6 @@
               successCallback : res => {
                   let result = res.body.data.secondHouseSummaryModels ;
                   this.pageStates.hasEsf = !!(result && result.length>0);
-
                   this.calcTab();
               }
           }) ;

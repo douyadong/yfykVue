@@ -4,9 +4,9 @@
 3. 作者：zhaohuagang@lifang.com
 4. 备注：由于很多应用只是把数据接口当做model层，而不是直接接触数据库，本文件提供数据接口配置
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-export default {    
+export default {
     "timeout": 60 * 1000 ,  //超时请求时间，单位：毫秒
-    "successStatusCode" : 1 ,    
+    "successStatusCode" : 1 ,
     "prefix" : {
         "dev" : "//10.0.18.78:8107" ,
         "test" : "//m.test.wkzf" ,
@@ -24,10 +24,10 @@ export default {
             "checkLoginStatus" : "member/h5IsLogin.rest"
         } ,
         "learn" : {
-            "detail" : "yfyk/quJingShareArticleDetail.rest",  
-            "comments": "article/queryArticleCommentList.rest",  
+            "detail" : "yfyk/quJingShareArticleDetail.rest",
+            "comments": "article/queryArticleCommentList.rest",
             "commitComment":"yfyk/agentShareArticleComment.rest",
-            "up":"article/thumbUp.rest",        
+            "up":"article/thumbUp.rest",
         } ,
         "rent" : {
             "detail" : "yfyk/getHouseRentDetailInfo.rest"
@@ -36,6 +36,7 @@ export default {
             "detail" : "yfyk/agentInfoDetail.rest" ,
             "esf" : "yfyk/agentRecmdSecondHouseList.rest" ,
             "xf" : "yfyk/agentRecmdNewHouseList.rest" ,
+            "rent" : "yfyk/agentShopRentHouseList.rest" ,
             "press" : "yfyk/agentRecmdArticleList.rest" ,
             "rate" : "yfyk/queryAgentCommentList.rest",
             "addComment":"commentAgent/h5AddComment.rest"
