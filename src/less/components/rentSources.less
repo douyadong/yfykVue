@@ -12,57 +12,68 @@
     height: 12.3rem;
     padding: 1.75rem 1.5rem;
     position: relative;
-    .flex-box();
-    >.pic{
-      width: 37.97%;
-      height: 8.685rem;
-      .box-center();
-      //border:1px solid ;
-      >img{
-       max-width: 100%;
-       max-height: 8.685rem;
+    .sources-content{
+      .flex-box();
+      >.pic{
+        width: 37.97%;
+        height: 8.685rem;
+        .box-center();
+        //border:1px solid ;
+        >img{
+          max-width: 100%;
+          max-height: 8.685rem;
+        }
       }
-    }
-    >.desc{
-      padding-left: 1rem;
-      width: 62.03%;
-      >h3{
-        font-size: 1.6rem;
-        color: @default-font-color;
-        letter-spacing: -0.2px;
-        line-height: 1.6rem;
-      }
-      >p{
-        font-size: 1.1rem;
-        color: #7C7C7C;
-        letter-spacing: 0;
-        line-height: 1.1rem;
-        clear: both;
-      }
-      >.position{
-        margin-top: 1rem;
-        margin-bottom: 3.8rem;
-  /*      >span{
-          display: inline-block;
-          width: 2rem;
-          text-align: center;
-          border-left: 1px solid #7C7C7C;
-          border-right: 1px solid #7C7C7C;
-          margin-left: 0.5rem;
-          margin-right: 0.5rem;
-          padding: 0 0.5rem;
-        }*/
-      }
-      >.price{
-        >span{
-          display: inline-block;
+      >.desc{
+        padding-left: 1rem;
+        width: 62.03%;
+        >h3{
+          font-size: 1.6rem;
+          color: @default-font-color;
+          letter-spacing: -0.2px;
+          line-height: 1.6rem;
+          .text-ellipsis();
+        }
+        >p{
+          font-size: 1.1rem;
+          color: #7C7C7C;
+          letter-spacing: 0;
+          line-height: 1.1rem;
+          clear: both;
+        }
+        >ul{
+          >li{
+            display: inline-block;
+            background-color: #f9f9f9;
+            color: #999;
+            .border-radius(3px);
+            margin: 0 2px 2px 0;
+            padding: 2px 5px;
+          }
+        }
+        >.position{
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+          /*      >span{
+                  display: inline-block;
+                  width: 2rem;
+                  text-align: center;
+                  border-left: 1px solid #7C7C7C;
+                  border-right: 1px solid #7C7C7C;
+                  margin-left: 0.5rem;
+                  margin-right: 0.5rem;
+                  padding: 0 0.5rem;
+                }*/
+        }
+        >.price{
           font-size: 1.6rem;
           color: #FC4C5A;
           letter-spacing: 0;
-          float: right;
+          margin-top: 0.6rem;
         }
       }
     }
+
   }
   >.space{
     margin-bottom: 1rem;

@@ -1,15 +1,29 @@
 <template>
   <div class="rent-sources">
-   <div class="wk-panel single-source" :class="{space:statusStyle , underline: !statusStyle}" v-for=" (items , index) in dataItems" :key="items.houseId">
-     <div class="pic">
-       <img :src="items.firstImageUrl" alt="zhaopian">
-     </div>
-     <div class="desc">
-       <h3>{{items.subEstateName}}</h3>
-       <p class="position">{{items.spaceArea}}㎡ &nbsp;|&nbsp; {{items.orientationStr}} &nbsp;|&nbsp; {{items.renovationStr || "--" }}</p>
-       <p class="price">{{items.houseTypeStr}} <span>{{items.rentPrice}} 元/月</span></p>
-     </div>
-   </div>
+    <div class="wk-panel single-source" :class="{space:statusStyle , underline: !statusStyle}"
+         v-for=" (items , index) in dataItems" :key="items.houseId">
+      <router-link :to="{ name: 'rentDetailShare', params: { houseId: items.houseId , agentId: agentId }}">
+        <div class="sources-content">
+          <div class="pic">
+            <img :src="items.firstImageUrl" alt="zhaopian">
+          </div>
+          <div class="desc">
+            <h3>{{items.houseTitle || "--"}}</h3>
+            <p class="position">
+              {{items.houseTypeStr}}&nbsp;|&nbsp; {{items.spaceArea}}㎡&nbsp;|&nbsp; {{items.districtAndTownName || "--"
+              }}</p>
+            <ul>
+                 <li v-if="items.houseTag.isSubwayHouse === 1 ">近地铁</li>
+                 <li v-if="items.houseTag.isPriceDown === 1 ">降价</li>
+                 <li v-if="items.houseTag.isNewHouse === 1 ">新上</li>
+                 <li v-if="items.houseTag.isHardcover === 1 ">精装</li>
+                 <li v-if="items.houseTag.isSouth === 1 ">朝南</li>
+            </ul>
+            <p class="price"><span>{{items.rentPrice}} 元/月</span></p>
+          </div>
+        </div>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -40,9 +54,9 @@
 //        return prefix+ "/sharexf/" + url + ".html?agentId=" + this.agentId + "&cityId="+this.cityId;//"https://m.wkzf.com/shanghai/xfdetail/" + encryptEstateId + ".html" ;
 //      }
     } ,
-    props : [ "statusStyle" , "dataItems" ] ,  // statusStyle: Boolean  ，dataItems: Array[]
+    props : [ "statusStyle" , "dataItems" ,"agentId"] ,  // statusStyle: Boolean  ，dataItems: Array[]
   }
 </script>
 <style lang="less" scoped>
   @import "../../../src/less/components/rentSources.less" ;
-</style>111
+</style>
