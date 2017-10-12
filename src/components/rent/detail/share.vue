@@ -86,8 +86,27 @@
             <!--外来房源房源描述-->
             <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>10000&&text.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
-                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="aa">{{text}}</div>
-                <div>查看更多</div>
+                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
+                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
+            </div>
+        </div>
+        <!--小区信息-->
+        <div class="wk-panel top-gap estate-info">
+            <div class="info panel-header">小区信息</div>
+            <div class="estate-detail">
+                <div class="estate-img">
+                    <img :src="estate.src" alt="">
+                </div>
+                <div class="estate-text">
+                    <ul>
+                        <li class="estate-name">{{estate.name}}</li>
+                        <li>
+                            <span>{{estate.year}}</span><span class="division">|</span><span>{{estate.total}}</span>
+                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>
+                        </li>
+                        <li>{{estate.address}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!--位置及周边部分-->
@@ -139,8 +158,26 @@
                   simpleHouseRentDetailInfo : {} ,
                   simpleAgentModel : {}
               },
-              text:'耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯我if将诶',
-              moreInfo:true
+              text:`耳机哦非法分开服务费我也蚂蜂窝IWO夫君
+              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿
+              我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也
+              蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯
+              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢
+              诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费
+              劲儿我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝
+              IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯为客疯狂费劲儿
+              我开房间噢诶无附件为额风口浪尖嗯我if将诶`,
+              moreInfo:true,//是否超过5行
+              textHeight:'',//定义原本外部房源信息盒子高度
+              isLook:'查看更多',//点击查看更多外部房源信息
+              estate:{
+                  //模拟小区信息;
+                  src:'https://img.wkzf.com/e15d7d3d78974f1dbe076c7e8967c714.CL',
+                  name:'虹东校区',
+                  year:'1993年竣工',
+                  total:'150户',
+                  address:'虹桥路996弄'
+              }
           }
       } ,
       methods : {
@@ -155,7 +192,18 @@
                   eventParam : eventParam ,
                   type : 2
               })) ;
-          }
+          },
+         //点击查看更多显示更多房源描述信息
+         outsideMoreInfo(){
+            if($('.is-look').text()=='查看更多'){
+                this.$refs.sansInfo.style.height=this.textHeight+'px';
+                this.isLook='收起'
+            };
+            if($('.is-look').text()=='收起'){
+                this.$refs.sansInfo.style.height=25*5+'px';
+                this.isLook='查看更多'
+            }
+         }
       } ,
       created() {
           let houseId = this.$route.params.houseId ;
@@ -169,8 +217,15 @@
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
                   this.$nextTick(function(){
-                      console.log(this.$refs.aa)
-                      this.$refs.aa.style.color="red" 
+                    //   console.log(this.$refs.sansInfo)
+                    //   this.$refs.sansInfo.style.color="red";
+                      let houseInfo=this.$refs.sansInfo.clientHeight;
+                      this.textHeight=this.$refs.sansInfo.clientHeight;
+                    //   console.log(this.$refs.sansInfo.clientHeight);
+                    //   超出控制高度;
+                      if(houseInfo/25>5){
+                        this.$refs.sansInfo.style.height=25*5+'px';
+                      }
                   });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
@@ -197,9 +252,6 @@
               }
           }) ;
       } ,
-      mounted(){
-        // console.log(this.$refs.cc)
-      },
       components : {
           downloadApp ,
           assistant ,

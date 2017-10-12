@@ -179,13 +179,61 @@
         .outside-info{
             line-height: 25px;
             font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
         }
         .moreInfo{
             overflow: hidden;
         }
+        .is-look{
+            line-height: 2.25rem;
+            font-size: 1.6rem;
+            color: @danger-deeper-color;
+            padding-bottom: 2rem;
+        }
     }
 }
-
+// 小区信息
+.estate-info{
+    .estate-detail{
+        padding: 2rem 1.5rem;
+        .clearfix();
+        .estate-img{
+            width: 12rem;
+            height: 8rem;
+            float:left;
+            margin-right: @gap-dimension;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .estate-text{
+            ul{
+                li{
+                    line-height: 2rem;
+                    font-size: 1.6rem;
+                    color: @light-font-color;
+                }
+                li+li{
+                    margin-top: @gap-dimension;
+                }
+                .estate-name{
+                    color: #000000;
+                }
+                .division{
+                    padding: 0  @gap-dimension;
+                }
+                .skip{
+                    float:right;
+                    color:  @light-font-color;
+                    padding-top: 0.2rem;
+                }
+            }
+        }
+    }
+}
+// 位置及周边
 .location {
     .panel-header{
         border: none;
