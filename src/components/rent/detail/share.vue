@@ -9,7 +9,7 @@
                 <img :src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
             </swiper-slide>
-        </swiper>
+        </swiper> 
        <!--房源概要部分-->
        <div class="wk-panel summary">
             <div class="panel-header">
@@ -33,7 +33,7 @@
         </div>
         <!--房子简介-->
         <div class="wk-panel house-info">
-            <div  class=" panel-body lr-padding tb-padding ">
+            <div  class=" panel-body lr-padding tb-padding">
                 <ul class="column-3">
                     <li v-if="apiData.simpleHouseRentDetailInfo.houseId<10000"><dl><dt>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dt><dd>付款方式</dd></dl></li>
                     <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dt><dd>户型</dd></dl></li>
@@ -121,11 +121,9 @@
             </div>
         </div>
         <!--相似房源推荐-->
-        <div class="alike-house top-gap wk-panel">
+        <div class="alike-house top-gap wk-panel" v-if="rent.data.rentList.length">
             <div class="house-recommend panel-header">相似房源推荐</div>
             <rent-sources :statusStyle="styleStatus" :dataItems="rent.data.rentList" :agentId="agentId"></rent-sources>
-            <div class="look-most lr-padding" v-if="outsideHouseAccount">查看更多</div>
-            <!--<router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>-->
         </div>
         <!--结束-->
     </div>
