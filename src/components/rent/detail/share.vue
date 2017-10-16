@@ -100,7 +100,7 @@
                 <div class="estate-text">
                     <ul>
                         <li class="estate-name">{{estate.name}}</li>
-                        <li>
+                        <li class="jiantou">
                             <span>{{estate.year}}</span><span class="division">|</span><span>{{estate.total}}</span>
                             <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>
                         </li>
