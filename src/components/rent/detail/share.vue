@@ -75,7 +75,7 @@
         <!--房源描述部分-->
         <div class="wk-panel description top-gap">
             <!--自有房源房源描述-->
-            <div v-if="apiData.simpleHouseRentDetailInfo.houseId<10000" class="self-house">
+            <div v-if="apiData.simpleHouseRentDetailInfo.houseId<1000000" class="self-house">
                 <div class="panel-header">房源描述</div>
                 <div  class="panel-body  lr-padding tb-padding">
                     <dl><dt>主要卖点</dt><dd>{{ apiData.simpleHouseRentDetailInfo.sellPoint || "暂无描述" }}</dd></dl>
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>10000&&text.length>30" class="outside-house ">
+            <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>1000000&&text.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
                 <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
                 <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
@@ -229,12 +229,14 @@
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
                   this.$nextTick(function(){
-                      let houseInfo=this.$refs.sansInfo.clientHeight;
-                      this.textHeight=this.$refs.sansInfo.clientHeight;
-                    //   超出控制高度;
-                      if(houseInfo/25>5){
-                        this.$refs.sansInfo.style.height=25*5+'px';
-                      }
+                     if(this.apiData.simpleHouseRentDetailInfo.houseId>1000000){
+                        let houseInfo=this.$refs.sansInfo.clientHeight;
+                        this.textHeight=this.$refs.sansInfo.clientHeight;
+                        //   超出控制高度;
+                        if(houseInfo/25>5){
+                            this.$refs.sansInfo.style.height=25*5+'px';
+                        }
+                     }
                   });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
