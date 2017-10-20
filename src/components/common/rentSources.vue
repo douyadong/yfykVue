@@ -1,8 +1,8 @@
 <template>
   <div class="rent-sources">
     <div class="wk-panel single-source" :class="{space:statusStyle , underline: !statusStyle}"
-         v-for=" (items , index) in dataItems" :key="items.houseId">
-      <router-link :to="{ name: 'rentDetailShare', params: { houseId: items.houseId , agentId: agentId }}">
+         v-for=" (items , index) in dataItems" :key="items.encryptHouseId">
+      <router-link :to="{ name: 'rentDetailShare', params: { houseId: items.encryptHouseId , agentId: agentId }}">
         <div class="sources-content">
           <div class="pic">
             <img :src="items.firstImageUrl" alt="zhaopian">
@@ -10,7 +10,7 @@
           <div class="desc">
             <h3>{{items.houseTitle || "--"}}</h3>
             <p class="position">
-              {{items.houseTypeStr}}&nbsp;|&nbsp; {{items.spaceArea}}㎡&nbsp;|&nbsp; {{items.districtAndTownName || "--"
+              {{items.houseTypeStr}} {{items.spaceArea}}㎡&nbsp;| {{items.districtAndTownName || "--"
               }}</p>
             <ul>
                  <li v-if="items.houseTag.isSubwayHouse === 1 ">近地铁</li>
