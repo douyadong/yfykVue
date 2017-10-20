@@ -41,7 +41,7 @@
                 <hr>
                 <ul class="outline">
                 	<li class='tags'>                        
-                		<span :class="tag.className" v-for="tag in apiData.house.tagList">{{tag.name}}</span>              		
+                		<span :class="tag.className" v-for="(tag,index) in apiData.house.tagList" :key="index">{{tag.name}}</span>              		
                 	</li>
                     <li class="left">
                     	<dl>

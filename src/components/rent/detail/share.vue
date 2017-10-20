@@ -9,7 +9,7 @@
                 <img :src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
             </swiper-slide>
-        </swiper>
+        </swiper> 
        <!--房源概要部分-->
        <div class="wk-panel summary">
             <div class="panel-header">
@@ -33,7 +33,7 @@
         </div>
         <!--房子简介-->
         <div class="wk-panel house-info">
-            <div  class=" panel-body lr-padding tb-padding ">
+            <div  class=" panel-body lr-padding tb-padding">
                 <ul class="column-3">
                     <li v-if="apiData.simpleHouseRentDetailInfo.houseId<10000"><dl><dt>{{ apiData.simpleHouseRentDetailInfo.payTypeStr }}</dt><dd>付款方式</dd></dl></li>
                     <li><dl><dt>{{ apiData.simpleHouseRentDetailInfo.houseTypeStr }}</dt><dd>户型</dd></dl></li>
@@ -75,7 +75,7 @@
         <!--房源描述部分-->
         <div class="wk-panel description top-gap">
             <!--自有房源房源描述-->
-            <div v-if="apiData.simpleHouseRentDetailInfo.houseId<10000" class="self-house">
+            <div v-if="apiData.simpleHouseRentDetailInfo.houseId<1000000" class="self-house">
                 <div class="panel-header">房源描述</div>
                 <div  class="panel-body  lr-padding tb-padding">
                     <dl><dt>主要卖点</dt><dd>{{ apiData.simpleHouseRentDetailInfo.sellPoint || "暂无描述" }}</dd></dl>
@@ -84,10 +84,29 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>10000&&text.length>30" class="outside-house ">
+            <div v-else-if="apiData.simpleHouseRentDetailInfo.houseId>1000000&&text.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
-                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="aa">{{text}}</div>
-                <div>查看更多</div>
+                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
+                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
+            </div>
+        </div>
+        <!--小区信息-->
+        <div class="wk-panel top-gap estate-info">
+            <div class="info panel-header">小区信息</div>
+            <div class="estate-detail">
+                <div class="estate-img">
+                    <img :src="estate.src" alt="">
+                </div>
+                <div class="estate-text">
+                    <ul>
+                        <li class="estate-name">{{estate.name}}</li>
+                        <li class="jiantou">
+                            <span>{{estate.year}}</span><span class="division">|</span><span>{{estate.total}}</span>
+                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>
+                        </li>
+                        <li>{{estate.address}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!--位置及周边部分-->
@@ -101,6 +120,11 @@
                 <div class="mark"></div>
             </div>
         </div>
+        <!--相似房源推荐-->
+        <div class="alike-house top-gap wk-panel" v-if="rent.data.rentList.length">
+            <div class="house-recommend panel-header">相似房源推荐</div>
+            <rent-sources :statusStyle="styleStatus" :dataItems="rent.data.rentList" :agentId="agentId"></rent-sources>
+        </div>
         <!--结束-->
     </div>
 </template>
@@ -108,6 +132,8 @@
 <script>
     import downloadApp from "@/components/common/downloadApp" ;
     import assistant from "@/components/common/assistant" ;
+    import rentSources from "@/components/common/rentSources";
+    import rent from "../../../../mock/rent/detail.json";
     import $ from "jquery";
     import { swiper , swiperSlide } from "vue-awesome-swiper" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
@@ -139,8 +165,30 @@
                   simpleHouseRentDetailInfo : {} ,
                   simpleAgentModel : {}
               },
-              text:'耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯我if将诶',
-              moreInfo:true
+              text:`耳机哦非法分开服务费我也蚂蜂窝IWO夫君
+              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿
+              我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也
+              蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯
+              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢
+              诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费
+              劲儿我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝
+              IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯为客疯狂费劲儿
+              我开房间噢诶无附件为额风口浪尖嗯我if将诶`,
+              moreInfo:true,//是否超过5行
+              textHeight:'',//定义原本外部房源信息盒子高度
+              isLook:'查看更多',//点击查看更多外部房源信息
+              estate:{
+                  //模拟小区信息;
+                  src:'https://img.wkzf.com/e15d7d3d78974f1dbe076c7e8967c714.CL',
+                  name:'虹东校区',
+                  year:'1993年竣工',
+                  total:'150户',
+                  address:'虹桥路996弄'
+              },
+              styleStatus:false,//控制相似房源公共组件样式；
+              agentId:'',
+              rent:rent,
+              outsideHouseAccount:true//相似房源处是否显示更多;
           }
       } ,
       methods : {
@@ -155,12 +203,24 @@
                   eventParam : eventParam ,
                   type : 2
               })) ;
-          }
+          },
+         //点击查看更多显示更多房源描述信息
+         outsideMoreInfo(){
+            if($('.is-look').text()=='查看更多'){
+                this.$refs.sansInfo.style.height=this.textHeight+'px';
+                this.isLook='收起'
+            };
+            if($('.is-look').text()=='收起'){
+                this.$refs.sansInfo.style.height=25*5+'px';
+                this.isLook='查看更多'
+            }
+         }
       } ,
       created() {
           let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;
           this.cityId = this.$route.query.cityId;
+          this.agentId=agentId;
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
@@ -169,8 +229,14 @@
                   Object.assign(this.$data.apiData , res.body.data) ;
                   document.title = "租房详情" ;
                   this.$nextTick(function(){
-                      console.log(this.$refs.aa)
-                      this.$refs.aa.style.color="red" 
+                     if(this.apiData.simpleHouseRentDetailInfo.houseId>1000000){
+                        let houseInfo=this.$refs.sansInfo.clientHeight;
+                        this.textHeight=this.$refs.sansInfo.clientHeight;
+                        //   超出控制高度;
+                        if(houseInfo/25>5){
+                            this.$refs.sansInfo.style.height=25*5+'px';
+                        }
+                     }
                   });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
@@ -197,12 +263,10 @@
               }
           }) ;
       } ,
-      mounted(){
-        // console.log(this.$refs.cc)
-      },
       components : {
           downloadApp ,
           assistant ,
+          rentSources,
           swiper ,
           swiperSlide
       }
