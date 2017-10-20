@@ -163,7 +163,7 @@
                   rates : [] ,  //评价数据
                   esfSources : [] , //二手房源
                   xfSources : [] ,  //新房房源
-                  rentSources : data.data.rentList ,  // 租房房源
+                  rentSources : [] ,  // 租房房源
                   presses : []  //房产资讯
               },
               agentId : "" ,
@@ -259,7 +259,7 @@
                   }
               }) ;
           } ,
-        //无限加载租房
+          //无限加载租房
         infiniteLoadingRent : function() {
           let agentId = this.$route.params.agentId ;
           apiDataFilter.request({
@@ -270,8 +270,8 @@
               this.$data.apiData.rentSources = this.$data.apiData.rentSources.concat(result) ;  //将房源数据累加
               this.pageStates.rentPageIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
               this.$refs.infiniteLoadingRent.$emit("$InfiniteLoading:loaded") ;  //标识本次数据加载完成
-              if(res.body.data.page.total === this.$data.apiData.rentSources.length) {
-                this.$refs.infiniteLoadingXf.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕
+              if(res.body.data.total === this.$data.apiData.rentSources.length) {
+                this.$refs.infiniteLoadingRent.$emit("$InfiniteLoading:complete") ;  //标识所有数据加载完毕
               }
             }
           }) ;
@@ -300,7 +300,7 @@
           },
           calcTab(){
             this.readyTabCount++;
-            if(this.readyTabCount == 3){
+            if(this.readyTabCount == 4){
               console.log('ready 333');
               if(this.pageStates.hasEsf){
                 this.pageStates.activeTab = this.pageStates.activeTabContent = "esf";
@@ -312,6 +312,10 @@
               }
               if(this.pageStates.hasPress){
                 this.pageStates.activeTab = this.pageStates.activeTabContent = "press";
+                return;
+              }
+              if(this.pageStates.hasRent){
+                this.pageStates.activeTab = this.pageStates.activeTabContent = "rent";
                 return;
               }
             }
@@ -392,6 +396,16 @@
                   this.calcTab();
               }
           }) ;
+        //查询是否有租房数据，决定是否显示租房tab
+        apiDataFilter.request({
+          apiPath : "space.rent" ,
+          data : { "agentId" : agentId , "pageIndex" : 0 , "pageSize" : 1 } ,
+          successCallback : res => {
+            let result = res.body.data.rentHouseList ;
+            this.pageStates.hasRent = !!(result && result.length>0);
+            this.calcTab();
+          }
+        }) ;
 
 
           //查询经纪人评价数据
