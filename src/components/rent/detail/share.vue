@@ -131,13 +131,19 @@
       created() {          
           let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;  
-          this.cityId = this.$route.query.cityId;       
+          this.cityId = this.$route.query.cityId;    
+          let self = this;   
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,              
               successCallback : res => {                 
                   Object.assign(this.$data.apiData , res.body.data) ;
-                  document.title = "租房详情" ;
+                  //document.title = "租房详情" ;
+                  self.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
+                    console.log('更新标题成功');
+                  },function(){
+                    console.log('更新标题失败');
+                  });
                   //定制页面微信分享参数                  
                   let wechatShare = res.body.data.weChatShare ;
                   this.$wechatShare({

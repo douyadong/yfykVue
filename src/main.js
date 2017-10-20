@@ -11,6 +11,7 @@ import router from "./router" ;
 import VueLazyload from "vue-lazyload" ;  //图片懒加载插件
 import WechatShare from "@/plugins/wechatShare";
 import BigData from "@/plugins/bigData";
+import NativeBridge from "@/plugins/nativeBridge";
 import DeviceId from "@/plugins/deviceId";
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 vue插件使用
@@ -20,6 +21,7 @@ Vue.use(VueLazyload) ;
 Vue.use(WechatShare);
 Vue.use(DeviceId);
 Vue.use(BigData);
+Vue.use(NativeBridge);
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 关闭生产模式下给出的提示
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/

@@ -21,6 +21,8 @@ import weixinAdd from "@/components/weixin/add" ;
 import login from "@/components/login/index" ;
 import esfDetailShare from "@/components/esf/detail/share";
 import videoPlay from "@/components/common/videoPlay";
+import getDeviceId from "@/components/test/getDeviceId";
+import updateTitle from "@/components/test/updateTitle";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -103,6 +105,14 @@ export default new Router({
             path: "/videoPlay",
             name: "videoPlay",
             component: videoPlay
+        },{
+            path: "/test/getDeviceId",
+            name: "getDeviceId",
+            component: getDeviceId
+        },{
+            path: "/test/updateTitle",
+            name: "updateTitle",
+            component: updateTitle
         }
     ]
 }) ;

@@ -225,7 +225,12 @@
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            document.title = "二手房详情";
+            //document.title = "二手房详情";
+            this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
+                console.log("更新标题成功");
+            },function(){
+                console.log("更新标题失败");
+            })  
         },
 		data(){
 			return {
@@ -373,12 +378,28 @@
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
                 
-                document.title = data.data.house.houseTitle;
+                //document.title = data.data.house.houseTitle;
+                self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
+                    console.log("更新标题成功");
+                },function(){
+                    console.log("更新标题失败");
+                })
+
+                self.$wechatShare({
+                  "title" : data.data.house.houseTitle ,
+                  "timelineTitle" : data.data.house.houseTitle ,
+                  "content" : data.data.house.houseTitle ,
+                  "imgUrl" : data.data.house.imgList && data.data.house.imgList.length > 0 && data.data.house.imgList[0] || '',//取第一个图片
+                  "linkUrl": '',
+                  "complete":function(){
+                    
+                  }
+                });
 
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
-                //todo::
+                
                 Object.assign(self.apiData,data.data); 
 
                 //计算tagList

@@ -17,7 +17,7 @@
         </p>
       </div>
       <div class="wk-panel">
-          <spread :title="article.title" :articleId="articleId" />
+          <spread :title="article.title" :articleId="articleId" :shareTitle="article.shareTitle" :shareContent="article.shareContent" :shareImageUrl="article.shareImageUrl"/>
       </div>
        <div class="wk-panel article-comments">
           <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
@@ -75,7 +75,10 @@
               content:"",
               thumbUpNumStr:0,
               isUp:false,
-              coverUrl:""
+              coverUrl:"",
+              shareTitle: "",
+              shareContent: "",
+              shareImageUrl: "",
             },            
             comments:[],
             commiting:false,
@@ -99,7 +102,12 @@
         
       },
       created() {
-        window.document.title = "有房有客分享";
+        //window.document.title = "有房有客分享";
+        this.$nativeBridge.invokeMethod('updateTitle',['nativeBridge'],function(){
+          console.log("更新标题成功");
+        },function(){
+          console.log("更新标题失败");
+        })
         this.fetchArticle();          
           
           //埋点
@@ -239,12 +247,20 @@
                   content:data.data.articleDetailModel.content,
                   thumbUpNumStr:parseInt(data.data.articleDetailModel.thumbUpNumStr)||0,
                   coverUrl:data.data.articleDetailModel.coverUrl,
-                  phoneNum:data.data.articleDetailModel.phoneNum
+                  phoneNum:data.data.articleDetailModel.phoneNum,
+                  shareTitle: data.data.articleDetailModel.shareTitle,
+                  shareContent: data.data.articleDetailModel.shareContent,
+                  shareImageUrl: data.data.articleDetailModel.shareImageUrl,                  
                 };   
                 self.isShowCall = !!data.data.articleDetailModel.phoneNum; 
                 self.agent = data.data.agentModel;
                 if(data.data.articleDetailModel.shareTitle){
-                  window.document.title = data.data.articleDetailModel.shareTitle;
+                  //window.document.title = data.data.articleDetailModel.shareTitle;
+                  self.$nativeBridge.invokeMethod('updateTitle',[data.data.articleDetailModel.shareTitle],function(){
+                    console.log("更新标题成功");
+                  },function(){
+                    console.log("更新标题失败");
+                  });
                 }                
 
                 self.$wechatShare({

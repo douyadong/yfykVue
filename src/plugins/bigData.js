@@ -77,6 +77,7 @@ export default {
 		let bigData = function(data){
 			//data.cookieId = utils.getCookieId();
 			Vue.getDeviceIdFromNative(function(deviceId){
+				data.projectId = 3; // 悟空找房pc：1 （保持不变）   悟空找房h5：2 ， 有房有客 h5: 3
 				data.cookieId = deviceId;
 				let total = getTotal();
 				data.pNum = total;
