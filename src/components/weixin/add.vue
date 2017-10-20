@@ -17,6 +17,12 @@
         } ,
         created() {
             document.title = "买房卖房就找悟空找房" ;
+            this.$nativeBridge.invokeMethod('updateTitle',['买房卖房就找悟空找房'],function(){
+                console.log('更新标题成功');
+            },function(){
+                console.log('更新标题失败');
+            });
+            
         }
     }
 </script>

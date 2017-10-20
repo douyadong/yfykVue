@@ -330,6 +330,7 @@
           let agentId = this.$route.params.agentId ;
           this.agentId = agentId ;
           this.cityId = this.$route.query.cityId ;
+          let self = this;
           //页面埋点功能
           this.$bigData({
             pageName : 2065 ,
@@ -348,7 +349,12 @@
                   //页面标题和分享内容设置
                   let generalTitle = "悟空找房" + agent.agentName ;
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
-                  document.title = generalTitle ;  //设置页面title
+                  //document.title = generalTitle ;  //设置页面title
+                  self.$nativeBridge.invokeMethod('updateTitle',[generalTitle],function(){
+                    console.log('更新标题成功');
+                  },function(){
+                    console.log('更新标题失败');
+                  });
                   //页面微信分享设置
                   this.$wechatShare({
                       "content" : shareContent ,
