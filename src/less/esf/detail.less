@@ -194,37 +194,72 @@
 		}
 	}
 
-	.basic-info{
-		padding-bottom: 1rem;
-		.panel-header{
-			border:none;
-			padding-bottom: 0;
-			padding-top: 1.5rem;
-		}
+	// .basic-info{
+	// 	padding-bottom: 1rem;
+	// 	.panel-header{
+	// 		border:none;
+	// 		padding-bottom: 0;
+	// 		padding-top: 1.5rem;
+	// 	}
 
-		.panel-body{
-			padding-top: 0;			
-		}
+	// 	.panel-body{
+	// 		padding-top: 0;			
+	// 	}
 
-		dl{
-			font-size: 1.4rem;
-			dt{				
-				color:#7C7C7C;
-				margin-bottom: .5rem;
-				margin-top: 1.5rem;
-			}
+	// 	dl{
+	// 		font-size: 1.4rem;
+	// 		dt{				
+	// 			color:#7C7C7C;
+	// 			margin-bottom: .5rem;
+	// 			margin-top: 1.5rem;
+	// 		}
 
-			dd{
-				color:#000;
-			}
-		}
+	// 		dd{
+	// 			color:#000;
+	// 		}
+	// 	}
 
-		.more{
-			display: block;
-			color: #4081D6;
-			margin-top: 1.5rem;			
-		}
-	}
+	// 	.more{
+	// 		display: block;
+	// 		color: #4081D6;
+	// 		margin-top: 1.5rem;			
+	// 	}
+	// }
+
+	// 3.7版本房源信息描述
+	.description {
+    	.self-house{
+        	.panel-body {
+            	dl {            
+                	dt, dd {
+                    	font-size : 1.6rem ;
+                    	line-height : 2.0rem ;
+                	}
+                	dt {
+                		color : @light-font-color ;
+                		line-height : 2.5rem ;
+                	}
+            	}
+        	}
+    }
+    .outside-house{
+        .outside-info{
+            line-height: 25px;
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .moreInfo{
+            overflow: hidden;
+        }
+        .is-look{
+            line-height: 2.25rem;
+            font-size: 1.6rem;
+            color: @danger-deeper-color;
+            padding-bottom: 2rem;
+        }
+    }
+}
 
 	.estate-info{
 		.panel-header{

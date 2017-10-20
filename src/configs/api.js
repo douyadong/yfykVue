@@ -30,8 +30,8 @@ export default {
             "up":"article/thumbUp.rest",
         } ,
         "rent" : {
-            "detail" : "yfyk/getHouseRentDetailInfo.rest"
-            //    "detail" : "yfyk/queryHouseDetailForYfyk.rest"
+            // "detail" : "yfyk/getHouseRentDetailInfo.rest"
+               "detail" : "yfyk/queryHouseDetailForYfyk.rest"
         } ,
         "space": {
             "detail" : "yfyk/agentInfoDetail.rest" ,

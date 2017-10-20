@@ -110,8 +110,8 @@
             </div>
         </div>		
 
-		<!-- 基本信息 -->
-		<div class="wk-panel basic-info" v-if="apiData.house.isExternal && apiData.house.extHouseDesc && apiData.house.extHouseDesc.length > 30">			
+		<!--3.6版本房源描述基本信息 -->
+		<!--<div class="wk-panel basic-info" v-if="apiData.house.isExternal && apiData.house.extHouseDesc && apiData.house.extHouseDesc.length > 30">			
             <h1 class="panel-header">基本信息</h1>                
             <div  class="panel-body lr-padding tb-padding">		
                 <template v-if="!apiData.house.isExternal">		
@@ -129,13 +129,30 @@
     				</dl>
                 </template>
                 <dl v-else>
-                    <!-- <dt></dt> -->
                     <dd class="ext-house-desc">{{extHouseDesc}}<span @click="toggleExpand" v-if="apiData.house.isExternal && apiData.house.extHouseDesc.length > 100">            
                 {{isExpanded?'收起':'更多'}}
             </span></dd>
                 </dl>
             </div>            
-		</div>
+		</div>-->
+         <!--3.7版本房源描述部分-->
+        <div class="wk-panel description top-gap">
+            <!--自有房源房源描述-->
+            <div v-if="apiData.house.isWKhouse==1" class="self-house">
+                <div class="panel-header">房源描述</div>
+                <div  class="panel-body  lr-padding tb-padding">
+                    <dl><dt>主要卖点</dt><dd>{{ apiData.house.sellPoint || "暂无描述" }}</dd></dl>
+                    <dl><dt>业主心态</dt><dd>{{ apiData.house.ownerMotivation || "暂无描述" }}</dd></dl>
+                    <dl><dt>周边配套</dt><dd>{{ apiData.house.aroundSupport || "暂无描述" }}</dd></dl>
+                </div>
+            </div>
+            <!--外来房源房源描述-->
+            <div v-else-if="apiData.house.isWKhouse==2&&apiData.house.sellPoint>30" class="outside-house ">
+                <div class="panel-header">房源描述</div>
+                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
+                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
+            </div>
+        </div>
 
 		<!-- 小区信息 -->
 		<div class="wk-panel estate-info">			
@@ -158,7 +175,7 @@
 				<ul class='list-info'>
 					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment || 0}} 个 <i class="iconfont icon-arrowR"></i></span></a></li>
+					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment.account || 0}} 个 <i class="iconfont icon-arrowR"></i></span></a></li>
 				</ul>				
 				
             </div>
@@ -272,7 +289,7 @@
                     owerMotivation:"",//业主动机
                     aroundSupport:"",//周边配套
                     sellPoint:"",//卖点    
-
+                    isWKhouse:"",
                     isStorePush:"",
                     isTopHouse:"",
                     commAgent:"",

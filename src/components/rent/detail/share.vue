@@ -240,16 +240,17 @@
                   });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
-                  this.$wechatShare({
-                      "title" : wechatShare.title ,
-                      "timelineTitle" : wechatShare.timelineTitle ,
-                      "content" : wechatShare.content ,
-                      "imgUrl" : wechatShare.picUrl ,
-                      "success" : function() { console.log("分享成功！") ;  } ,
-                      "fail" : function() { console.log("分享失败！") ;  } ,
-                      "cancel" : function() { console.log("您取消了分享！") ; } ,
-                      "complete" : function() { console.log("分享完成！") ; }
-                  }) ;
+                  console.log(wechatShare);
+                //   this.$wechatShare({
+                //       "title" : wechatShare.title ,
+                //       "timelineTitle" : wechatShare.timelineTitle ,
+                //       "content" : wechatShare.content ,
+                //       "imgUrl" : wechatShare.picUrl ,
+                //       "success" : function() { console.log("分享成功！") ;  } ,
+                //       "fail" : function() { console.log("分享失败！") ;  } ,
+                //       "cancel" : function() { console.log("您取消了分享！") ; } ,
+                //       "complete" : function() { console.log("分享完成！") ; }
+                //   }) ;
 
                   //页面埋点功能
                 this.$bigData({
