@@ -1,11 +1,23 @@
 <template>
 	<div id="esfDetailShare">
-		<assistant :cityId="cityId" :agent="apiData.agent" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
+		<assistant :cityId="cityId" :agent="apiData.agent"/>
 		<download-app />
 		<!--相册内容-->
+        
        <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
-                <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>                
+            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
+                <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
+                <template  v-if="slide.isVideo">
+                    <div style="position:relative" @click="playVideo(slide.video)">                    
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoSmallImage" class="img-responsive"> 
+                        <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
+                            <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                               
                 <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
             </swiper-slide>            
@@ -23,13 +35,14 @@
                     <li>
                     	<dl>
                     		<dt>总价</dt>
-                    		<dd>{{apiData.house.totalPrice}}元</dd>
+                    		<dd>{{apiData.house.totalPrice}}万</dd>
                     	</dl>
                     </li>
                     <li>
                     	<dl>
                     		<dt>户型</dt>
-                    		<dd>{{apiData.house.houseChild}}</dd></dl>
+                    		<dd>{{apiData.house.houseChild}}</dd>
+                        </dl>
                     </li>
                     <li>
                     	<dl>
@@ -46,7 +59,7 @@
                     <li class="left">
                     	<dl>
                     		<dt>单价</dt>
-                    		<dd>{{apiData.house.unitPrice}} 元/m2</dd>
+                    		<dd>{{apiData.house.unitPrice}} 元/㎡</dd>
                     	</dl>
                     </li>
                     <li class="right">
@@ -82,7 +95,7 @@
                     <li class="full">
                     	<dl>
                     		<dt>地铁</dt>
-                    		<dd>{{apiData.estate.subwayName}}</dd>
+                    		<dd>{{apiData.estate.subwayName || '--'}}</dd>
                     	</dl>
                     </li>
                 </ul>
@@ -168,14 +181,14 @@
 						<i class="iconfont icon-arrowR"></i>
 					</a>					
 				</div>
-				<h4>价格走势</h4>				
-				<div id="price" style="height:200px">
+				<h4 v-if="chartVisible">价格走势</h4>				
+				<div v-if="chartVisible" id="price" style="height:200px">
 
 				</div>
 				<ul class='list-info'>
 					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment.account || 0}} 个 <i class="iconfont icon-arrowR"></i></span></a></li>
+					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment.account || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
 				</ul>				
 				
             </div>
@@ -198,7 +211,7 @@
 		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" >
 			<h4 class="panel-header">相似房源推荐</h4>
 			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
-			<a class="more" :href="apiData.house.similarListUrl">查看更多</a>
+			<!-- <a class="more" :href="apiData.house.similarListUrl" v-if="!apiData.house.isExternal">查看更多</a> -->
 		</div>	
 
 		<div id="cover">
@@ -228,6 +241,13 @@
             this.houseId = this.$route.params.houseId;
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
+
+            //document.title = "二手房详情";
+            this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
+                console.log("更新标题成功");
+            },function(){
+                console.log("更新标题失败");
+            })  
         },
 		data(){
 			return {
@@ -236,6 +256,7 @@
               cityId:"",
               isExpanded: false,
               extHouseDesc:"",
+              chartVisible:false,
 			  pageStates : {
                   swiperActiveIndex : 1 //相册当前在第几帧
               } ,
@@ -373,12 +394,29 @@
                 data.data.estate.historicalTransactionListUrl = prefix + "/estate/historicalTransactionList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
-                // data.data.house.extHouseDesc = "这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流.这是外部房源的基本信息，用来测试的记得删掉哦。拉朗朗啦啦啦。哀吾生之须臾，羡长江之无穷。阁中帝子今何在，建外长江空自流";
+                
+                //document.title = data.data.house.houseTitle;
+                self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
+                    console.log("更新标题成功");
+                },function(){
+                    console.log("更新标题失败");
+                })
+
+                self.$wechatShare({
+                  "title" : data.data.house.houseTitle ,
+                  "timelineTitle" : data.data.house.houseTitle ,
+                  "content" : data.data.house.houseTitle ,
+                  "imgUrl" : data.data.house.imgList && data.data.house.imgList.length > 0 && data.data.house.imgList[0] || '',//取第一个图片
+                  "linkUrl": '',
+                  "complete":function(){
+                    
+                  }
+                });
 
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
-                //todo::
+                
                 Object.assign(self.apiData,data.data); 
 
                 //计算tagList
@@ -421,7 +459,7 @@
                     self.apiData.house.tagList.push({className:"tt",name:"南北通透"});
                 }
 
-                if(house.houseId > 10000/*1000000000*/){
+                if(house.houseId > 1000000000){
                     self.apiData.house.isExternal  = true;
                 }else{
                     self.apiData.house.isExternal  = false;
@@ -431,6 +469,7 @@
                 var datatmp = [], unitprice = [],realPrice=[];
                 var unSortPrice,maxPrice,tmpPrice;                 
                 if (data.data.estate.estateHistoricalPrice && data.data.estate.estateHistoricalPrice.length > 1)  {
+                        self.chartVisible = true;
                         for (var i = 0; i < data.data.estate.estateHistoricalPrice.length; i++) {
                             if (data.data.estate.estateHistoricalPrice[i] && data.data.estate.estateHistoricalPrice[i].date && data.data.estate.estateHistoricalPrice[i].unitPrice) {
                                 tmpPrice=parseFloat(data.data.estate.estateHistoricalPrice[i].unitPrice) == 0 ? null : parseFloat(data.data.estate.estateHistoricalPrice[i].unitPrice);
@@ -572,12 +611,13 @@
                         };
                         // 使用刚指定的配置项和数据显示图表。
                         myChart.setOption(option);
+
                     }else{
                         console.log('price hide');
-                        $('#price').hide().prev().hide();
-
+                        //$('#price').hide().prev().hide();
+                        self.chartVisible = false;
                     }
-                }
+                }            
             });						
 		},
 		methods : {
@@ -594,13 +634,18 @@
               })) ;
           },
           previewImage(hide){          	
-          	if(hide){
-          		$('#cover').hide();
-                $('html').css("overflow","auto");
-          	}else{
-          		$('#cover').show();
-                $('html').css("overflow","hidden");
-          	}
+          	// if(hide){
+          	// 	$('#cover').hide();
+           //      $('html').css("overflow","auto");
+          	// }else{
+          	// 	$('#cover').show();
+           //      $('html').css("overflow","hidden");
+          	// }
+          },
+          playVideo(video){
+            this.$router.push({
+                path:"/videoPlay?video=" + video
+            });
           },
           toggleExpand(){
             this.isExpanded = !this.isExpanded;
@@ -617,11 +662,41 @@
                 if(this.apiData.house.houseVideoResponse){
                     result.push({
                         isVideo: true,
+                        video: encodeURIComponent(JSON.stringify({
+                            videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
+                            videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
+                        })),
                         url:this.apiData.house.houseVideoResponse.videoUrl,
                         videoUrl:this.apiData.house.houseVideoResponse.videoUrl,
                         videoSmallImage: this.apiData.house.houseVideoResponse.videoSmallImage
                     });
                 }
+
+                //https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL
+                //http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4
+
+                // result.push({
+                //     isVideo: true,
+                //     video: encodeURIComponent(JSON.stringify({
+                //         videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                //         videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                //     })),
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL",
+                //     videoUrl:"http://v.wkzf.com/d629583119e942beb4aeb456a81bae48WV.mp4",
+                //     videoSmallImage: "https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
+
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
+
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
+
+                // result.push({
+                //     url:"https://img.wkzf.com/cf931c293aab471aa5b4a10db350922c.CL"
+                // });
 
                 if(this.apiData.house.imgList){
                     this.apiData.house.imgList.forEach(function(img){
@@ -644,4 +719,11 @@
 </script>
 <style lang="less">
 	@import "../../../less/esf/detail.less"; 
+
+    .swiper-wrapper{
+        img{
+            width:100%;
+            height:210px;
+        }
+    }
 </style>

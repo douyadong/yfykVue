@@ -29,6 +29,9 @@ import xfInfo from "@/components/xf/information";
 import xfPosterPreview from "@/components/xf/poster-preview";
 import estateDetailComments from "@/components/estate/detail/comments";
 import estateDetailAddComment from "@/components/estate/detail/addComment"
+import videoPlay from "@/components/common/videoPlay";
+import getDeviceId from "@/components/test/getDeviceId";
+import updateTitle from "@/components/test/updateTitle";
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 使用路由插件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -146,6 +149,18 @@ export default new Router({
           path:"/estate/detail/addComment/:subEstateId?",
           name:"estateDetailAddComment",
           component:estateDetailAddComment
-      }
+      },{
+            path: "/videoPlay",
+            name: "videoPlay",
+            component: videoPlay
+        },{
+            path: "/test/getDeviceId",
+            name: "getDeviceId",
+            component: getDeviceId
+        },{
+            path: "/test/updateTitle",
+            name: "updateTitle",
+            component: updateTitle
+		}
     ]
 }) ;
