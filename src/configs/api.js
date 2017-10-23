@@ -44,6 +44,9 @@ export default {
         },
         "esf":{
            "detail": "yfyk/getOldHouseDetailInfo.rest"
+        },
+        "estate":{
+            "detail":"estate/yfykEstateInfo.rest"
         }
     }
 } ;

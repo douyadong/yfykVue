@@ -151,7 +151,7 @@
          <!--3.7版本房源描述部分-->
         <div class="wk-panel description top-gap">
             <!--自有房源房源描述-->
-            <div v-if="apiData.house.isWKhouse==2" class="self-house">
+            <div v-if="apiData.house.isWKhouse==1" class="self-house">
                 <div class="panel-header">房源描述</div>
                 <div  class="panel-body  ">
                     <dl><dt>主要卖点</dt><dd>{{ apiData.house.sellPoint || "暂无描述" }}</dd></dl>
@@ -160,10 +160,10 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.house.isWKhouse==1" class="outside-house ">
+            <div v-else-if="apiData.house.isWKhouse==2&&apiData.house.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
                 <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
-                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
+                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look ">{{isLook}}</div>
             </div>
         </div>
 
@@ -263,15 +263,6 @@
               moreInfo:true,//是否超过5行
               textHeight:"",//定义原本外部房源信息盒子高度
               isLook:"查看更多",//点击查看更多外部房源信息
-              text:`耳机哦非法分开服务费我也蚂蜂窝IWO夫君
-              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿
-              我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也
-              蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯
-              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢
-              诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费
-              劲儿我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝
-              IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯为客疯狂费劲儿
-              我开房间噢诶无附件为额风口浪尖嗯我if将诶`,
               pageConfs : {                                
                   swiperOption : {  // 整个相册 swiper插件的选项                     
                       name : "currentSwiper" ,
@@ -413,17 +404,7 @@
                 },function(){
                     console.log("更新标题失败");
                 })
-                // 3.7
-                self.$nextTick(function(){
-                     if(this.apiData.house.isWKhouse==2){
-                        let houseInfo=this.$refs.sansInfo.clientHeight;
-                        this.textHeight=this.$refs.sansInfo.clientHeight;
-                        //   超出控制高度;
-                        if(houseInfo/25>5){
-                            this.$refs.sansInfo.style.height=25*5+'px';
-                        }
-                     }
-                });
+              
 
                 self.$wechatShare({
                   "title" : data.data.house.houseTitle ,
@@ -441,6 +422,18 @@
                 }
                 
                 Object.assign(self.apiData,data.data); 
+
+                  // 3.7
+                self.$nextTick(function(){
+                     if(self.$data.apiData.house.isWKhouse==2){
+                        let houseInfo=self.$refs.sansInfo.clientHeight;
+                        self.textHeight=self.$refs.sansInfo.clientHeight;
+                        //   超出控制高度;
+                        if(houseInfo/25>5){
+                            self.$refs.sansInfo.style.height=25*5+'px';
+                        }
+                     }
+                });
 
                 //计算tagList
                 let house = self.apiData.house;
@@ -682,10 +675,12 @@
           //点击查看更多显示更多房源描述信息
           outsideMoreInfo(){
             if($('.is-look').text()=='查看更多'){
+                console.log(this.textHeight)
                 this.$refs.sansInfo.style.height=this.textHeight+'px';
                 this.isLook='收起'
             };
             if($('.is-look').text()=='收起'){
+                console.log(1)
                 this.$refs.sansInfo.style.height=25*5+'px';
                 this.isLook='查看更多'
             }
