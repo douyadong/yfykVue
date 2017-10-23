@@ -12,7 +12,7 @@
                 <dl>
                     <dt><img :src="agent.headRoundImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
                     <dd class="agent-name">{{ agent.agentName }}</dd>
-                    <dd class="agent-tel">{{ agent.agentBelongToCompanyName }}</dd>
+                    <dd class="agent-tel">{{ agent.agentMobile }}</dd>
                 </dl>
             </router-link>
         </li>    

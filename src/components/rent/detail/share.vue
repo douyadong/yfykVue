@@ -3,13 +3,34 @@
         <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
         <download-app />
        <!--相册内容-->
-        <swiper :options="pageConfs.swiperOption">
+       <!--3.6版本相册-->
+        <!--<swiper :options="pageConfs.swiperOption">
             <swiper-slide v-for="(slide , index) in apiData.houseImages" :key="index">
                 <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>                
                 <img :src="slide" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.houseImages.length }}</div>
             </swiper-slide>
-        </swiper> 
+        </swiper> -->
+
+        <!--3.7版本相册-->
+        <swiper :options="pageConfs.swiperOption">            
+            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
+                <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
+                <template  v-if="slide.isVideo">
+                    <div style="position:relative" @click="playVideo(slide.video)">                    
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive"> 
+                        <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
+                            <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                               
+                <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
+                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
+            </swiper-slide>            
+        </swiper>
         <!--房源概要部分-->
         <div class="wk-panel summary">
             <div class="panel-header">
@@ -94,7 +115,7 @@
                     <ul>
                         <li class="estate-name">{{apiData.subEstateName}}</li>
                         <li class="jiantou">
-                            <span>{{apiData.completedStr}}</span><span class="division">|</span><span>{{apiData.totalHouse}}</span>
+                            <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
                             <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>
                         </li>
                         <li>{{apiData.estateAddr}}</li>
@@ -104,13 +125,15 @@
         </div>
         <!--位置及周边部分-->
         <div class="wk-panel location ">
-            <div class="location-container">
-                <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
-                <div class="cover">
-                    <i class="iconfont icon-arrowTS"></i><span>{{ apiData.estateAddr}}</span>
+            <a :href="mapUrl">
+                <div class="location-container">
+                    <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
+                    <div class="cover">
+                        <i class="iconfont icon-arrowTS"></i><span>{{ apiData.estateAddr}}</span>
+                    </div>
+                    <div class="mark"></div>
                 </div>
-                <div class="mark"></div>
-            </div>
+            </a>
         </div>
         <!--相似房源推荐-->
         <div class="alike-house top-gap wk-panel" v-if="apiData.similarHouses.length!=0">
@@ -128,6 +151,8 @@
     import $ from "jquery";
     import { swiper , swiperSlide } from "vue-awesome-swiper" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
+    import config from "@/configs/api";
+    let prefix = config.prefix[apiDataFilter.getEnv()];
     export default {
       name : "rentDetailShare" ,
       data () {
@@ -155,30 +180,11 @@
               apiData : {
                   houseImages:[]
               },
-              text:`耳机哦非法分开服务费我也蚂蜂窝IWO夫君
-              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿
-              我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也
-              蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯
-              耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费劲儿我开房间噢
-              诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝IWO夫君为客疯狂费
-              劲儿我开房间噢诶无附件为额风口浪尖嗯耳机哦非法分开服务费我也蚂蜂窝
-              IWO夫君为客疯狂费劲儿我开房间噢诶无附件为额风口浪尖嗯为客疯狂费劲儿
-              我开房间噢诶无附件为额风口浪尖嗯我if将诶`,
               moreInfo:true,//是否超过5行
               textHeight:'',//定义原本外部房源信息盒子高度
               isLook:'查看更多',//点击查看更多外部房源信息
-              estate:{
-                  //模拟小区信息;
-                  src:'https://img.wkzf.com/e15d7d3d78974f1dbe076c7e8967c714.CL',
-                  name:'虹东校区',
-                  year:'1993年竣工',
-                  total:'150户',
-                  address:'虹桥路996弄'
-              },
               styleStatus:false,//控制相似房源公共组件样式；
               agentId:'',
-            //   rent:rent,
-              outsideHouseAccount:true//相似房源处是否显示更多;
           }
       } ,
       methods : {
@@ -204,7 +210,13 @@
                 this.$refs.sansInfo.style.height=25*5+'px';
                 this.isLook='查看更多'
             }
-         }
+         },
+        //  视频点击
+         playVideo(video){
+            this.$router.push({
+                path:"/videoPlay?video=" + video
+            });
+          },
       } ,
       created() {
           let houseId = this.$route.params.houseId ;
@@ -261,6 +273,38 @@
               }
           }) ;
       } ,
+      computed:{
+            houseImageAndVideoList:function(){
+                let result = [];
+                if(this.apiData.houseVideos){
+                    result.push({
+                        isVideo: true,
+                        video: encodeURIComponent(JSON.stringify({
+                            videoUrl:this.apiData.houseVideos.videoUrl,
+                            videoImage: this.apiData.houseVideos.imgUrl
+                        })),
+                        url:this.apiData.houseVideos.videoUrl,
+                        videoUrl:this.apiData.houseVideos.videoUrl,
+                        videoImage: this.apiData.houseVideos.imgUrl
+                    });
+                }
+                if(this.apiData.houseImages){
+                    this.apiData.houseImages.forEach(function(img){
+                        result.push({
+                            url:img                         
+                        });
+                    });
+                }
+
+                return result;
+            },
+            mapImgUrl:function(){
+                return 'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center='+this.apiData.estate.longitude+','+this.apiData.estate.latitude+'&zoom=18';
+            },
+            mapUrl:function(){
+                return prefix + '/esf/map.html?longitude=' + this.apiData.longitude + '&latitude=' + this.apiData.latitude + '&houseName='+this.apiData.subEstateName + '&houseAddress=' + this.apiData.estateAddr;
+            }
+        },
       components : {
           downloadApp ,
           assistant ,

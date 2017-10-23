@@ -50,14 +50,16 @@
         </div>
     </div>
     <div class="wk-panel location">
-       <div class="location-container">
-            <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
-            <div class="cover">
-                <i class="iconfont icon-arrowTS"></i>
-                <span class="estate-addr">{{apiData.estateAddr}}</span>
-            </div>
-            <div class="mark"></div>
+       <a :href="mapUrl">
+           <div class="location-container">
+               <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
+               <div class="cover">
+                   <i class="iconfont icon-arrowTS"></i>
+                   <span class="estate-addr">{{apiData.estateAddr}}</span>
+               </div>
+           <div class="mark"></div>
        </div>
+       </a>
     </div>
   </div>
 </template>
@@ -66,6 +68,8 @@
 import $ from "jquery";
 import { swiper , swiperSlide } from "vue-awesome-swiper" ;
 import apiDataFilter from "@/libraries/apiDataFilter" ;
+import config from "@/configs/api";
+let prefix = config.prefix[apiDataFilter.getEnv()];
 export default {
     name:"estateDetailShare",
     data(){
@@ -105,8 +109,26 @@ export default {
                     console.log(res);
                      this.apiData=Object.assign({},res.body.data);
                     console.log(this.apiData)
+                    //定制页面微信分享参数
+                    let wechatShare = res.body.data.weChatShare ;
+                    console.log(wechatShare);
+                    this.$wechatShare({
+                      "title" : wechatShare.title ,
+                      "timelineTitle" : wechatShare.timelineTitle ,
+                      "content" : wechatShare.content ,
+                      "imgUrl" : wechatShare.picUrl ,
+                      "success" : function() { console.log("分享成功！") ;  } ,
+                      "fail" : function() { console.log("分享失败！") ;  } ,
+                      "cancel" : function() { console.log("您取消了分享！") ; } ,
+                      "complete" : function() { console.log("分享完成！") ; }
+                    }) ;
                 }
             })
+        },
+        computed:{
+            mapUrl:function(){
+                return prefix + '/esf/map.html?longitude=' + this.apiData.longitude + '&latitude=' + this.apiData.latitude + '&houseName='+this.apiData.subEstateName + '&houseAddress=' + this.apiData.estateAddr;
+            }
         },
         components : {
           swiper,
