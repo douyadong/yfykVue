@@ -1,7 +1,7 @@
 <template>
     <div id="rentDetailShare">
-        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002 })" />
-        <download-app />
+        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002, otherParams:true})" :wechatBigDataParams="getUvParamsString({ eventName : 2057008 })"/>
+        <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
        <!--3.6版本相册-->
         <!--<swiper :options="pageConfs.swiperOption">
@@ -116,7 +116,7 @@
                         <li class="estate-name">{{apiData.subEstateName}}</li>
                         <li class="jiantou">
                             <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
-                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip"></router-link>
+                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>
                         </li>
                         <li>{{apiData.estateAddr}}</li>
                     </ul>
@@ -138,7 +138,7 @@
         <!--相似房源推荐-->
         <div class="alike-house top-gap wk-panel" v-if="apiData.similarHouses.length!=0">
             <div class="house-recommend panel-header">相似房源推荐</div>
-            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId"></rent-sources>
+            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId" :eventName="2057005"></rent-sources>
         </div>
         <!--结束-->
     </div>
@@ -190,15 +190,21 @@
       methods : {
           //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-              let eventParam = { house_id : this.apiData.houseId } ;
-              if(otherParams !== undefined && otherParams !== null ) {
-                  eventParam = Object.assign( eventParam , otherParams ) ;
-              }
-              return encodeURIComponent(JSON.stringify({
+            //   let eventParam = { house_id : this.apiData.houseId } ;
+            if(otherParams){
+                let eventParam = { house_id : this.apiData.houseId } ;
+                eventParam = Object.assign( eventParam , otherParams ) ;
+                return encodeURIComponent(JSON.stringify({
                   eventName : eventName ,
                   eventParam : eventParam ,
                   type : 2
+                }));
+            }else{
+                return encodeURIComponent(JSON.stringify({
+                  eventName : eventName ,
+                  type : 2
               })) ;
+            }   
           },
          //点击查看更多显示更多房源描述信息
          outsideMoreInfo(){
