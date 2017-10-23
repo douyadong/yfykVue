@@ -114,7 +114,7 @@ export default new Router({
             name: "esfDetailShare",
             component: esfDetailShare
         },{
-            path:"/estate/detail/share",
+            path:"/estate/detail/share/:subEstateId",
             name:"estateDetailShare",
             component:estateDetailShare
         },{

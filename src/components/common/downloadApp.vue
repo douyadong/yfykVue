@@ -5,7 +5,7 @@
             <dd>找对人，买好房</dd>
             <dd>就在悟空找房！</dd>
         </dl>
-        <a href="javascript:;" class="wk-btn wk-btn-transparent wk-btn-xs" @click="wakeup">下载APP</a>
+        <a href="javascript:;" class="wk-btn wk-btn-transparent wk-btn-xs" @click="wakeup" :data-bigdata="downloadBigDataParams">下载APP</a>
     </div>
 </template>
 
@@ -16,6 +16,7 @@
         data () {
             return {}
         } ,
+        props:["downloadBigDataParams"],
         methods : {
             wakeup : function() {
                 new WakeupApp({
