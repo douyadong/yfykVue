@@ -18,7 +18,7 @@
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
                     <div style="position:relative" @click="playVideo(slide.video)">                    
-                        <img style="margin:0 auto;dislay:block;" src="https://imgwater-test.oss.aliyuncs.com/6af6e136ce64436598f5e016bc9378f3.DL" class="img-responsive"> 
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImg" class="img-responsive"> 
                         <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
                             <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
 
