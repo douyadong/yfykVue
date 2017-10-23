@@ -68,7 +68,7 @@
             <ul class="wk-panel tabs-handle">
               <li v-if="pageStates.hasEsf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">二手房</a></li>
               <li v-if="pageStates.hasXf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">新房</a></li>
-              <li v-if="pageStates.hasRent"><a href="javascript:;" :class="{ on : pageStates.activeTab=='rent' }" @click="swapToTab('rent');" :data-bigdata="getUvParamsString({ eventName : 2065004 })">租房</a></li>
+              <li v-if="pageStates.hasRent"><a href="javascript:;" :class="{ on : pageStates.activeTab=='rent' }" @click="swapToTab('rent');" :data-bigdata="getUvParamsString({ eventName : 2065014 })">租房</a></li>
               <li v-if="pageStates.hasPress"><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
             </ul>
             <!--tabs-frame部分-->
@@ -96,7 +96,7 @@
             <div  v-if="pageStates.activeTab=='rent'">
             <transition  name="slide-fade">
               <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
+                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
                 <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
                   <div slot="no-more" class="no-more">没有更多了！</div>
                 </infinite-loading>
