@@ -5,7 +5,7 @@
        <!--相册内容-->
        <swiper :options="pageConfs.swiperOption">
             <swiper-slide v-for="(slide , index) in apiData.simpleHouseRentDetailInfo.houseImageAndVideoList" :key="slide.imgKey">
-                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="height : 210px ; " v-if="slide.isVideo"></video>
+                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>                
                 <img :src="slide.imageSrc" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.simpleHouseRentDetailInfo.houseImageAndVideoList.length }}</div>
             </swiper-slide>
@@ -221,13 +221,19 @@
           let agentId = this.$route.params.agentId ;
           this.cityId = this.$route.query.cityId;
           this.agentId=agentId;
+		  let self = this;
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
               successCallback : res => {
                   console.log(res)
                   Object.assign(this.$data.apiData , res.body.data) ;
-                  document.title = "租房详情" ;
+                  //document.title = "租房详情" ;
+                  self.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
+                    console.log('更新标题成功');
+                  },function(){
+                    console.log('更新标题失败');
+                  });
                   this.$nextTick(function(){
                      if(this.apiData.simpleHouseRentDetailInfo.houseId>1000000){
                         let houseInfo=this.$refs.sansInfo.clientHeight;
@@ -240,16 +246,17 @@
                   });
                   //定制页面微信分享参数
                   let wechatShare = res.body.data.weChatShare ;
-                  this.$wechatShare({
-                      "title" : wechatShare.title ,
-                      "timelineTitle" : wechatShare.timelineTitle ,
-                      "content" : wechatShare.content ,
-                      "imgUrl" : wechatShare.picUrl ,
-                      "success" : function() { console.log("分享成功！") ;  } ,
-                      "fail" : function() { console.log("分享失败！") ;  } ,
-                      "cancel" : function() { console.log("您取消了分享！") ; } ,
-                      "complete" : function() { console.log("分享完成！") ; }
-                  }) ;
+                  console.log(wechatShare);
+                //   this.$wechatShare({
+                //       "title" : wechatShare.title ,
+                //       "timelineTitle" : wechatShare.timelineTitle ,
+                //       "content" : wechatShare.content ,
+                //       "imgUrl" : wechatShare.picUrl ,
+                //       "success" : function() { console.log("分享成功！") ;  } ,
+                //       "fail" : function() { console.log("分享失败！") ;  } ,
+                //       "cancel" : function() { console.log("您取消了分享！") ; } ,
+                //       "complete" : function() { console.log("分享完成！") ; }
+                //   }) ;
 
                   //页面埋点功能
                 this.$bigData({

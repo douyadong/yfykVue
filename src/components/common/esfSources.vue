@@ -10,7 +10,7 @@
                     <span v-else-if="source.isStorePush === 1">店长推荐</span>
                     <span v-else-if="source.commAgent > 0">急售</span>
                     <span v-if="source.fullYears >= 5 && source.onlyOne == 1">满五唯一</span>
-                    <span v-if="source.fullYears >= 2">满二</span>
+                    <span v-else-if="source.fullYears >= 2">满二</span>
                     <span v-if="source.isSubwayHouse === 1">地铁</span>
                     <span v-if="source.isSchoolHouse === 1">近学校</span>
                     <span v-if="source.isNewOnStore === 1">新上</span>
@@ -49,7 +49,8 @@ export default {
           })) ;
       } ,
       getRedirectUrl : function(url) {
-          return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+this.cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
+          return '/esf/detail/share/' + url + '/' + this.agentId + '/' + this.cityId;
+          //return prefix + '/share/' +  url + '.html?agentId='+ this.agentId+'&cityId='+this.cityId;//"https://m.wkzf.com/shanghai/esf/" + encryptHouseId + ".html" ;
       }
   } ,
   props : [ "items" , "eventName" , "otherParams", "agentId", "cityId" ] ,
