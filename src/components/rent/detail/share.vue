@@ -116,7 +116,7 @@
                         <li class="estate-name">{{apiData.subEstateName}}</li>
                         <li class="jiantou">
                             <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
-                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>
+                            <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" class="iconfont icon-arrowR skip" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>
                         </li>
                         <li>{{apiData.estateAddr}}</li>
                     </ul>
