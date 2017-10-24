@@ -291,7 +291,7 @@
                         })),
                         url:this.apiData.houseVideos.videoUrl,
                         videoUrl:this.apiData.houseVideos.videoUrl,
-                        videoImage: this.apiData.houseVideos.imgUrl
+                        videoImage: this.apiData.houseVideos.imageUrl
                     });
                 }
                 if(this.apiData.houseImages){
