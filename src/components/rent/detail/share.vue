@@ -108,19 +108,22 @@
         <div class="wk-panel top-gap estate-info">
             <div class="info panel-header">小区信息</div>
             <div class="estate-detail">
-                <div class="estate-img">
-                    <img :src="apiData.estateImgUrl" alt="">
-                </div>
-                <div class="estate-text">
-                    <ul>
-                        <li class="estate-name">{{apiData.subEstateName}}</li>
-                        <li class="jiantou">
-                            <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
-                            <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" class="iconfont icon-arrowR skip" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>
-                        </li>
-                        <li>{{apiData.estateAddr}}</li>
-                    </ul>
-                </div>
+                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})">
+                    <div class="estate-img">
+                        <img :src="apiData.estateImgUrl" alt="">
+                    </div>
+                    <div class="estate-text">
+                        <ul>
+                            <li class="estate-name">{{apiData.subEstateName}}</li>
+                            <li class="jiantou">
+                                <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
+                                <i class="iconfont icon-arrowR skip"></i>
+                                <!--<router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>-->
+                            </li>
+                            <li>{{apiData.estateAddr}}</li>
+                        </ul>
+                    </div>
+                </router-link>
             </div>
         </div>
         <!--位置及周边部分-->
@@ -178,7 +181,7 @@
                   }
               } ,
               apiData : {
-                  houseImages:[]
+                //   houseImages:[]
               },
               moreInfo:true,//是否超过5行
               textHeight:'',//定义原本外部房源信息盒子高度
