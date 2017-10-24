@@ -19,7 +19,7 @@
                  <li v-if="items.houseTag.isHardcover === 1 ">精装</li>
                  <li v-if="items.houseTag.isSouth === 1 ">朝南</li>
             </ul>
-            <p class="price"><span>{{items.rentPriceStr}} 元/月</span></p>
+            <p class="price"> {{items.rentPriceStr}} 元/月 </p>
           </div>
         </div>
       </router-link>
