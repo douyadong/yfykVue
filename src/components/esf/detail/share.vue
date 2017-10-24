@@ -188,13 +188,8 @@
 				<ul class='list-info'>
 					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-<<<<<<< HEAD
 					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
-=======
-					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment && apiData.estate.comment.account || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
->>>>>>> 33cb2e5d9fd15117b17f479ab81daa369b22ecae
-				</ul>				
-				
+				</ul>
             </div>
 		</div>
 
