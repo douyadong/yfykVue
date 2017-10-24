@@ -30,7 +30,6 @@
 </template>
 
 <script>
-    import commentsList from "../../../../mock/estate/comment.json";
     import infiniteLoading from "vue-infinite-loading";
     import apiDataFilter from "@/libraries/apiDataFilter"; 
     import $ from "jquery";
