@@ -233,6 +233,7 @@
           this.cityId = this.$route.query.cityId;
           this.agentId=agentId;
 		  let self = this;
+          document.title="有房有客";
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,
@@ -285,7 +286,7 @@
       computed:{
             houseImageAndVideoList:function(){
                 let result = [];
-                if(this.apiData.houseVideos){
+                if(this.apiData.houseVideos.videoUrl){
                     result.push({
                         isVideo: true,
                         video: encodeURIComponent(JSON.stringify({

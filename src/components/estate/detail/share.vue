@@ -101,6 +101,7 @@ export default {
         },
         created(){
             let subEstateId=this.$route.params.subEstateId;
+            document.title="有房有客";
             console.log(subEstateId)
             apiDataFilter.request({
                 apiPath:"estate.detail",
