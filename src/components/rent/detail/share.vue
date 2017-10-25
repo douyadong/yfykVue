@@ -55,16 +55,16 @@
                 </ul>
                 <hr>
                 <ul class="outline">
-                    <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.houseChildTypeStr }}</dd></dl></li>
-                    <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.renovationStr }}</dd></dl></li>
-                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.floorStr}}</dd></dl></li>
-                    <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.orientationStr }}</dd></dl></li>
-                    <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.estateAddr}}</dd></dl></li>
+                    <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.houseChildTypeStr||"--"}}</dd></dl></li>
+                    <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.renovationStr||"--" }}</dd></dl></li>
+                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.floorStr||"--"}}</dd></dl></li>
+                    <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.orientationStr||"--" }}</dd></dl></li>
+                    <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.estateAddr||"--"}}</dd></dl></li>
                 </ul>
                 <hr>
                 <ul class="subway-school">
-                    <li><dl><dt>地铁</dt><dd>{{ apiData.subwayStr }}</dd></dl></li>
-                    <li><dl><dt>学校</dt><dd>{{ apiData.schoolStr }}</dd></dl></li>
+                    <li><dl><dt>地铁</dt><dd>{{ apiData.subwayStr||"--" }}</dd></dl></li>
+                    <li><dl><dt>学校</dt><dd>{{ apiData.schoolStr||"--" }}</dd></dl></li>
                 </ul>
             </div>
         </div>
@@ -233,7 +233,6 @@
           this.cityId = this.$route.query.cityId;
           this.agentId=agentId;
 		  let self = this;
-          document.title="有房有客";
           apiDataFilter.request({
               apiPath : "rent.detail" ,
               data : { "houseId" : houseId , "agentId" : agentId } ,

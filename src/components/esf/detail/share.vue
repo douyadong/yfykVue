@@ -241,7 +241,7 @@
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            //document.title = "二手房详情";
+            // document.title = "二手房详情";
             this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
                 console.log("更新标题成功");
             },function(){
