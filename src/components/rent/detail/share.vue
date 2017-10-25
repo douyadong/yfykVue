@@ -55,16 +55,16 @@
                 </ul>
                 <hr>
                 <ul class="outline">
-                    <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.houseChildTypeStr }}</dd></dl></li>
-                    <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.renovationStr }}</dd></dl></li>
-                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.floorStr}}</dd></dl></li>
-                    <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.orientationStr }}</dd></dl></li>
-                    <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.estateAddr}}</dd></dl></li>
+                    <li class="percent-70"><dl><dt>类型</dt><dd>{{ apiData.houseChildTypeStr||"--"}}</dd></dl></li>
+                    <li class="percent-30"><dl><dt>装修</dt><dd>{{ apiData.renovationStr||"--" }}</dd></dl></li>
+                    <li class="percent-70"><dl><dt>楼层</dt><dd>{{ apiData.floorStr||"--"}}</dd></dl></li>
+                    <li class="percent-30"><dl><dt>朝向</dt><dd>{{ apiData.orientationStr||"--" }}</dd></dl></li>
+                    <li class="percent-100"><dl><dt>地址</dt><dd>{{ apiData.estateAddr||"--"}}</dd></dl></li>
                 </ul>
                 <hr>
                 <ul class="subway-school">
-                    <li><dl><dt>地铁</dt><dd>{{ apiData.subwayStr }}</dd></dl></li>
-                    <li><dl><dt>学校</dt><dd>{{ apiData.schoolStr }}</dd></dl></li>
+                    <li><dl><dt>地铁</dt><dd>{{ apiData.subwayStr||"--" }}</dd></dl></li>
+                    <li><dl><dt>学校</dt><dd>{{ apiData.schoolStr||"--" }}</dd></dl></li>
                 </ul>
             </div>
         </div>
@@ -108,19 +108,22 @@
         <div class="wk-panel top-gap estate-info">
             <div class="info panel-header">小区信息</div>
             <div class="estate-detail">
-                <div class="estate-img">
-                    <img :src="apiData.estateImgUrl" alt="">
-                </div>
-                <div class="estate-text">
-                    <ul>
-                        <li class="estate-name">{{apiData.subEstateName}}</li>
-                        <li class="jiantou">
-                            <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
-                            <router-link :to="'/estate/detail/share'" class="iconfont icon-arrowR skip" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>
-                        </li>
-                        <li>{{apiData.estateAddr}}</li>
-                    </ul>
-                </div>
+                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})">
+                    <div class="estate-img">
+                        <img :src="apiData.estateImgUrl" alt="">
+                    </div>
+                    <div class="estate-text">
+                        <ul>
+                            <li class="estate-name">{{apiData.subEstateName}}</li>
+                            <li class="jiantou">
+                                <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
+                                <i class="iconfont icon-arrowR skip"></i>
+                                <!--<router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>-->
+                            </li>
+                            <li>{{apiData.estateAddr}}</li>
+                        </ul>
+                    </div>
+                </router-link>
             </div>
         </div>
         <!--位置及周边部分-->
@@ -178,7 +181,7 @@
                   }
               } ,
               apiData : {
-                  houseImages:[]
+                //   houseImages:[]
               },
               moreInfo:true,//是否超过5行
               textHeight:'',//定义原本外部房源信息盒子高度
@@ -237,8 +240,8 @@
                   console.log(res)
                   this.apiData=Object.assign({}, res.body.data) ;
                   console.log(this.$data.apiData)
-                  //document.title = "租房详情" ;
-                  self.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
+                  document.title = "租房详情" ;
+                  this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
                     console.log('更新标题成功');
                   },function(){
                     console.log('更新标题失败');
@@ -282,7 +285,7 @@
       computed:{
             houseImageAndVideoList:function(){
                 let result = [];
-                if(this.apiData.houseVideos){
+                if(this.apiData.houseVideos.videoUrl){
                     result.push({
                         isVideo: true,
                         video: encodeURIComponent(JSON.stringify({

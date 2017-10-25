@@ -188,9 +188,8 @@
 				<ul class='list-info'>
 					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment.account || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
-				</ul>				
-				
+					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
+				</ul>
             </div>
 		</div>
 
@@ -242,7 +241,7 @@
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            //document.title = "二手房详情";
+            document.title = "二手房详情";
             this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
                 console.log("更新标题成功");
             },function(){
