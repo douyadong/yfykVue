@@ -101,7 +101,7 @@ export default {
         },
         created(){
             let subEstateId=this.$route.params.subEstateId;
-            document.title="有房有客";
+            document.title="小区详情";
             console.log(subEstateId)
             apiDataFilter.request({
                 apiPath:"estate.detail",
@@ -110,7 +110,7 @@ export default {
                     console.log(res);
                      this.apiData=Object.assign({},res.body.data);
                     console.log(this.apiData)
-                    self.$nativeBridge.invokeMethod('updateTitle',[this.apiData.estateName],function(){
+                    this.$nativeBridge.invokeMethod('updateTitle',[this.apiData.estateName],function(){
                         console.log("更新标题成功");
                     },function(){
                         console.log("更新标题失败");
