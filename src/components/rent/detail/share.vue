@@ -181,7 +181,10 @@
                   }
               } ,
               apiData : {
-                //   houseImages:[]
+                houseVideos:{},
+                houseSupporting:{},
+                similarHouses:{},
+                houseAgent:{}
               },
               moreInfo:true,//是否超过5行
               textHeight:'',//定义原本外部房源信息盒子高度
@@ -225,10 +228,9 @@
             this.$router.push({
                 path:"/videoPlay?video=" + video
             });
-          },
-      } ,
-      created() {
-          let houseId = this.$route.params.houseId ;
+         },
+         watchRoute(){
+                 let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;
           this.cityId = this.$route.query.cityId;
           this.agentId=agentId;
@@ -281,7 +283,14 @@
                 }) ;
               }
           }) ;
+         }
       } ,
+      created() {
+         this.watchRoute()
+      } ,
+      watch:{
+          "$route":"watchRoute"
+      },
       computed:{
             houseImageAndVideoList:function(){
                 let result = [];
