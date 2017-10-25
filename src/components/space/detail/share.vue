@@ -134,7 +134,7 @@
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     import InfiniteLoading from "vue-infinite-loading" ;
     import utils from "@/libraries/utils" ;
-    import data from '../../../../mock/xf/rentLi';
+//    import data from '../../../../mock/xf/rentLi';
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -203,7 +203,7 @@
           spreadStoryContent : function() {
               this.pageStates.storyExtendable = false ;
           } ,
-          //切换二手房 | 新房 | 房产资讯 tabs
+          //切换二手房 | 新房 | 租房 | 房产资讯 tabs
           swapToTab : function(tabName) {
               this.pageStates.activeTab = tabName ;
               //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
@@ -440,22 +440,4 @@
 
 <style lang="less" scoped>
     @import "../../../../src/less/space/detail.less" ;
-    // .overlay{
-    //   position: fixed;
-    //   background-color: rgba(0,0,0,.4);
-    //   left:0;
-    //   right:0;
-    //   top:0;
-    //   bottom:0;
-    //   z-index:10000;
-    //   img{
-    //     width:80%;
-    //     height:auto;
-    //     display:block;
-    //     margin:auto auto;
-    //   }
-    //   &.hidden{
-    //     display:none;
-    //   }
-    // }
 </style>
