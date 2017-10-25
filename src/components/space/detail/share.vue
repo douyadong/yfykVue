@@ -203,7 +203,7 @@
           spreadStoryContent : function() {
               this.pageStates.storyExtendable = false ;
           } ,
-          //切换二手房 | 新房 | 房产资讯 tabs
+          //切换二手房 | 新房 | 租房 | 房产资讯 tabs
           swapToTab : function(tabName) {
               this.pageStates.activeTab = tabName ;
               //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
