@@ -440,22 +440,4 @@
 
 <style lang="less" scoped>
     @import "../../../../src/less/space/detail.less" ;
-    // .overlay{
-    //   position: fixed;
-    //   background-color: rgba(0,0,0,.4);
-    //   left:0;
-    //   right:0;
-    //   top:0;
-    //   bottom:0;
-    //   z-index:10000;
-    //   img{
-    //     width:80%;
-    //     height:auto;
-    //     display:block;
-    //     margin:auto auto;
-    //   }
-    //   &.hidden{
-    //     display:none;
-    //   }
-    // }
 </style>
