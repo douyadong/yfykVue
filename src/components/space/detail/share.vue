@@ -134,7 +134,7 @@
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     import InfiniteLoading from "vue-infinite-loading" ;
     import utils from "@/libraries/utils" ;
-    import data from '../../../../mock/xf/rentLi';
+//    import data from '../../../../mock/xf/rentLi';
     export default {
       name : "spaceDetailShare" ,
       data () {
