@@ -94,14 +94,14 @@
                 </transition>
             </div>
             <div  v-if="pageStates.activeTab=='rent'">
-            <transition  name="slide-fade">
-              <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
-                <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
-                  <div slot="no-more" class="no-more">没有更多了！</div>
-                </infinite-loading>
-              </div>
-            </transition>
+                <transition  name="slide-fade">
+                <div  v-if="pageStates.activeTabContent=='rent'">
+                    <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
+                    <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
+                    <div slot="no-more" class="no-more">没有更多了！</div>
+                    </infinite-loading>
+                </div>
+                </transition>
           </div>
             <div class="wk-panel" v-if="pageStates.activeTab=='press'">
                 <transition  name="slide-fade">
