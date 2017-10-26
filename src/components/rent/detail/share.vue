@@ -1,6 +1,8 @@
 <template>
     <div id="rentDetailShare">
-        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002})" :wechatBigDataParams="getUvParamsString({ eventName : 2057008 })"/>
+        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
+            :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"
+            :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
        <!--3.6版本相册-->
@@ -18,7 +20,7 @@
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
                     <div style="position:relative" @click="playVideo(slide.video)">                    
-                        <img style="margin:0 auto;dislay:block;" src="https://imgwater-test.oss.aliyuncs.com/6af6e136ce64436598f5e016bc9378f3.DL" class="img-responsive"> 
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive"> 
                         <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
                             <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
 
@@ -108,7 +110,7 @@
         <div class="wk-panel top-gap estate-info">
             <div class="info panel-header">小区信息</div>
             <div class="estate-detail">
-                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})">
+                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004,otherParams:{rent_house_id :apiData.houseId,estate_id:apiData.subEstateId}})">
                     <div class="estate-img">
                         <img :src="apiData.estateImgUrl" alt="">
                     </div>
@@ -118,7 +120,6 @@
                             <li class="jiantou">
                                 <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
                                 <i class="iconfont icon-arrowR skip"></i>
-                                <!--<router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004})"></router-link>-->
                             </li>
                             <li>{{apiData.estateAddr}}</li>
                         </ul>
@@ -195,26 +196,9 @@
       } ,
       methods : {
           //获取用户点击埋点参数方法
-        //   getUvParamsString : function({ eventName , otherParams }) {
-        //     //   let eventParam = { house_id : this.apiData.houseId } ;
-        //     if(otherParams){
-        //         let eventParam = { house_id : this.apiData.houseId } ;
-        //         eventParam = Object.assign( eventParam , otherParams ) ;
-        //         return encodeURIComponent(JSON.stringify({
-        //           eventName : eventName ,
-        //           eventParam : eventParam ,
-        //           type : 2
-        //         }));
-        //     }else{
-        //         return encodeURIComponent(JSON.stringify({
-        //           eventName : eventName ,
-        //           type : 2
-        //       })) ;
-        //     }   
-        //   },
-          //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-              let eventParam = { house_id : this.apiData.houseId } ;
+            //   let eventParam = { house_id : this.apiData.houseId } ;
+              let eventParam = {} ;
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
               }
@@ -242,59 +226,59 @@
             });
          },
          watchRoute(){
-                 let houseId = this.$route.params.houseId ;
-          let agentId = this.$route.params.agentId ;
-          this.cityId = this.$route.query.cityId;
-          this.agentId=agentId;
-		  let self = this;
-          apiDataFilter.request({
-              apiPath : "rent.detail" ,
-              data : { "houseId" : houseId , "agentId" : agentId } ,
-              successCallback : res => {
-                  console.log(res)
-                  this.apiData=Object.assign({}, res.body.data) ;
-                  console.log(this.$data.apiData)
-                  document.title = "租房详情" ;
-                  this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
-                    console.log('更新标题成功');
-                  },function(){
-                    console.log('更新标题失败');
-                  });
-                  this.$nextTick(function(){
-                     if(this.apiData.isWKhouse==2){
-                        let houseInfo=this.$refs.sansInfo.clientHeight;
-                        this.textHeight=this.$refs.sansInfo.clientHeight;
-                        //   超出控制高度;
-                        if(houseInfo/25>5){
-                            this.$refs.sansInfo.style.height=25*5+'px';
+            let houseId = this.$route.params.houseId ;
+            let agentId = this.$route.params.agentId ;
+            this.cityId = this.$route.query.cityId;
+            this.agentId=agentId;
+		    let self = this;
+            apiDataFilter.request({
+                apiPath : "rent.detail" ,
+                data : { "houseId" : houseId , "agentId" : agentId } ,
+                successCallback : res => {
+                    console.log(res)
+                    this.apiData=Object.assign({}, res.body.data) ;
+                    console.log(this.$data.apiData)
+                    document.title = "租房详情" ;
+                    this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
+                        console.log('更新标题成功');
+                    },function(){
+                        console.log('更新标题失败');
+                    });
+                    this.$nextTick(function(){
+                        if(this.apiData.isWKhouse==2){
+                            let houseInfo=this.$refs.sansInfo.clientHeight;
+                            this.textHeight=this.$refs.sansInfo.clientHeight;
+                            //   超出控制高度;
+                            if(houseInfo/25>5){
+                                this.$refs.sansInfo.style.height=25*5+'px';
+                            }
                         }
-                     }
-                  });
-                  //定制页面微信分享参数
-                  let wechatShare = res.body.data.weChatShare ;
-                  console.log(wechatShare);
-                  this.$wechatShare({
-                      "title" : wechatShare.title ,
-                      "timelineTitle" : wechatShare.timelineTitle ,
-                      "content" : wechatShare.content ,
-                      "imgUrl" : wechatShare.picUrl ,
-                      "success" : function() { console.log("分享成功！") ;  } ,
-                      "fail" : function() { console.log("分享失败！") ;  } ,
-                      "cancel" : function() { console.log("您取消了分享！") ; } ,
-                      "complete" : function() { console.log("分享完成！") ; }
-                  }) ;
+                    });
+                    //定制页面微信分享参数
+                    let wechatShare = res.body.data.weChatShare ;
+                    console.log(wechatShare);
+                    this.$wechatShare({
+                        "title" : wechatShare.title ,
+                        "timelineTitle" : wechatShare.timelineTitle ,
+                        "content" : wechatShare.content ,
+                        "imgUrl" : wechatShare.picUrl ,
+                        "success" : function() { console.log("分享成功！") ;  } ,
+                        "fail" : function() { console.log("分享失败！") ;  } ,
+                        "cancel" : function() { console.log("您取消了分享！") ; } ,
+                        "complete" : function() { console.log("分享完成！") ; }
+                    }) ;
 
-                  //页面埋点功能
-                this.$bigData({
-                  pageName : 2057 ,
-                  pageParam : {
-                      agent_id : agentId ,
-                      house_id : this.apiData.houseId
-                  } ,
-                  type : 1
-                }) ;
-              }
-          }) ;
+                    //页面埋点功能
+                    this.$bigData({
+                        pageName : 2057 ,
+                        pageParam : {
+                        agent_id : agentId ,
+                        house_id : this.apiData.houseId
+                        } ,
+                        type : 1
+                    }) ;
+                }
+            }) ;
          }
       } ,
       created() {

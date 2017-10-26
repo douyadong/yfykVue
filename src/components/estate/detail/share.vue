@@ -28,7 +28,7 @@
                 <li>{{apiData.district}}</li>
                 <li>{{apiData.propertyRight}}</li>
                 <li>{{apiData.completedStr}}</li>
-                <li>{{apiData.totalHouseCount}}</li>
+                <li>{{apiData.totalHouse}}</li>
                 <li>{{apiData.propertyType}}</li>
                 <li>{{apiData.propertyCharges}}</li>
                 <li>{{apiData.greenRate}}</li>
