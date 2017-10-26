@@ -2,7 +2,7 @@
   <div class="rent-sources">
     <div class="wk-panel single-source" :class="{space:statusStyle , underline: !statusStyle}"
          v-for=" (items , index) in dataItems" :key="items.encryptHouseId">
-      <router-link :to="{ name: 'rentDetailShare', params: { houseId: items.encryptHouseId , agentId: agentId }}" :data-bigdata="getUvParamsString(eventName)">
+      <router-link :to="{ name: 'rentDetailShare', params: { houseId: items.encryptHouseId , agentId: agentId }}" :data-bigdata="getUvParamsString({eventName : eventName , houseId: items.encryptHouseId , otherParams : otherParams})">
         <div class="sources-content">
           <div class="pic">
             <img :src="items.firstImageUrl" alt="zhaopian">
@@ -39,21 +39,19 @@
       }
     } ,
     methods : {
-      getUvParamsString : function( eventName ) {
-      /*  let eventParam = { new_house_id : estateId } ;
+      getUvParamsString : function( { eventName , houseId , otherParams }) {
+        let eventParam = { rent_house_id : houseId } ;
         if(otherParams !== undefined && otherParams !== null ) {
           eventParam = Object.assign( eventParam , otherParams ) ;
-        }*/
+        }
         return encodeURIComponent(JSON.stringify({
           eventName : eventName ,
+          eventParam : eventParam ,
           type : 2
         })) ;
       } ,
-//      getRedirectUrl : function(url) {
-//        return prefix+ "/sharexf/" + url + ".html?agentId=" + this.agentId + "&cityId="+this.cityId;//"https://m.wkzf.com/shanghai/xfdetail/" + encryptEstateId + ".html" ;
-//      }
     } ,
-    props : [ "statusStyle" , "dataItems" ,"agentId" , "eventName"] ,  // statusStyle: Boolean  ，dataItems: Array[]
+    props : [ "statusStyle" , "dataItems" ,"agentId" , "eventName" ,"otherParams"] ,  // statusStyle: Boolean  ，dataItems: Array[]
   }
 </script>
 <style lang="less" scoped>

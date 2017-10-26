@@ -10,8 +10,8 @@
                 <template  v-if="slide.isVideo">
                     <div style="position:relative" @click="playVideo(slide.video)">                    
                         <img style="margin:0 auto;dislay:block;" :src="slide.videoSmallImage" class="img-responsive"> 
-                        <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
-                            <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
+                        <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.5)">
+                            <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(255,255,255,.5);border-bottom:14px solid transparent;margin-left:4px;">
 
                             </div>
                         </div>
@@ -241,12 +241,7 @@
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            document.title = "二手房详情";
-            this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
-                console.log("更新标题成功");
-            },function(){
-                console.log("更新标题失败");
-            })  
+            document.title = "二手房详情";    
         },
 		data(){
 			return {

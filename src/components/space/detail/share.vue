@@ -96,7 +96,7 @@
             <div  v-if="pageStates.activeTab=='rent'">
             <transition  name="slide-fade">
               <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
+                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId" :otherParams="{ agent_id : apiData.agentDetail.agentId }"></rent-sources>
                 <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
                   <div slot="no-more" class="no-more">没有更多了！</div>
                 </infinite-loading>
@@ -349,12 +349,7 @@
                   //页面标题和分享内容设置
                   let generalTitle = "悟空找房" + agent.agentName ;
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
-                  //document.title = generalTitle ;  //设置页面title
-                  self.$nativeBridge.invokeMethod('updateTitle',[generalTitle],function(){
-                    console.log('更新标题成功');
-                  },function(){
-                    console.log('更新标题失败');
-                  });
+                  document.title = generalTitle ;  //设置页面title
                   //页面微信分享设置
                   this.$wechatShare({
                       "content" : shareContent ,

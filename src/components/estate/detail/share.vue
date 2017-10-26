@@ -110,11 +110,7 @@ export default {
                     console.log(res);
                      this.apiData=Object.assign({},res.body.data);
                     console.log(this.apiData)
-                    this.$nativeBridge.invokeMethod('updateTitle',[this.apiData.estateName],function(){
-                        console.log("更新标题成功");
-                    },function(){
-                        console.log("更新标题失败");
-                    })
+                    document.title = this.apiData.estateName;                    
                     //定制页面微信分享参数
                     let wechatShare = res.body.data.weChatShare ;
                     console.log(wechatShare);
