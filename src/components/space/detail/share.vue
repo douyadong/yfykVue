@@ -94,14 +94,14 @@
                 </transition>
             </div>
             <div  v-if="pageStates.activeTab=='rent'">
-            <transition  name="slide-fade">
-              <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
-                <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
-                  <div slot="no-more" class="no-more">没有更多了！</div>
-                </infinite-loading>
-              </div>
-            </transition>
+                <transition  name="slide-fade">
+                <div  v-if="pageStates.activeTabContent=='rent'">
+                    <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
+                    <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
+                    <div slot="no-more" class="no-more">没有更多了！</div>
+                    </infinite-loading>
+                </div>
+                </transition>
           </div>
             <div class="wk-panel" v-if="pageStates.activeTab=='press'">
                 <transition  name="slide-fade">
@@ -440,22 +440,4 @@
 
 <style lang="less" scoped>
     @import "../../../../src/less/space/detail.less" ;
-    // .overlay{
-    //   position: fixed;
-    //   background-color: rgba(0,0,0,.4);
-    //   left:0;
-    //   right:0;
-    //   top:0;
-    //   bottom:0;
-    //   z-index:10000;
-    //   img{
-    //     width:80%;
-    //     height:auto;
-    //     display:block;
-    //     margin:auto auto;
-    //   }
-    //   &.hidden{
-    //     display:none;
-    //   }
-    // }
 </style>
