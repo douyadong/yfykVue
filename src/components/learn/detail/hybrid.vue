@@ -71,7 +71,7 @@
           }
         },
       created() {       
-          window.document.title = "取经文章详情页";   
+          //window.document.title = "取经文章详情页";   
           this.fetchArticle();          
 
           //埋点
@@ -188,8 +188,11 @@
                   coverUrl:data.data.articleDetailModel.coverUrl
                 };
                 self.agent.agentVerifiedStatus = data.data.agentModel.agentVerifiedStatus;
-                if(data.data.articleDetailModel.shareTitle){
-                  window.document.title = data.data.articleDetailModel.shareTitle;
+                if(data.data.articleDetailModel.title){
+                  window.document.title = data.data.articleDetailModel.title;
+                  self.$nativeBridge.invokeMethod('updateTitle',[data.data.articleDetailModel.title],function(){
+
+                  },function(){});
                 } 
                 Vue.nextTick(()=>{
                   self.setArticleFont();              
