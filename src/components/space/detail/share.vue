@@ -96,7 +96,7 @@
             <div  v-if="pageStates.activeTab=='rent'">
             <transition  name="slide-fade">
               <div  v-if="pageStates.activeTabContent=='rent'">
-                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId"></rent-sources>
+                <rent-sources :statusStyle="styleStatus" :eventName="2065015" :dataItems="apiData.rentSources" :agentId="agentId" :otherParams="{ agent_id : apiData.agentDetail.agentId }"></rent-sources>
                 <infinite-loading :on-infinite="infiniteLoadingRent" ref="infiniteLoadingRent">
                   <div slot="no-more" class="no-more">没有更多了！</div>
                 </infinite-loading>
