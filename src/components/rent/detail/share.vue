@@ -142,7 +142,7 @@
         <!--相似房源推荐-->
         <div class="alike-house top-gap wk-panel" v-if="apiData.similarHouses.length!=0">
             <div class="house-recommend panel-header">相似房源推荐</div>
-            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId" :eventName="2057005"></rent-sources>
+            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId" :eventName="2057005" :otherParams="{ agent_id : apiData.houseAgent.agnetId }"></rent-sources>
         </div>
         <!--结束-->
     </div>
