@@ -207,7 +207,7 @@
 			</div>
 			
 		</a>
-		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" >
+		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" id="aa" >
 			<h4 class="panel-header">相似房源推荐</h4>
 			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
 			<!-- <a class="more" :href="apiData.house.similarListUrl" v-if="!apiData.house.isExternal">查看更多</a> -->
@@ -241,12 +241,7 @@
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            document.title = "二手房详情";
-            this.$nativeBridge.invokeMethod('updateTitle',['二手房详情'],function(){
-                console.log("更新标题成功");
-            },function(){
-                console.log("更新标题失败");
-            })  
+            document.title = "二手房详情";    
         },
 		data(){
 			return {

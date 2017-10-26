@@ -134,7 +134,7 @@
     import apiDataFilter from "@/libraries/apiDataFilter" ;
     import InfiniteLoading from "vue-infinite-loading" ;
     import utils from "@/libraries/utils" ;
-    import data from '../../../../mock/xf/rentLi';
+//    import data from '../../../../mock/xf/rentLi';
     export default {
       name : "spaceDetailShare" ,
       data () {
@@ -203,7 +203,7 @@
           spreadStoryContent : function() {
               this.pageStates.storyExtendable = false ;
           } ,
-          //切换二手房 | 新房 | 房产资讯 tabs
+          //切换二手房 | 新房 | 租房 | 房产资讯 tabs
           swapToTab : function(tabName) {
               this.pageStates.activeTab = tabName ;
               //让外层容器切换，改变了页面滚动条状态后再改变下面activeTabContent的值从而触发infiniteLoading
@@ -349,12 +349,7 @@
                   //页面标题和分享内容设置
                   let generalTitle = "悟空找房" + agent.agentName ;
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
-                  //document.title = generalTitle ;  //设置页面title
-                  self.$nativeBridge.invokeMethod('updateTitle',[generalTitle],function(){
-                    console.log('更新标题成功');
-                  },function(){
-                    console.log('更新标题失败');
-                  });
+                  document.title = generalTitle ;  //设置页面title                  
                   //页面微信分享设置
                   this.$wechatShare({
                       "content" : shareContent ,

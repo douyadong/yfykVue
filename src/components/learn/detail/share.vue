@@ -102,12 +102,7 @@
         
       },
       created() {
-        //window.document.title = "有房有客分享";
-        this.$nativeBridge.invokeMethod('updateTitle',['nativeBridge'],function(){
-          console.log("更新标题成功");
-        },function(){
-          console.log("更新标题失败");
-        })
+        //window.document.title = "有房有客分享";        
         this.fetchArticle();          
           
           //埋点
@@ -254,13 +249,8 @@
                 };   
                 self.isShowCall = !!data.data.articleDetailModel.phoneNum; 
                 self.agent = data.data.agentModel;
-                if(data.data.articleDetailModel.shareTitle){
-                  //window.document.title = data.data.articleDetailModel.shareTitle;
-                  self.$nativeBridge.invokeMethod('updateTitle',[data.data.articleDetailModel.shareTitle],function(){
-                    console.log("更新标题成功");
-                  },function(){
-                    console.log("更新标题失败");
-                  });
+                if(data.data.articleDetailModel.title){
+                  window.document.title = data.data.articleDetailModel.title;                  
                 }                
 
                 self.$wechatShare({

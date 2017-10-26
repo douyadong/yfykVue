@@ -1,6 +1,6 @@
 <template>
     <div id="rentDetailShare">
-        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002, otherParams:true})" :wechatBigDataParams="getUvParamsString({ eventName : 2057008 })"/>
+        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002})" :wechatBigDataParams="getUvParamsString({ eventName : 2057008 })"/>
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
        <!--3.6版本相册-->
@@ -18,7 +18,7 @@
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
                     <div style="position:relative" @click="playVideo(slide.video)">                    
-                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive"> 
+                        <img style="margin:0 auto;dislay:block;" src="https://imgwater-test.oss.aliyuncs.com/6af6e136ce64436598f5e016bc9378f3.DL" class="img-responsive"> 
                         <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.3)">
                             <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(0,0,0,.5);border-bottom:14px solid transparent;margin-left:4px;">
 
@@ -181,7 +181,10 @@
                   }
               } ,
               apiData : {
-                //   houseImages:[]
+                houseVideos:{},
+                houseSupporting:{},
+                similarHouses:{},
+                houseAgent:{}
               },
               moreInfo:true,//是否超过5行
               textHeight:'',//定义原本外部房源信息盒子高度
@@ -192,22 +195,34 @@
       } ,
       methods : {
           //获取用户点击埋点参数方法
+        //   getUvParamsString : function({ eventName , otherParams }) {
+        //     //   let eventParam = { house_id : this.apiData.houseId } ;
+        //     if(otherParams){
+        //         let eventParam = { house_id : this.apiData.houseId } ;
+        //         eventParam = Object.assign( eventParam , otherParams ) ;
+        //         return encodeURIComponent(JSON.stringify({
+        //           eventName : eventName ,
+        //           eventParam : eventParam ,
+        //           type : 2
+        //         }));
+        //     }else{
+        //         return encodeURIComponent(JSON.stringify({
+        //           eventName : eventName ,
+        //           type : 2
+        //       })) ;
+        //     }   
+        //   },
+          //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-            //   let eventParam = { house_id : this.apiData.houseId } ;
-            if(otherParams){
-                let eventParam = { house_id : this.apiData.houseId } ;
-                eventParam = Object.assign( eventParam , otherParams ) ;
-                return encodeURIComponent(JSON.stringify({
+              let eventParam = { house_id : this.apiData.houseId } ;
+              if(otherParams !== undefined && otherParams !== null ) {
+                  eventParam = Object.assign( eventParam , otherParams ) ;
+              }
+              return encodeURIComponent(JSON.stringify({
                   eventName : eventName ,
                   eventParam : eventParam ,
                   type : 2
-                }));
-            }else{
-                return encodeURIComponent(JSON.stringify({
-                  eventName : eventName ,
-                  type : 2
               })) ;
-            }   
           },
          //点击查看更多显示更多房源描述信息
          outsideMoreInfo(){
@@ -225,10 +240,9 @@
             this.$router.push({
                 path:"/videoPlay?video=" + video
             });
-          },
-      } ,
-      created() {
-          let houseId = this.$route.params.houseId ;
+         },
+         watchRoute(){
+                 let houseId = this.$route.params.houseId ;
           let agentId = this.$route.params.agentId ;
           this.cityId = this.$route.query.cityId;
           this.agentId=agentId;
@@ -240,12 +254,7 @@
                   console.log(res)
                   this.apiData=Object.assign({}, res.body.data) ;
                   console.log(this.$data.apiData)
-                  document.title = "租房详情" ;
-                  this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
-                    console.log('更新标题成功');
-                  },function(){
-                    console.log('更新标题失败');
-                  });
+                  document.title = "租房详情" ;                  
                   this.$nextTick(function(){
                      if(this.apiData.isWKhouse==2){
                         let houseInfo=this.$refs.sansInfo.clientHeight;
@@ -281,7 +290,14 @@
                 }) ;
               }
           }) ;
+         }
       } ,
+      created() {
+         this.watchRoute()
+      } ,
+      watch:{
+          "$route":"watchRoute"
+      },
       computed:{
             houseImageAndVideoList:function(){
                 let result = [];
