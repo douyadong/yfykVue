@@ -100,7 +100,7 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.isWKhouse==2&&apiData.sellPoint.length>30" class="outside-house ">
+            <div v-else-if="apiData.isWKhouse==2&&apiData.sellPoint&&apiData.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
                 <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{apiData.sellPoint}}</div>
                 <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
@@ -245,7 +245,7 @@
                         console.log('更新标题失败');
                     });
                     this.$nextTick(function(){
-                        if(this.apiData.isWKhouse==2){
+                        if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){
                             let houseInfo=this.$refs.sansInfo.clientHeight;
                             this.textHeight=this.$refs.sansInfo.clientHeight;
                             //   超出控制高度;
