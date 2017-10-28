@@ -123,31 +123,6 @@
             </div>
         </div>		
 
-		<!--3.6版本房源描述基本信息 -->
-		<!--<div class="wk-panel basic-info" v-if="apiData.house.isExternal && apiData.house.extHouseDesc && apiData.house.extHouseDesc.length > 30">			
-            <h1 class="panel-header">基本信息</h1>                
-            <div  class="panel-body lr-padding tb-padding">		
-                <template v-if="!apiData.house.isExternal">		
-    				<dl>
-    					<dt>主要卖点</dt>
-    					<dd>{{apiData.house.sellPoint}}</dd>
-    				</dl>
-    				<dl>
-    					<dt>业主心态</dt>
-    					<dd>{{apiData.house.ownerMotivation}}</dd>
-    				</dl>
-    				<dl>
-    					<dt>周边配套</dt>
-    					<dd>{{apiData.house.aroundSupport}}</dd>
-    				</dl>
-                </template>
-                <dl v-else>
-                    <dd class="ext-house-desc">{{extHouseDesc}}<span @click="toggleExpand" v-if="apiData.house.isExternal && apiData.house.extHouseDesc.length > 100">            
-                {{isExpanded?'收起':'更多'}}
-            </span></dd>
-                </dl>
-            </div>            
-		</div>-->
          <!--3.7版本房源描述部分-->
         <div class="wk-panel description top-gap">
             <!--自有房源房源描述-->
@@ -160,7 +135,7 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.house.isWKhouse==2&&apiData.sellPoint&&apiData.house.sellPoint.length>30" class="outside-house ">
+            <div v-else-if="apiData.house.isWKhouse==2&&apiData.house.sellPoint&&apiData.house.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
                 <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch}" ref="sansInfo">{{text}}</div>
                 <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
@@ -416,7 +391,7 @@
 
                   // 3.7
                 self.$nextTick(function(){
-                     if(self.apiData.isWKhouse==2&&self.apiData.sellPoint&&self.apiData.sellPoint.length>30){                            
+                     if(self.apiData.house.isWKhouse==2&&self.apiData.house.sellPoint&&self.apiData.house.sellPoint.length>30){                            
                             self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
                         }
                 });
@@ -659,18 +634,18 @@
           },
             //   3.7版本
           //点击查看更多显示更多房源描述信息
-          outsideMoreInfo(){
-            if($('.is-look').text()=='查看更多'){
-                console.log(this.textHeight)
-                this.$refs.sansInfo.style.height=this.textHeight+'px';
-                this.isLook='收起'
-            };
-            if($('.is-look').text()=='收起'){
-                console.log(1)
-                this.$refs.sansInfo.style.height=25*5+'px';
-                this.isLook='查看更多'
-            }
-          }
+        //   outsideMoreInfo(){
+        //     if($('.is-look').text()=='查看更多'){
+        //         console.log(this.textHeight)
+        //         this.$refs.sansInfo.style.height=this.textHeight+'px';
+        //         this.isLook='收起'
+        //     };
+        //     if($('.is-look').text()=='收起'){
+        //         console.log(1)
+        //         this.$refs.sansInfo.style.height=25*5+'px';
+        //         this.isLook='查看更多'
+        //     }
+        //   }
         } ,
         computed:{
             houseImageAndVideoList:function(){

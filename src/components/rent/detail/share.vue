@@ -50,7 +50,7 @@
         <!--房子简介-->
         <div class="wk-panel house-info">
             <div  class=" panel-body lr-padding tb-padding">
-                <ul class="column-3">
+                <ul class="column-3" :class="{outside:apiData.isWKhouse==2}">
                     <li v-if="apiData.isWKhouse==1"><dl><dt>{{ apiData.payTypeStr }}</dt><dd>付款方式</dd></dl></li>
                     <li><dl><dt>{{ apiData.houseTypeStr }}</dt><dd>户型</dd></dl></li>
                     <li><dl><dt>{{ apiData.spaceArea }} m&sup2;</dt><dd>面积 </dd></dl></li>

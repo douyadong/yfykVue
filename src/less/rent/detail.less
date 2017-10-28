@@ -87,6 +87,36 @@
                 }
             }
         }
+        .outside{
+            .clearfix();
+            li {
+                border-right : 1px solid @lighter-line-gray-color ;
+                float : left ;                
+                text-align : center ;
+                width : 50% ;
+                &:first-child {
+                    text-align : left ;
+                }
+                &:last-child {
+                    border : none ;
+                }
+                dl {
+                    display : inline-block ;
+                    dt, dd {
+                        text-align : left ;
+                    }
+                    dt {
+                        color :  @danger-color;
+                        font-size : 1.6rem ;
+                    }
+                    dd {
+                        color : @light-font-color ;
+                        font-size : 1.2rem ;
+                        line-height : 2.5rem ;
+                    }
+                }
+            }
+        }
         .outline, .subway-school {
             dl {
                 .clearfix() ;
