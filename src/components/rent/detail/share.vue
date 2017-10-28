@@ -102,8 +102,8 @@
             <!--外来房源房源描述-->
             <div v-else-if="apiData.isWKhouse==2&&apiData.sellPoint&&apiData.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
-                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{apiData.sellPoint}}</div>
-                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look lr-padding">{{isLook}}</div>
+                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch }" ref="sansInfo">{{apiData.sellPoint}}</div>
+                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
             </div>
         </div>
         <!--小区信息-->
@@ -162,7 +162,8 @@
       data () {
           return {
               pageStates : {
-                  swiperActiveIndex : 1 //相册当前在第几帧
+                  swiperActiveIndex : 1 , //相册当前在第几帧
+                  hasMoreSwitch : false  //房源描述展开开关显示状态
               } ,
               pageConfs : {
                   swiperOption : {  // 整个相册 swiper插件的选项
@@ -186,10 +187,7 @@
                 houseSupporting:{},
                 similarHouses:{},
                 houseAgent:{}
-              },
-              moreInfo:true,//是否超过5行
-              textHeight:'',//定义原本外部房源信息盒子高度
-              isLook:'查看更多',//点击查看更多外部房源信息
+              } ,                       
               styleStatus:false,//控制相似房源公共组件样式；
               agentId:'',
           }
@@ -209,15 +207,8 @@
               })) ;
           },
          //点击查看更多显示更多房源描述信息
-         outsideMoreInfo(){
-            if($('.is-look').text()=='查看更多'){
-                this.$refs.sansInfo.style.height=this.textHeight+'px';
-                this.isLook='收起'
-            };
-            if($('.is-look').text()=='收起'){
-                this.$refs.sansInfo.style.height=25*5+'px';
-                this.isLook='查看更多'
-            }
+         spreadDescription(){            
+            this.pageStates.hasMoreSwitch = false ;
          },
         //  视频点击
          playVideo(video){
@@ -234,29 +225,21 @@
             apiDataFilter.request({
                 apiPath : "rent.detail" ,
                 data : { "houseId" : houseId , "agentId" : agentId } ,
-                successCallback : res => {
-                    console.log(res)
-                    this.apiData=Object.assign({}, res.body.data) ;
-                    console.log(this.$data.apiData)
+                successCallback : res => {                    
+                    this.apiData=Object.assign({}, res.body.data) ;                    
                     document.title = "租房详情" ;
                     this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
                         console.log('更新标题成功');
                     },function(){
                         console.log('更新标题失败');
                     });
-                    this.$nextTick(function(){
-                        if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){
-                            let houseInfo=this.$refs.sansInfo.clientHeight;
-                            this.textHeight=this.$refs.sansInfo.clientHeight;
-                            //   超出控制高度;
-                            if(houseInfo/25>5){
-                                this.$refs.sansInfo.style.height=25*5+'px';
-                            }
+                    this.$nextTick(()=>{
+                        if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){                            
+                            this.pageStates.hasMoreSwitch = this.$refs.sansInfo.clientHeight > 125 ;
                         }
                     });
                     //定制页面微信分享参数
-                    let wechatShare = res.body.data.weChatShare ;
-                    console.log(wechatShare);
+                    let wechatShare = res.body.data.weChatShare ;                    
                     this.$wechatShare({
                         "title" : wechatShare.title ,
                         "timelineTitle" : wechatShare.timelineTitle ,
