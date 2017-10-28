@@ -160,10 +160,10 @@
                 </div>
             </div>
             <!--外来房源房源描述-->
-            <div v-else-if="apiData.house.isWKhouse==2&&apiData.house.sellPoint.length>30" class="outside-house ">
+            <div v-else-if="apiData.house.isWKhouse==2&&apiData.sellPoint&&apiData.house.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
-                <div class="outside-info panel-body lr-padding" :class="{moreInfo:moreInfo}" ref="sansInfo">{{text}}</div>
-                <div  v-if="moreInfo" @click="outsideMoreInfo" class="is-look ">{{isLook}}</div>
+                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch}" ref="sansInfo">{{text}}</div>
+                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
             </div>
         </div>
 
@@ -210,7 +210,6 @@
 		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" id="aa" >
 			<h4 class="panel-header">相似房源推荐</h4>
 			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
-			<!-- <a class="more" :href="apiData.house.similarListUrl" v-if="!apiData.house.isExternal">查看更多</a> -->
 		</div>	
 
 		<div id="cover">
@@ -252,11 +251,9 @@
               extHouseDesc:"",
               chartVisible:false,
 			  pageStates : {
-                  swiperActiveIndex : 1 //相册当前在第几帧
+                  swiperActiveIndex : 1, //相册当前在第几帧
+                  hasMoreSwitch : false  //房源描述展开开关显示状态
               } ,
-              moreInfo:true,//是否超过5行
-              textHeight:"",//定义原本外部房源信息盒子高度
-              isLook:"查看更多",//点击查看更多外部房源信息
               pageConfs : {                                
                   swiperOption : {  // 整个相册 swiper插件的选项                     
                       name : "currentSwiper" ,
@@ -419,14 +416,9 @@
 
                   // 3.7
                 self.$nextTick(function(){
-                     if(self.$data.apiData.house.isWKhouse==2){
-                        let houseInfo=self.$refs.sansInfo.clientHeight;
-                        self.textHeight=self.$refs.sansInfo.clientHeight;
-                        //   超出控制高度;
-                        if(houseInfo/25>5){
-                            self.$refs.sansInfo.style.height=25*5+'px';
+                     if(self.apiData.isWKhouse==2&&self.apiData.sellPoint&&self.apiData.sellPoint.length>30){                            
+                            self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
                         }
-                     }
                 });
 
                 //计算tagList
