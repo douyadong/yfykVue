@@ -40,11 +40,6 @@
                     <h1>{{ apiData.subEstateName }}</h1>
                     <div class="money">{{ apiData.rentPriceStr }} 元 / 月</div>
                 </div>
-                <!--<ul>
-                    <li><span>带看</span><span>20</span></li>
-                    <li><span>浏览</span><span>140</span></li>
-                    <li><span>分享</span><span>88</span></li>
-                </ul>-->
             </div>
         </div>
         <!--房子简介-->

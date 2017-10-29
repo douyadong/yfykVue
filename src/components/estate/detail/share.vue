@@ -95,25 +95,20 @@ export default {
                     }
                  } ,
                  apiData : {
-                     //imgList:[]
                  }  
             }
         },
         created(){
             let subEstateId=this.$route.params.subEstateId;
             document.title="小区详情";
-            console.log(subEstateId)
             apiDataFilter.request({
                 apiPath:"estate.detail",
                 data:{"subEstateId":subEstateId},
                 successCallback:res=>{
-                    console.log(res);
                      this.apiData=Object.assign({},res.body.data);
-                    console.log(this.apiData)
                     document.title = this.apiData.estateName;                    
                     //定制页面微信分享参数
                     let wechatShare = res.body.data.weChatShare ;
-                    console.log(wechatShare);
                     this.$wechatShare({
                       "title" : wechatShare.title ,
                       "timelineTitle" : wechatShare.timelineTitle ,
