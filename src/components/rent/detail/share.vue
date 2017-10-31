@@ -5,19 +5,9 @@
             :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
-       <!--3.6版本相册-->
-        <!--<swiper :options="pageConfs.swiperOption">
-            <swiper-slide v-for="(slide , index) in apiData.houseImages" :key="index">
-                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>                
-                <img :src="slide" class="img-responsive" v-else>
-                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.houseImages.length }}</div>
-            </swiper-slide>
-        </swiper> -->
-
         <!--3.7版本相册-->
         <swiper :options="pageConfs.swiperOption">            
             <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
-                <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
                     <div style="position:relative" @click="playVideo(slide.video)">                    
                         <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive"> 
@@ -104,20 +94,16 @@
         <!--小区信息-->
         <div class="wk-panel top-gap estate-info">
             <div class="info panel-header">小区信息</div>
-            <div class="estate-detail">
-                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004,otherParams:{rent_house_id :apiData.houseId,estate_id:apiData.subEstateId}})">
-                    <div class="estate-img">
+            <div class="estate-detail lr-padding">
+                <router-link :to="'/estate/detail/share/'+apiData.encryptSubEstateId" :data-bigdata="getUvParamsString({ eventName : 2057004,otherParams:{rent_house_id :apiData.houseId,estate_id:apiData.subEstateId}})">                
                         <img :src="apiData.estateImgUrl" alt="">
-                    </div>
-                    <div class="estate-text">
-                        <ul>
-                            <li class="estate-name">{{apiData.subEstateName}}</li>
-                            <li class="jiantou">
-                                <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
-                                <i class="iconfont icon-arrowR skip"></i>
-                            </li>
-                            <li>{{apiData.estateAddr}}</li>
-                        </ul>
+                    <div class="estate-text">                       
+                        <p class="estate-name">{{apiData.subEstateName}}</p>
+                        <p class="jiantou">
+                            <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
+                            <i class="iconfont icon-arrowR skip"></i>
+                        </p>
+                        <p>{{apiData.estateAddr}}</p>      
                     </div>
                 </router-link>
             </div>

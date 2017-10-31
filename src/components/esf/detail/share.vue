@@ -632,20 +632,6 @@
                 this.extHouseDesc = this.apiData.house.extHouseDesc.substring(0,100);
             }
           },
-            //   3.7版本
-          //点击查看更多显示更多房源描述信息
-        //   outsideMoreInfo(){
-        //     if($('.is-look').text()=='查看更多'){
-        //         console.log(this.textHeight)
-        //         this.$refs.sansInfo.style.height=this.textHeight+'px';
-        //         this.isLook='收起'
-        //     };
-        //     if($('.is-look').text()=='收起'){
-        //         console.log(1)
-        //         this.$refs.sansInfo.style.height=25*5+'px';
-        //         this.isLook='查看更多'
-        //     }
-        //   }
         } ,
         computed:{
             houseImageAndVideoList:function(){

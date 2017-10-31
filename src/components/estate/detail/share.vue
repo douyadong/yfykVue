@@ -12,40 +12,84 @@
     <!--小区信息介绍-->
     <div class="estate-info wk-panel">
         <div class="estate-static1">
-            <ul class="estate-kind1">
-                <li>所属板块</li>
-                <li>产权年限</li>
-                <li>竣工年代</li>
-                <li>房屋总数</li>
-                <li>物业类型</li>
-                <li>物业费</li>
-                <li>绿化率</li>
-                <li>容积率</li>
-                <li>物业公司</li>
-                <li>开发商</li>
-            </ul>
-            <ul class="estate-kind-info1">
-                <li>{{apiData.district}}</li>
-                <li>{{apiData.propertyRight}}</li>
-                <li>{{apiData.completedStr}}</li>
-                <li>{{apiData.totalHouse}}</li>
-                <li>{{apiData.propertyType}}</li>
-                <li>{{apiData.propertyCharges}}</li>
-                <li>{{apiData.greenRate}}</li>
-                <li>{{apiData.volumeRate}}</li>
-                <li>{{apiData.propertyCompany}}</li>
-                <li>{{apiData.developers}}</li>
+            <ul>
+                <li>
+                    <dl>
+                        <dt>所属板块</dt>
+                        <dd>{{apiData.district}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>产权年限</dt>
+                        <dd>{{apiData.propertyRight}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>竣工年代</dt>
+                        <dd>{{apiData.completedStr}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>房屋总数</dt>
+                        <dd>{{apiData.totalHouse}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>物业类型</dt>
+                        <dd>{{apiData.propertyType}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>物业费</dt>
+                        <dd>{{apiData.propertyCharges}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>绿化率</dt>
+                        <dd>{{apiData.greenRate}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>容积率</dt>
+                        <dd>{{apiData.volumeRate}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>物业公司</dt>
+                        <dd>{{apiData.propertyCompany}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>开发商</dt>
+                        <dd>{{apiData.developers}}</dd>
+                    </dl>
+                </li>
             </ul>
         </div>
         <hr>
         <div class="estate-static2">
-            <ul class="estate-kind2">
-                <li>地铁</li>
-                <li>学校</li>
-            </ul>
-            <ul class="estate-kind-info2">
-                <li>{{apiData.subwayName}}</li>
-                <li>{{apiData.schoolName}}</li>
+            <ul >
+                <li>
+                    <dl>
+                        <dt>地铁</dt>
+                        <dd>{{apiData.subwayName}}</dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>学校</dt>
+                        <dd>{{apiData.schoolName}}</dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>
