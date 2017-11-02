@@ -152,7 +152,6 @@
 						<p>{{apiData.estate.estateName}}</p>
 						<p>{{apiData.estate.completedStr}} 年竣工  &nbsp;|  &nbsp;{{apiData.estate.totalHouse}}</p>
 						<p>{{apiData.estate.estateAddr}}</p>
-
 						<i class="iconfont icon-arrowR"></i>
 					</a>					
 				</div>

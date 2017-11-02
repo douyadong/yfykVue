@@ -100,7 +100,7 @@
                     <div class="estate-text">                       
                         <p class="estate-name">{{apiData.subEstateName}}</p>
                         <p class="jiantou">
-                            <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
+                            <span>{{apiData.completedStr}}年竣工  &nbsp;|  &nbsp;{{apiData.totalHouse}}户</span>
                             <i class="iconfont icon-arrowR skip"></i>
                         </p>
                         <p>{{apiData.estateAddr}}</p>      
