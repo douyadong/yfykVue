@@ -30,7 +30,7 @@ export default {
 					if(data.androidData){
 						window.jsHandlerFunc({imei: data.androidData});
 					}else{
-						window.jsHandlerFunc({imei:data.iosData});
+						window.jsHandlerFunc({imei:data.iosData && data.iosData[0]});
 					}
 				}, function(){
 					deviceId = utils.getCookieId();
