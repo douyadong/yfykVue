@@ -18,7 +18,7 @@
 		overflow: hidden;
         img{
             width:100%;
-            height: 18rem;
+            height: 210px;
         }
 		.pagination{
 			position:absolute;
@@ -26,7 +26,6 @@
 			bottom:1.4rem;
 			font-size:1.2rem;
 			line-height: 2.3rem;
-			//border-radius: 1.2rem;
 			.border-radius(1.2rem);
 			background-color : rgba(0, 0, 0, .5) ;
 			color:#fff;
@@ -38,165 +37,43 @@
 
 // 小区信息介绍
 .estate-info{
-    padding:0 1.5rem;
-    // margin-bottom: @gap-dimension;
-    .clearfix();
+    padding:0 1.5rem; 
      li{
         padding-top: 2rem;
+        font-size: 1.6rem;
+        dl{
+            .clearfix();
+            dt{
+                color: @light-font-color;
+                float: left;
+            }
+            dd{
+                color: @default-font-color;
+            }
+        }
     }
-    
     .estate-static1{
-        .clearfix();
-        .estate-kind1{
-            float:left;
-            font-size: 1.6rem;
-            color: @light-font-color;
-        }
-        .estate-kind-info1{
+        dd{
             margin-left: 8.1rem;
-            font-size: 1.6rem;
-            color: @default-font-color;
         }
     }
-      .estate-static2{
-        .clearfix();
-        .estate-kind2{
-            float:left;
-            margin-right:1.4rem;
-            font-size: 1.6rem;
-            color: @light-font-color;
-        }
-        .estate-kind-info2{
+    .estate-static2{
+        dd{
             margin-left: 4.6rem;
-            font-size: 1.6rem;
-            color: @default-font-color;
-            padding-bottom: 2rem;
         }
-    }  
+    } 
     hr{
         margin:2rem 0 0;
     }
 }
-// 在售房源
-// .selling{
-//     padding: @gap-dimension 1.5rem;
-//     margin-bottom:1rem;
-//     .clearfix();
-//     .house-source{
-//         font-size: 1.6rem;
-//         color: @default-font-color;
-//     }
-//     .house-amount{
-//         float:right;
-//         span{
-//             font-size: 1.6rem;
-//             color: @default-font-color;
-//         }
-//        i{
-//            padding-top: 0.4rem;
-//        }
-//     }    
-// }
-// 用户评论
-// .guest-comment{
-//     .comment{
-//         .clearfix();
-//         margin-left: 0;
-//         padding:@gap-dimension 1.5rem;
-//         .comment-amount{
-//             float:right;
-//             .skip{
-//                 color: @default-font-color;
-//             }
-//         }
-//     }
-//     .no-data{
-//         font-size: 1.6rem;
-//         color: @light-font-color;
-//         text-align: center;
-//         line-height: 3rem;
-//     }
-//     .comment-all-info{
-//         padding-left: 1.5rem;
-//         padding-right: 1.5rem;
-//         .panel-item{
-//             border-bottom: 1px solid  @light-line-gray-color;
-//         }
-//         .comment-phone{
-//             position: relative;
-//             img{
-//                 width:3rem;
-//                 height:3rem;
-//                 .border-radius(50%);
-//                 margin-right: .5rem;
-//             }
-//             span{
-//                 margin-right: 0.85rem;
-//             }
-//             .youping{
-//                 color: @danger-color;
-//             }
-//             .yezhu{
-//                 color: @primary-color;
-//             }
-//         }
-//         .comment-time-like{
-//             .clearfix();
-//             .click-like{
-//                 float:right;
-//             }
-//             .isUp{
-//                     color: @primary-color;
-//                     &+.comment-like-amount{
-//                         color: @primary-color;
-//                     }
-//                 }
-//         }
-        
-//     }
-//     .all-comment{
-//          ul{
-//             .clearfix();
-//             padding: @gap-dimension 0;
-//             li{
-//                 float:left;
-//                 margin-right : 3.5%;
-//                 overflow : hidden;
-//                 width : 31% ;
-//                 &:last-child{
-//                     margin-right:0;
-//                 }
-//             }
-//         }
-//         .comment-all-info:last-child{
-//             .panel-item{
-//                 border: none; 
-//             }
-//         }
-//     }  
-// }
-// 我来评价
-// .evaluate{
-//     display: block;
-//     height:4.5rem;
-//     line-height: 4.5rem;
-//     text-align: center;
-//     background-color: @title-background-color;
-//     font-size: 1.5rem;
-//     color: @light-font-color;
-//     .border-radius(0.3rem);
-// }
 // 位置及周边
 .location {
+    padding-top: 2rem;
     .panel-header{
         border: none;
     }
     .location-container {
         position : relative ;
-        // img{
-        //     height: 250px;
-        //     width: 100%;
-        // }
         .mark {            
             .center-block() ;
             height : 2rem;
