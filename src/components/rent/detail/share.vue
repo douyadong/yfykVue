@@ -1,9 +1,12 @@
 <template>
     <div id="rentDetailShare">
-        <assistant  v-if="houseState ==2" :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
-            :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"
-            :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
-      <offDown v-if="houseState == 4"></offDown>
+      <div v-if="apiData.houseState">
+        <assistant  v-if="apiData.houseState == 2" :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
+                    :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"
+                    :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
+        <offDown v-else></offDown>
+      </div>
+
       <!--<div class="not-have" ><p>房源已下架</p></div>-->
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
@@ -193,7 +196,6 @@
               } ,
               styleStatus:false,//控制相似房源公共组件样式；
               agentId:'',
-            houseState:4
           }
       } ,
       methods : {

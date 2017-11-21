@@ -1,7 +1,9 @@
 <template>
 	<div id="esfDetailShare">
-		<assistant v-if="houseState == 2" :cityId="cityId" :agent="apiData.agent"/>
-    <offDown v-if="houseState == 4"></offDown>
+    <div v-if="apiData.house.houseState">
+      <assistant v-if="apiData.house.houseState == 2" :cityId="cityId" :agent="apiData.agent"/>
+      <offDown v-else></offDown>
+    </div>
 		<download-app />
 		<!--相册内容-->
 
