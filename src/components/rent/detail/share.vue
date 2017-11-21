@@ -1,26 +1,28 @@
 <template>
     <div id="rentDetailShare">
-        <assistant :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
+        <assistant  v-if="houseState ==2" :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
             :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"
             :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
+      <offDown v-if="houseState == 4"></offDown>
+      <!--<div class="not-have" ><p>房源已下架</p></div>-->
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
        <!--相册内容-->
        <!--3.6版本相册-->
         <!--<swiper :options="pageConfs.swiperOption">
             <swiper-slide v-for="(slide , index) in apiData.houseImages" :key="index">
-                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>                
+                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>
                 <img :src="slide" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.houseImages.length }}</div>
             </swiper-slide>
         </swiper> -->
 
         <!--3.7版本相册-->
-        <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
+        <swiper :options="pageConfs.swiperOption">
+            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
-                    <div style="position:relative" @click="playVideo(slide.video)">                    
-                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive"> 
+                    <div style="position:relative" @click="playVideo(slide.video)">
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoImage" class="img-responsive">
                         <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.5)">
                             <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(255,255,255,1);border-bottom:14px solid transparent;margin-left:4px;">
 
@@ -28,10 +30,10 @@
                         </div>
                     </div>
                 </template>
-                               
+
                 <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
-            </swiper-slide>            
+            </swiper-slide>
         </swiper>
         <!--房源概要部分-->
         <div class="wk-panel summary">
@@ -85,7 +87,7 @@
                 <li :class=" { no : ! apiData.houseSupporting.hasBalcony }" class="iconfont icon-balcony">阳台</li>
                 <li :class=" { no : ! apiData.houseSupporting.hasGas }" class="iconfont icon-gas ">煤气</li>
                 <li :class=" { no : ! apiData.houseSupporting.hasMicrowave }" class="iconfont icon-microwave ">微波炉</li>
-                <li :class=" { no : ! apiData.houseSupporting.hasFridge }" class="iconfont icon-refrigerator right">冰箱</li>       
+                <li :class=" { no : ! apiData.houseSupporting.hasFridge }" class="iconfont icon-refrigerator right">冰箱</li>
             </ul>
         </div>
         <!--房源描述部分-->
@@ -152,6 +154,7 @@
     import downloadApp from "@/components/common/downloadApp" ;
     import assistant from "@/components/common/assistant" ;
     import rentSources from "@/components/common/rentSources";
+    import offDown from "@/components/common/offDown";
     import $ from "jquery";
     import { swiper , swiperSlide } from "vue-awesome-swiper" ;
     import apiDataFilter from "@/libraries/apiDataFilter" ;
@@ -187,9 +190,10 @@
                 houseSupporting:{},
                 similarHouses:{},
                 houseAgent:{}
-              } ,                       
+              } ,
               styleStatus:false,//控制相似房源公共组件样式；
               agentId:'',
+            houseState:4
           }
       } ,
       methods : {
@@ -207,7 +211,7 @@
               })) ;
           },
          //点击查看更多显示更多房源描述信息
-         spreadDescription(){            
+         spreadDescription(){
             this.pageStates.hasMoreSwitch = false ;
          },
         //  视频点击
@@ -225,8 +229,8 @@
             apiDataFilter.request({
                 apiPath : "rent.detail" ,
                 data : { "houseId" : houseId , "agentId" : agentId } ,
-                successCallback : res => {                    
-                    this.apiData=Object.assign({}, res.body.data) ;                    
+                successCallback : res => {
+                    this.apiData=Object.assign({}, res.body.data) ;
                     document.title = "租房详情" ;
                     this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
                         console.log('更新标题成功');
@@ -234,12 +238,12 @@
                         console.log('更新标题失败');
                     });
                     this.$nextTick(()=>{
-                        if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){                            
+                        if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){
                             this.pageStates.hasMoreSwitch = this.$refs.sansInfo.clientHeight > 125 ;
                         }
                     });
                     //定制页面微信分享参数
-                    let wechatShare = res.body.data.weChatShare ;                    
+                    let wechatShare = res.body.data.weChatShare ;
                     this.$wechatShare({
                         "title" : wechatShare.title ,
                         "timelineTitle" : wechatShare.timelineTitle ,
@@ -288,7 +292,7 @@
                 if(this.apiData.houseImages){
                     this.apiData.houseImages.forEach(function(img){
                         result.push({
-                            url:img                         
+                            url:img
                         });
                     });
                 }
@@ -307,7 +311,8 @@
           assistant ,
           rentSources,
           swiper ,
-          swiperSlide
+          swiperSlide,
+          offDown
       }
     }
 </script>

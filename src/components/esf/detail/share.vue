@@ -1,15 +1,16 @@
 <template>
 	<div id="esfDetailShare">
-		<assistant :cityId="cityId" :agent="apiData.agent"/>
+		<assistant v-if="houseState == 2" :cityId="cityId" :agent="apiData.agent"/>
+    <offDown v-if="houseState == 4"></offDown>
 		<download-app />
 		<!--相册内容-->
-        
-       <swiper :options="pageConfs.swiperOption">            
-            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">                
+
+       <swiper :options="pageConfs.swiperOption">
+            <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
                 <!-- <video :src="slide.videoUrl" :poster="slide.videoSmallImage" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.isVideo"></video> -->
                 <template  v-if="slide.isVideo">
-                    <div style="position:relative" @click="playVideo(slide.video)">                    
-                        <img style="margin:0 auto;dislay:block;" :src="slide.videoSmallImage" class="img-responsive"> 
+                    <div style="position:relative" @click="playVideo(slide.video)">
+                        <img style="margin:0 auto;dislay:block;" :src="slide.videoSmallImage" class="img-responsive">
                         <div style="display:flex;justify-content:center;align-items:center;position:absolute;left:50%;top:50%;margin-left:-30px;margin-top:-30px;width:60px;height:60px;border-radius:50%;background-color:rgba(0,0,0,.5)">
                             <div style="width:0;height:0;border-top:14px solid transparent;border-left:20px solid rgba(255,255,255,.5);border-bottom:14px solid transparent;margin-left:4px;">
 
@@ -17,10 +18,10 @@
                         </div>
                     </div>
                 </template>
-                               
+
                 <img @click="previewImage()" :src="slide.url" class="img-responsive" v-else>
                 <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ houseImageAndVideoList.length }}</div>
-            </swiper-slide>            
+            </swiper-slide>
         </swiper>
         <!-- 收藏 -->
         <i class="star"></i>
@@ -28,7 +29,7 @@
 		<!-- -->
         <div class="wk-panel summary">
             <div class="panel-header">
-                <h1>{{apiData.house.houseTitle}}</h1>                
+                <h1>{{apiData.house.houseTitle}}</h1>
             </div>
             <div  class="panel-body lr-padding tb-padding">
                 <ul class="basic">
@@ -53,8 +54,8 @@
                 </ul>
                 <hr>
                 <ul class="outline">
-                	<li class='tags'>                        
-                		<span :class="tag.className" v-for="(tag,index) in apiData.house.tagList" :key="index">{{tag.name}}</span>              		
+                	<li class='tags'>
+                		<span :class="tag.className" v-for="(tag,index) in apiData.house.tagList" :key="index">{{tag.name}}</span>
                 	</li>
                     <li class="left">
                     	<dl>
@@ -101,7 +102,7 @@
                 </ul>
                 <hr>
                 <ul class="estate-info">
-                    <li>                    
+                    <li>
                     	<dl>
                     		<dt>预算</dt>
                     		<dd><a :href="apiData.house.mortgageUrl">首付{{apiData.house.advancePayment}}万，月供{{apiData.house.mortgage}}元 <i class="iconfont icon-arrowR"></i></a></dd>
@@ -112,7 +113,7 @@
                     		<dt>小区</dt>
                     		<dd><a :href="apiData.estate.estateUrl">{{apiData.estate.estateName}} <i class="iconfont icon-arrowR"></i></a></dd>
                     	</dl>
-                    </li>          
+                    </li>
                     <li class="full">
                     	<dl>
                     		<dt>学校</dt>
@@ -121,13 +122,13 @@
                     </li>
                 </ul>
             </div>
-        </div>		
+        </div>
 
 		<!--3.6版本房源描述基本信息 -->
-		<!--<div class="wk-panel basic-info" v-if="apiData.house.isExternal && apiData.house.extHouseDesc && apiData.house.extHouseDesc.length > 30">			
-            <h1 class="panel-header">基本信息</h1>                
-            <div  class="panel-body lr-padding tb-padding">		
-                <template v-if="!apiData.house.isExternal">		
+		<!--<div class="wk-panel basic-info" v-if="apiData.house.isExternal && apiData.house.extHouseDesc && apiData.house.extHouseDesc.length > 30">
+            <h1 class="panel-header">基本信息</h1>
+            <div  class="panel-body lr-padding tb-padding">
+                <template v-if="!apiData.house.isExternal">
     				<dl>
     					<dt>主要卖点</dt>
     					<dd>{{apiData.house.sellPoint}}</dd>
@@ -142,11 +143,11 @@
     				</dl>
                 </template>
                 <dl v-else>
-                    <dd class="ext-house-desc">{{extHouseDesc}}<span @click="toggleExpand" v-if="apiData.house.isExternal && apiData.house.extHouseDesc.length > 100">            
+                    <dd class="ext-house-desc">{{extHouseDesc}}<span @click="toggleExpand" v-if="apiData.house.isExternal && apiData.house.extHouseDesc.length > 100">
                 {{isExpanded?'收起':'更多'}}
             </span></dd>
                 </dl>
-            </div>            
+            </div>
 		</div>-->
          <!--3.7版本房源描述部分-->
         <div class="wk-panel description top-gap">
@@ -168,20 +169,20 @@
         </div>
 
 		<!-- 小区信息 -->
-		<div class="wk-panel estate-info">			
-            <h1 class="panel-header">小区信息</h1>                            
+		<div class="wk-panel estate-info">
+            <h1 class="panel-header">小区信息</h1>
             <div  class="panel-body lr-padding tb-padding">
-				<div>			
-					<img :src="apiData.estate.estateImgUrl">		
+				<div>
+					<img :src="apiData.estate.estateImgUrl">
 					<a class="estate" :href="apiData.estate.estateUrl">
 						<p>{{apiData.estate.estateName}}</p>
 						<p>{{apiData.estate.completedStr}} 年竣工  &nbsp;|  &nbsp;{{apiData.estate.totalHouse}}</p>
 						<p>{{apiData.estate.estateAddr}}</p>
 
 						<i class="iconfont icon-arrowR"></i>
-					</a>					
+					</a>
 				</div>
-				<h4 v-if="chartVisible">价格走势</h4>				
+				<h4 v-if="chartVisible">价格走势</h4>
 				<div v-if="chartVisible" id="price" style="height:200px">
 
 				</div>
@@ -205,21 +206,21 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</a>
 		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" id="aa" >
 			<h4 class="panel-header">相似房源推荐</h4>
 			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
-		</div>	
+		</div>
 
 		<div id="cover">
-			<swiper :options="pageConfs.swiperOption2">            
-	            <swiper-slide  v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">	   
-	            	<div @click="previewImage(true)" class="img-container" :style="{'background-image':'url('+slide.url+')'}"></div>             
+			<swiper :options="pageConfs.swiperOption2">
+	            <swiper-slide  v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
+	            	<div @click="previewImage(true)" class="img-container" :style="{'background-image':'url('+slide.url+')'}"></div>
 	                <div class="pagination">{{ index + 1 }} / {{ houseImageAndVideoList.length }}</div>
-	            </swiper-slide>            
+	            </swiper-slide>
         	</swiper>
-		</div>	
+		</div>
     </div>
 </template>
 <script>
@@ -228,19 +229,20 @@
 	import apiDataFilter from "@/libraries/apiDataFilter" ;
 	import esfSources from "@/components/common/esfSources" ;
 	import downloadApp from "@/components/common/downloadApp" ;
+  import offDown from "@/components/common/offDown";
 	import $ from 'jquery';
 	import Echarts from "echarts";
     import config from "@/configs/api";
     let prefix = config.prefix[apiDataFilter.getEnv()];
 	export default {
 		name : "esfDetailShare" ,
-		components:{assistant,swiper,swiperSlide,esfSources,downloadApp},
+		components:{assistant,swiper,swiperSlide,esfSources,downloadApp,offDown},
         created(){
             this.houseId = this.$route.params.houseId;
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
 
-            document.title = "二手房详情";    
+            document.title = "二手房详情";
         },
 		data(){
 			return {
@@ -254,26 +256,26 @@
                   swiperActiveIndex : 1, //相册当前在第几帧
                   hasMoreSwitch : false  //房源描述展开开关显示状态
               } ,
-              pageConfs : {                                
-                  swiperOption : {  // 整个相册 swiper插件的选项                     
+              pageConfs : {
+                  swiperOption : {  // 整个相册 swiper插件的选项
                       name : "currentSwiper" ,
                       // 所有配置均为可选（同Swiper配置）
-                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换  
+                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换
                       grabCursor : true ,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
                       setWrapperSize : true ,
-                      autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化                      
+                      autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化
                       //定义几个回调函数
                       onInit : swiper => {
                           this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
                       } ,
                       onSlideChangeEnd : swiper => {
                         this.pageStates.swiperActiveIndex = swiper.activeIndex + 1 ;
-                      }       
+                      }
                   },
-                  swiperOption2 : {  // 整个相册 swiper插件的选项                     
+                  swiperOption2 : {  // 整个相册 swiper插件的选项
                       name : "swiper" ,
                       // 所有配置均为可选（同Swiper配置）
-                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换  
+                      autoplay : 0 , //自动切换的时间间隔（单位ms），不设定该参数slide不会自动切换
                       grabCursor : true ,  //设置为true时，鼠标覆盖Swiper时指针会变成手掌形状，拖动时指针会变成抓手形状
                       setWrapperSize : true ,
                       autoHeight : false ,  //自动高度。设置为true时，wrapper和container会随着当前slide的高度而发生变化
@@ -303,7 +305,7 @@
                     extHouseDesc:"",//外部房源信息
                     owerMotivation:"",//业主动机
                     aroundSupport:"",//周边配套
-                    sellPoint:"",//卖点    
+                    sellPoint:"",//卖点
                     isWKhouse:"",
                     isStorePush:"",
                     isTopHouse:"",
@@ -336,8 +338,8 @@
                     subwayName:"",//地铁
                     longtitude:"",
                     latitude:"",
-                    estateHistoricalPrice:[],  
-                    comment:""                  
+                    estateHistoricalPrice:[],
+                    comment:""
                   },
                   sameTownTotalCount:"",
                   sameTownHouseList:[],
@@ -366,18 +368,19 @@
                     abbreviation:"",
                     companyName:"",
                     storeName:""
-                  }                  
-              } ,              
+                  }
+              } ,
+        houseState:4
 			}
 		},
-		mounted(){	
+		mounted(){
             let self = this;
             apiDataFilter.request({
             apiPath:"esf.detail",
-              data:{                
+              data:{
                 houseId:this.houseId,
                 agentId:this.agentId
-              }, 
+              },
               errorCallback:function(){
 
               },
@@ -388,14 +391,14 @@
                 data.data.estate.historicalTransactionListUrl = prefix + "/estate/historicalTransactionList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
-                
+
                 //document.title = data.data.house.houseTitle;
                 self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
                     console.log("更新标题成功");
                 },function(){
                     console.log("更新标题失败");
                 })
-              
+
 
                 self.$wechatShare({
                   "title" : data.data.house.houseTitle ,
@@ -404,19 +407,19 @@
                   "imgUrl" : data.data.house.imgList && data.data.house.imgList.length > 0 && data.data.house.imgList[0] || '',//取第一个图片
                   "linkUrl": '',
                   "complete":function(){
-                    
+
                   }
                 });
 
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
-                
-                Object.assign(self.apiData,data.data); 
+
+                Object.assign(self.apiData,data.data);
 
                   // 3.7
                 self.$nextTick(function(){
-                     if(self.apiData.isWKhouse==2&&self.apiData.sellPoint&&self.apiData.sellPoint.length>30){                            
+                     if(self.apiData.isWKhouse==2&&self.apiData.sellPoint&&self.apiData.sellPoint.length>30){
                             self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
                         }
                 });
@@ -469,7 +472,7 @@
 
                 //taken from 悟空找房h5 分享页
                 var datatmp = [], unitprice = [],realPrice=[];
-                var unSortPrice,maxPrice,tmpPrice;                 
+                var unSortPrice,maxPrice,tmpPrice;
                 if (data.data.estate.estateHistoricalPrice && data.data.estate.estateHistoricalPrice.length > 1)  {
                         self.chartVisible = true;
                         for (var i = 0; i < data.data.estate.estateHistoricalPrice.length; i++) {
@@ -492,7 +495,7 @@
                             return parseFloat(a) - parseFloat(b);
                         });
                         maxPrice = Math.ceil((sortArray[sortArray.length - 1] / 10000) + 1) * 10000;
-                        
+
                         let myChart = Echarts.init(document.getElementById('price'));
                         // 指定图表的配置项和数据
                         let option = {
@@ -619,8 +622,8 @@
                         //$('#price').hide().prev().hide();
                         self.chartVisible = false;
                     }
-                }            
-            });						
+                }
+            });
 		},
 		methods : {
           //获取用户点击埋点参数方法
@@ -628,14 +631,14 @@
               let eventParam = { house_id : this.houseId } ;
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
-              }              
-              return encodeURIComponent(JSON.stringify({ 
-                  eventName : eventName , 
+              }
+              return encodeURIComponent(JSON.stringify({
+                  eventName : eventName ,
                   eventParam : eventParam ,
                   type : 2
               })) ;
           },
-          previewImage(hide){          	
+          previewImage(hide){
           	// if(hide){
           	// 	$('#cover').hide();
            //      $('html').css("overflow","auto");
@@ -717,7 +720,7 @@
                 if(this.apiData.house.imgList){
                     this.apiData.house.imgList.forEach(function(img){
                         result.push({
-                            url:img                         
+                            url:img
                         });
                     });
                 }
@@ -734,7 +737,7 @@
 	}
 </script>
 <style lang="less">
-	@import "../../../less/esf/detail.less"; 
+	@import "../../../less/esf/detail.less";
 
     .swiper-wrapper{
         img{
