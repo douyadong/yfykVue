@@ -235,7 +235,9 @@
               successCallback:function(res){
                 let data = res.body;
                 if(data.data.articleDetailModel.contentType == 1) {
-                  window.location.href = data.data.articleDetailModel.content;
+                  $('body').empty().html('<style>html, body, iframe{margin: 0; padding: 0; width: 100%; height: 100%;}</style><iframe frameborder="0" src="'+data.data.articleDetailModel.content+'"></iframe>');
+
+                  //window.location.href = data.data.articleDetailModel.content;
                   return;
                 }
                 self.article = {
