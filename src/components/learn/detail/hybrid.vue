@@ -163,10 +163,10 @@
               },
               successCallback:function(res){
                 let data = res.body;
-                if(data.data.articleDetailModel.contentType == 1) {
+                /*if(data.data.articleDetailModel.contentType == 1) {
                   window.location.href = data.data.articleDetailModel.content;
                   return;
-                }
+                }*/
 
                 self.article = {
                   title:data.data.articleDetailModel.title,
