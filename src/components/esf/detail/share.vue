@@ -1,10 +1,13 @@
 <template>
 	<div id="esfDetailShare">
     <div v-if="apiData.house.houseState">
-      <assistant v-if="apiData.house.houseState == 2" :cityId="cityId" :agent="apiData.agent"/>
+      <assistant v-if="apiData.house.houseState == 2" :cityId="cityId" :agent="apiData.agent"
+      :callBigDataParams="getUvParamsString({ eventName : 2055004,otherParams:{house_id :apiData.house.houseId}})"
+      :wechatBigDataParams="getUvParamsString({ eventName : 2055009,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId} })"
+      :portraitBigDataParams="getUvParamsString({ eventName : 2055003,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId} })"/>
       <offDown v-else></offDown>
     </div>
-		<download-app />
+		<download-app :downloadBigDataParams="getUvParamsString({ eventName : 2055006})"/>
 		<!--相册内容-->
 
        <swiper :options="pageConfs.swiperOption">
@@ -176,7 +179,7 @@
             <div  class="panel-body lr-padding tb-padding">
 				<div>
 					<img :src="apiData.estate.estateImgUrl">
-					<a class="estate" :href="apiData.estate.estateUrl">
+					<a class="estate" :href="apiData.estate.estateUrl" :data-bigdata="getUvParamsString({ eventName : 2055007,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})">
 						<p>{{apiData.estate.estateName}}</p>
 						<p>{{apiData.estate.completedStr}} 年竣工  &nbsp;|  &nbsp;{{apiData.estate.totalHouse}}</p>
 						<p>{{apiData.estate.estateAddr}}</p>
@@ -212,7 +215,7 @@
 		</a>
 		<div class="wk-panel similar-esf" v-if="apiData.sameTownHouseList && apiData.sameTownHouseList.length > 0" id="aa" >
 			<h4 class="panel-header">相似房源推荐</h4>
-			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" eventName="2065005" :otherParams="{ agent_id : 999 }" />
+			<esf-sources :cityId="cityId" :agentId="agentId" :items="apiData.sameTownHouseList" :eventName="2055008"  />
 		</div>
 
 		<div id="cover">
@@ -243,11 +246,19 @@
             this.houseId = this.$route.params.houseId;
             this.agentId = this.$route.params.agentId;
             this.cityId = this.$route.params.cityId;
-
             document.title = "二手房详情";
+            //页面埋点功能
+            this.$bigData({
+                pageName : 2055 ,
+                pageParam : {
+                    agent_id : this.agentId,
+                    house_id:this.houseId
+                } ,
+                type : 1
+            }) ;
         },
 		data(){
-			return {
+		    return {
               estateId:"",
               agentId:"",
               cityId:"",
@@ -630,7 +641,8 @@
 		methods : {
           //获取用户点击埋点参数方法
           getUvParamsString : function({ eventName , otherParams }) {
-              let eventParam = { house_id : this.houseId } ;
+            //   let eventParam = { house_id : this.houseId } ;
+              let eventParam={};
               if(otherParams !== undefined && otherParams !== null ) {
                   eventParam = Object.assign( eventParam , otherParams ) ;
               }
@@ -662,19 +674,9 @@
                 this.extHouseDesc = this.apiData.house.extHouseDesc.substring(0,100);
             }
           },
-            //   3.7版本
           //点击查看更多显示更多房源描述信息
-          outsideMoreInfo(){
-            if($('.is-look').text()=='查看更多'){
-                console.log(this.textHeight)
-                this.$refs.sansInfo.style.height=this.textHeight+'px';
-                this.isLook='收起'
-            };
-            if($('.is-look').text()=='收起'){
-                console.log(1)
-                this.$refs.sansInfo.style.height=25*5+'px';
-                this.isLook='查看更多'
-            }
+          spreadDescription(){
+            this.pageStates.hasMoreSwitch = false ;
           }
         } ,
         computed:{
