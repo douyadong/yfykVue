@@ -104,8 +104,14 @@
                     <dl><dt>周边配套</dt><dd>{{ apiData.aroundSupport || "暂无描述" }}</dd></dl>
                 </div>
             </div>
-            <!--外来房源房源描述-->
+            <!--爬取房源房源描述-->
             <div v-else-if="apiData.isWKhouse==2&&apiData.sellPoint&&apiData.sellPoint.length>30" class="outside-house ">
+                <div class="panel-header">房源描述</div>
+                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch }" ref="sansInfo">{{apiData.sellPoint}}</div>
+                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
+            </div>
+            <!--erp房源房源描述-->
+            <div v-else-if="apiData.isWKhouse==3&&apiData.sellPoint" class="outside-house ">
                 <div class="panel-header">房源描述</div>
                 <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch }" ref="sansInfo">{{apiData.sellPoint}}</div>
                 <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
@@ -133,7 +139,7 @@
             </div>
         </div>
         <!--位置及周边部分-->
-        <div class="wk-panel location ">
+        <div class="wk-panel location " v-if="apiData.longitude">
             <a :href="mapUrl">
                 <div class="location-container">
                     <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
@@ -240,7 +246,11 @@
                         console.log('更新标题失败');
                     });
                     this.$nextTick(()=>{
+                        // 为了不报错clientHeight的错，需要加上判断;此为爬取房源;
                         if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){
+                            this.pageStates.hasMoreSwitch = this.$refs.sansInfo.clientHeight > 125 ;
+                        }
+                        if(this.apiData.isWKhouse==3&&this.apiData.sellPoint){
                             this.pageStates.hasMoreSwitch = this.$refs.sansInfo.clientHeight > 125 ;
                         }
                     });

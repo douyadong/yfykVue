@@ -93,7 +93,7 @@
             </ul>
         </div>
     </div>
-    <div class="wk-panel location">
+    <div class="wk-panel location" v-if="apiData.longitude">
        <a :href="mapUrl">
            <div class="location-container">
                <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
@@ -150,6 +150,7 @@ export default {
                 data:{"subEstateId":subEstateId},
                 successCallback:res=>{
                      this.apiData=Object.assign({},res.body.data);
+                     console.log(this.apiData);
                     document.title = this.apiData.estateName;                    
                     //定制页面微信分享参数
                     let wechatShare = res.body.data.weChatShare ;

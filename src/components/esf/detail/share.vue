@@ -165,11 +165,17 @@
                     <dl><dt>周边配套</dt><dd>{{ apiData.house.aroundSupport || "暂无描述" }}</dd></dl>
                 </div>
             </div>
-            <!--外来房源房源描述-->
-            <div v-else-if="apiData.house.isWKhouse==2&&apiData.sellPoint&&apiData.house.sellPoint.length>30" class="outside-house ">
+            <!--爬取房源房源描述-->
+            <div v-else-if="apiData.house.isWKhouse==2&&apiData.house.sellPoint&&apiData.house.sellPoint.length>30" class="outside-house ">
                 <div class="panel-header">房源描述</div>
-                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch}" ref="sansInfo">{{text}}</div>
-                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more lr-padding">查看更多</div>
+                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch}" ref="sansInfo">{{apiData.house.sellPoint}}</div>
+                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more">查看更多</div>
+            </div>
+            <!--erp房源房源描述-->
+            <div v-else-if="apiData.house.isWKhouse==3&&apiData.house.sellPoint" class="outside-house ">
+                <div class="panel-header">房源描述</div>
+                <div class="outside-info panel-body lr-padding" :class="{ ellipsis : pageStates.hasMoreSwitch}" ref="sansInfo">{{apiData.house.sellPoint}}</div>
+                <div  v-if="pageStates.hasMoreSwitch" @click="spreadDescription" class="more">查看更多</div>
             </div>
         </div>
 
@@ -194,12 +200,12 @@
 				<ul class='list-info'>
 					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-					<li><a href=""><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
+					<li><a :href="apiData.estate.moreCommentUrl"><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
 				</ul>
             </div>
 		</div>
 
-		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'">
+		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude">
 			<span class="map-info">
 				<span class="inner"></span>
 			</span>
@@ -399,11 +405,14 @@
               },
               successCallback:function(res){
                 let data = res.body;
+                console.log(data);
                 data.data.estate.estateUrl = prefix + data.data.estate.estateUrl;//小区url
                 data.data.estate.sameEstateHouseListUrl = prefix + "/estate/sameEstateHouseList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
+                data.data.estate.moreCommentUrl=prefix+"/estate/moreComment.html?subEstateId="+data.data.estate.subEstateId+"&commentLocation=1";//跳转至小区评论页
                 data.data.estate.historicalTransactionListUrl = prefix + "/estate/historicalTransactionList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.house.mortgageUrl = prefix + "/houseLoanCalculator.html?totalPrice="+data.data.house.totalPrice;
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
+
 
                 //document.title = data.data.house.houseTitle;
                 self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
@@ -432,11 +441,15 @@
 
                   // 3.7
                 self.$nextTick(function(){
-                     if(self.apiData.isWKhouse==2&&self.apiData.sellPoint&&self.apiData.sellPoint.length>30){
-                            self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
-                        }
+                    // 爬取房源判断，防止报错;
+                     if(self.apiData.house.isWKhouse==2&&self.apiData.house.sellPoint){
+                        self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
+                     }
+                    //  erp房源判断;
+                    if(self.apiData.house.isWKhouse==3&&self.apiData.house.sellPoint){
+                        self.pageStates.hasMoreSwitch = self.$refs.sansInfo.clientHeight > 125 ;
+                     }
                 });
-
                 //计算tagList
                 let house = self.apiData.house;
                 house.tagList = [];
