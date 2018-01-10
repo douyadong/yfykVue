@@ -132,7 +132,7 @@
                                 <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
                                 <i class="iconfont icon-arrowR skip"></i>
                             </li>
-                            <li>{{apiData.estateAddr}}</li>
+                            <li class="ellipsis">{{apiData.estateAddr}}</li>
                         </ul>
                     </div>
                 </router-link>

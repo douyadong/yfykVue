@@ -188,7 +188,7 @@
 					<a class="estate" :href="apiData.estate.estateUrl" :data-bigdata="getUvParamsString({ eventName : 2055007,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})">
 						<p>{{apiData.estate.estateName}}</p>
 						<p>{{apiData.estate.completedStr}} 年竣工  &nbsp;|  &nbsp;{{apiData.estate.totalHouse}}</p>
-						<p>{{apiData.estate.estateAddr}}</p>
+						<p class="ellipsis">{{apiData.estate.estateAddr}}</p>
 
 						<i class="iconfont icon-arrowR"></i>
 					</a>
