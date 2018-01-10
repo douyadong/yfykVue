@@ -71,7 +71,8 @@
                     <li class="right">
                     	<dl>
                     		<dt>年代</dt>
-                    		<dd>{{apiData.house.completed}} 年</dd>
+                    		<dd v-if="apiData.house.completed">{{apiData.house.completed}} 年</dd>
+                            <dd v-else>--</dd>
                     	</dl>
                     </li>
                     <li class="left">
