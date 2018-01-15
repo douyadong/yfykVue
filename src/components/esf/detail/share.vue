@@ -111,13 +111,13 @@
                     <li>
                     	<dl>
                     		<dt>预算</dt>
-                    		<dd><a :href="apiData.house.mortgageUrl">首付{{apiData.house.advancePayment}}万，月供{{apiData.house.mortgage}}元 <i class="iconfont icon-arrowR"></i></a></dd>
+                    		<dd><a :href="apiData.house.mortgageUrl" :data-bigdata="getUvParamsString({ eventName : 2055010,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId}})">首付{{apiData.house.advancePayment}}万，月供{{apiData.house.mortgage}}元 <i class="iconfont icon-arrowR"></i></a></dd>
                     	</dl>
                     </li>
                     <li>
                     	<dl>
                     		<dt>小区</dt>
-                    		<dd><a :href="apiData.estate.estateUrl">{{apiData.estate.estateName}} <i class="iconfont icon-arrowR"></i></a></dd>
+                    		<dd><a :href="apiData.estate.estateUrl" :data-bigdata="getUvParamsString({ eventName : 2055011,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})">{{apiData.estate.estateName}} <i class="iconfont icon-arrowR"></i></a></dd>
                     	</dl>
                     </li>
                     <li class="full">
@@ -186,7 +186,7 @@
             <div  class="panel-body lr-padding tb-padding">
 				<div>
 					<img :src="apiData.estate.estateImgUrl">
-					<a class="estate" :href="apiData.estate.estateUrl" :data-bigdata="getUvParamsString({ eventName : 2055007,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})">
+					<a class="estate" :href="apiData.estate.estateUrl" :data-bigdata="getUvParamsString({ eventName : 2055012,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})">
 						<p>{{apiData.estate.estateName}}</p>
 						<p>{{apiData.estate.completedStr}} 年竣工  &nbsp;|  &nbsp;{{apiData.estate.totalHouse}}</p>
 						<p class="ellipsis">{{apiData.estate.estateAddr}}</p>
@@ -199,14 +199,14 @@
 
 				</div>
 				<ul class='list-info'>
-					<li><a :href="apiData.estate.sameEstateHouseListUrl"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
-					<li><a :href="apiData.estate.historicalTransactionListUrl"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
+					<li><a :href="apiData.estate.sameEstateHouseListUrl" :data-bigdata="getUvParamsString({ eventName : 2055014,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})"><span>在售房源</span> <span class="count">{{apiData.estate.sameEstateHouseAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
+					<li><a :href="apiData.estate.historicalTransactionListUrl" :data-bigdata="getUvParamsString({ eventName : 2055015,otherParams:{house_id :apiData.house.houseId,estate_id:apiData.estate.estateId}})"><span>历史成交</span> <span class="count">{{apiData.estate.historicalTransactionAmount}} 套 <i class="iconfont icon-arrowR"></i></span></a></li>
 					<li><a :href="apiData.estate.moreCommentUrl"><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
 				</ul>
             </div>
 		</div>
 
-		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude">
+		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude" :data-bigdata="getUvParamsString({ eventName : 2055013,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId}})">
 			<span class="map-info">
 				<span class="inner"></span>
 			</span>
