@@ -111,7 +111,7 @@
                     <li>
                     	<dl>
                     		<dt>预算</dt>
-                    		<dd><a :href="apiData.house.mortgageUrl" :data-bigdata="getUvParamsString({ eventName : 2055010,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId}})">首付{{apiData.house.advancePayment}}万，月供{{apiData.house.mortgage}}元 <i class="iconfont icon-arrowR"></i></a></dd>
+                    		<dd><a :href="apiData.house.mortgageUrl" :data-bigdata="getUvParamsString({ eventName : 2055010,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agentId}})">首付{{apiData.house.advancePayment}}万，月供{{apiData.house.mortgage}}元 <i class="iconfont icon-arrowR"></i></a></dd>
                     	</dl>
                     </li>
                     <li>
@@ -206,7 +206,7 @@
             </div>
 		</div>
 
-		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude" :data-bigdata="getUvParamsString({ eventName : 2055013,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId}})">
+		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude" :data-bigdata="getUvParamsString({ eventName : 2055013,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agentId}})">
 			<span class="map-info">
 				<span class="inner"></span>
 			</span>
@@ -406,7 +406,6 @@
               },
               successCallback:function(res){
                 let data = res.body;
-                console.log(data);
                 data.data.estate.estateUrl = prefix + data.data.estate.estateUrl;//小区url
                 data.data.estate.sameEstateHouseListUrl = prefix + "/estate/sameEstateHouseList.html?subEstateId=" + data.data.estate.encryptSubEstateId;
                 data.data.estate.moreCommentUrl=prefix+"/estate/moreComment.html?subEstateId="+data.data.estate.subEstateId+"&commentLocation=1";//跳转至小区评论页
@@ -437,9 +436,6 @@
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
                 }
-
-                Object.assign(self.apiData,data.data);
-
                   // 3.7
                 self.$nextTick(function(){
                     // 爬取房源判断，防止报错;

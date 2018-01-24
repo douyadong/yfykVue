@@ -140,7 +140,7 @@
         </div>
         <!--位置及周边部分-->
         <div class="wk-panel location " v-if="apiData.longitude">
-            <a :href="mapUrl" :data-bigdata="getUvParamsString({ eventName : 2057009,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId}})">
+            <a :href="mapUrl" :data-bigdata="getUvParamsString({ eventName : 2057009,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agentId}})">
                 <div class="location-container">
                     <img :src="'https://api.map.baidu.com/staticimage/v2?ak=GByG2pAz1WlmY7wX1rlIM4nd&width=640&height=426&center=' + apiData.longitude + ',' + apiData.latitude + '&zoom=18'" class="img-responsive">
                     <div class="cover">
