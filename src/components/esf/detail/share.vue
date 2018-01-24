@@ -435,7 +435,8 @@
 
                 if(data.data.house.extHouseDesc){
                     self.extHouseDesc = data.data.house.extHouseDesc.substring(0,100);
-                }
+                };
+                Object.assign(self.apiData,data.data);
                   // 3.7
                 self.$nextTick(function(){
                     // 爬取房源判断，防止报错;
