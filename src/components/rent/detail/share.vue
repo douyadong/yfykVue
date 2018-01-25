@@ -129,7 +129,7 @@
                         <ul>
                             <li class="estate-name">{{apiData.subEstateName}}</li>
                             <li class="jiantou">
-                                <span>{{apiData.completedStr}}年竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
+                                <span>{{apiData.completedStr}}竣工</span><span class="division">|</span><span>{{apiData.totalHouse}}户</span>
                                 <i class="iconfont icon-arrowR skip"></i>
                             </li>
                             <li class="ellipsis">{{apiData.estateAddr}}</li>
