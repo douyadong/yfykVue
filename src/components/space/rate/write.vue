@@ -4,10 +4,10 @@
             <div class="head-portrait"><img :src="apiData.headRoundImgUrl + '?x-oss-process=image/resize,w_60'"></div>
             <h2>{{apiData.agentName}}</h2>
             <span class="good" v-if="apiData.isWellAgent== 1">好</span>
-        </div>        
+        </div>
         <fieldset><legend>为经纪人评分</legend></fieldset>
         <div class="stars">
-            <i class="iconfont icon-star" v-for="n in 5" @click="checkStar(n)"></i>            
+            <i class="iconfont icon-star" v-for="n in 5" @click="checkStar(n)"></i>
         </div>
         <transition>
             <div class="desc">
@@ -16,18 +16,18 @@
                 <span v-if="pageStates.starCount == 3">服务一般，指出不足</span>
                 <span v-if="pageStates.starCount == 4">比较满意，指出不足</span>
                 <span v-if="pageStates.starCount == 5">非常满意，夸夸经纪人吧</span>
-            </div>            
-        </transition>
-        <transition  name="slide-fade">
-            <div class="tags" v-if="pageStates.starCount > 0 && pageStates.starCount < 5">            
-                <span v-for="( tag , index ) in apiData.badTags" :data-value="tag.id" @click="checkTag">{{ tag.label }}</span>            
             </div>
         </transition>
         <transition  name="slide-fade">
-            <div class="tags" v-if="pageStates.starCount > 4 && pageStates.starCount < 6">            
+            <div class="tags" v-if="pageStates.starCount > 0 && pageStates.starCount < 5">
+                <span v-for="( tag , index ) in apiData.badTags" :data-value="tag.id" @click="checkTag">{{ tag.label }}</span>
+            </div>
+        </transition>
+        <transition  name="slide-fade">
+            <div class="tags" v-if="pageStates.starCount > 4 && pageStates.starCount < 6">
                 <span v-for="( tag , index ) in apiData.goodTags" :data-value="tag.id"  @click="checkTag">{{ tag.label }}</span>
             </div>
-        </transition>                
+        </transition>
         <textarea placeholder="经纪人的服务您还满意吗？您的评价将督促我们不断进步!" v-model="model.content"></textarea>
         <div class="switch wrap">
             <span>匿名评价</span>
@@ -41,8 +41,8 @@
 <script>
     import $ from "jquery" ;
     import Switch from 'vue-switch/switch-2';
-    import apiDataFilter from '@/libraries/apiDataFilter';  
-    import utils from "@/libraries/utils" ;  
+    import apiDataFilter from '@/libraries/apiDataFilter';
+    import utils from "@/libraries/utils" ;
 
     export default {
         components:{
@@ -52,15 +52,15 @@
         data () {
             return {
                 pageStates : {
-                    starCount : 0 
+                    starCount : 0
                 } ,
                 apiData : {
                     agentName:"",//经纪人名字
                     isWellAgent:0,//是否好经纪人
                     headRoundImgUrl:"",
-                    badTags : [                        
+                    badTags : [
                     ] ,
-                    goodTags : [                        
+                    goodTags : [
                     ]
                 },
                 currentLabels:[],
@@ -70,7 +70,8 @@
                     score:0,
                     content:"",
                     commentType:3,//主动评论
-                    labels:[]
+                    labels:[],
+                    uuid:"", // 登陆成功后 提交时需要的提交的参数 （localStorage里面取yfyk2h5Token）
                 }
             }
         } ,
@@ -111,7 +112,7 @@
                 // if($source.hasClass('on') && n != this.pageStates.starCount){
                 //     return;
                 // }
-                
+
                 // if(!$source.hasClass('on') && n != this.pageStates.starCount + 1){
                 //     return;
                 // }
@@ -122,17 +123,18 @@
             } ,
             checkTag(event) {
                 let $source = $(event.target) ;
-                $source.toggleClass("on") ; 
+                $source.toggleClass("on") ;
             },
-            commit(){                
+            commit(){
                 let self = this;
                 utils.checkLoginStatus({ onCallback:function(){
                     let labels = [];
                     $('.tags span.on').each(function(index,ele){
-                        labels.push({labelId:$(ele).data('value')});                    
+                        labels.push({labelId:$(ele).data('value')});
                     });
                     self.model.labels = labels;
                     self.model.score = self.pageStates.starCount;
+                    self.model.uuid = localStorage.yfyk2h5Token;
                     if(self.model.score == 0){
                         $.tips("请给经纪人打分^_^",3);
                         return;
@@ -152,18 +154,18 @@
                                 self.$router.push({
                                     path:"/space/detail/share/"+self.$route.params.agentId
                                 });
-                            });                        
+                            });
                         }
                     });
                 }, offCallback:function(){
-                    var href = "/space/rate/write/" + self.$route.params.agentId; 
+                    var href = "/space/rate/write/" + self.$route.params.agentId;
                     self.$router.push({path:"/login?redirect=" + encodeURIComponent(href) });
-                } })                     
+                } })
             }
         }
     }
 </script>
 
 <style lang="less" scoped>
-    @import "../../../less/space/rate/write.less" ;     
+    @import "../../../less/space/rate/write.less" ;
 </style>
