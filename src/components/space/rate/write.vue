@@ -71,7 +71,7 @@
                     content:"",
                     commentType:3,//主动评论
                     labels:[],
-                    uuid:"", // 登陆成功后 提交时需要的提交的参数 （localStorage里面取yfyk2h5Token）
+                    uuid:"", // 登陆成功后 提交时需要的提交的参数 （localStorage里面取yfyk2h5Token）2月8号新增
                 }
             }
         } ,
