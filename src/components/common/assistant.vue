@@ -7,7 +7,7 @@
             <div class="triangle">
             </div>
         </li>
-        <li class="portrait">
+        <li class="portrait" v-if="headPortrait">
             <router-link :to="'/space/detail/share/' + agent.agentId+'?cityId='+cityId" :data-bigdata="portraitBigDataParams">
                 <dl>
                     <dt><img :src="agent.headRoundImgUrl + '?x-oss-process=image/resize,w_40'"></dt>
@@ -16,7 +16,7 @@
                 </dl>
             </router-link>
         </li>    
-        <li class="tools wx">
+        <li class="tools wx" v-if="agent.agentWChatId">
             <a :data-bigdata="wechatBigDataParams" @click="showWX">
                 <!-- <span><i class="iconfont icon-weixinkefu"></i></span> -->
                 <span>添加微信</span>
@@ -55,7 +55,7 @@
                 bubbleHidden: hidden
             }
         } ,             
-        props : [ "agent" , "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId","showBubble" ],        
+        props : [ "agent" ,"headPortrait", "portraitBigDataParams" , "callBigDataParams" , "wechatBigDataParams", "copyWechatBigDataParams","cityId","showBubble" ],        
         methods:{
             showWX(){
                 let self = this;

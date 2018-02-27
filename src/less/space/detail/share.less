@@ -1,0 +1,220 @@
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 1. 项目名称：yfyk2h5
+ 2. 文件名称：src -> less -> space -> detail.less (经纪人个人店铺详情)
+ 3. 作者：zhaohuagang@lifang.com
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ @import "../../variables.less" ;
+ @import "../../mixins.less" ;
+ #spaceDetailShare {
+     padding-bottom : 50px ;
+ }
+.card {    
+    padding : 1.5rem ;
+    dl {
+        .clearfix() ;
+        dt {
+            float : left ; 
+            font-size : 1.4rem ;                     
+        }
+        dd {
+            margin-left : 75px ;
+            padding : 2px 0 2px 0 ;
+            &.score-comment{
+                .score{
+                    float: left ;
+                    .iconfont{
+                        color : @star-color ;
+                        font-size : 1.2rem ;
+                    }
+                    .number{
+                        font-size: 1.6rem ;
+                    }
+                }
+                .comment{
+                    float: right;
+                    span{
+                        color: #7C7C7C ;
+                        font-size: 1.4rem ;
+                        vertical-align: baseline ;
+                    }
+                
+                }  
+            }
+        }
+    }
+    .outline {        
+        dt {
+            height : 60px ;
+            overflow : hidden ; 
+            width : 60px ;    
+        }
+        dd {
+            .fit-height() ;
+            font-size : 1.6rem ;             
+            .agent-name {
+                float : left ;
+                &.center{
+                    padding-top: 1.5rem ;
+                }
+                span {
+                    display : inline-block ;
+                }
+                .name {
+                    font-size : 1.8rem ;
+                }
+                .company {
+                    color :  #7C7C7C ;
+                }
+            }
+        }
+    }
+    hr{
+        margin: 1.5rem 0;   
+    }
+    ul{
+        .clearfix() ;
+        margin-bottom: 1.5rem ;
+        margin-top: 1.5rem ;
+        li{
+            float:left ;
+            width:33.3% ;
+            .title{
+                color:  #7C7C7C ;
+                font-size: 1.4rem ; 
+                margin-bottom: 0.85rem ; 
+            }
+            .title-info{
+                color:  #FC4C5A ;
+                font-size: 1.8rem ;
+            }
+        }
+    }
+    .business-area{
+        .know-area{
+            span{
+                color: #000000 ;
+                font-size: 1.6rem ; 
+            }
+            div{
+                float: right ;
+                span{
+                    color: #7C7C7C ;
+                    font-size: 1.4rem ;
+                    vertical-align: baseline ;
+                }
+            }
+        }
+        .circle-info{
+            color: #000000 ;
+            font-size: 1.4rem ;
+            margin-top: 1.5rem ;
+        }
+    }
+    .more {
+        color : #92a7c3 ;
+        display : block ;
+        font-size : 1.6rem ;
+        line-height : 30px ;
+        text-align : center ;
+    }
+    .optional {
+        dt {
+            color : @light-font-color ;
+            margin-top : 2px ;
+            width : 65px ;
+        }
+        dd {
+            font-size : 1.4rem ;
+            &.ellipsis {
+                height : 45px ;
+                overflow : hidden ;
+                text-overflow : ellipsis ; 
+            }
+            &.switch {
+                text-align : center ;
+                .iconfont {
+                    font-size : 1.0rem ;                    
+                }
+            }
+            &.picts {
+                .clearfix() ;
+                margin-top : 1rem ;
+                img {
+                    display : block ;
+                    float : left ;
+                    margin-right : 2% ;
+                    margin-bottom : .5rem ;
+                    height : 57px ;
+                    width : 32% ;
+                    &:last-child , &:nth-child(3) , &:nth-child(6) , &:nth-child(9) , &:nth-child(12) {
+                        margin-right : 0 ;
+                    }
+                }
+            }
+        }
+    }
+}
+.wk-tabs{
+
+}
+// .rates-panel {
+//     .panel-header {
+//         .clearfix() ;
+//         h2 {
+//             float : left ;
+//             font-size : 1.6rem ;
+//             font-weight : 400 ;
+//         }
+//         .count {
+//             color : @light-font-color ;
+//             float : right ;
+//             padding-right : 1rem ;
+//             .iconfont {
+//                 font-size : 1.2rem ;
+//             }
+//         }
+//     }
+//     .panel-body {
+//         padding-top : 0 ;
+//         padding-bottom : 1rem ;
+//         .multi-rates {
+//             margin-bottom : 1rem ;
+//         }       
+//         .wk-btn.rate-btn {
+//             background-color : #f6f6f6 ;
+//             color : #92a7c3 ;
+//         }
+//     }
+// }
+
+.wk-tabs {
+    .tabs-handle {
+        display:flex;
+        li {
+            flex:1;
+            text-align : center ;
+            // width : 33.3% ;
+            .on{
+                border-bottom-color : #FC4C5A ;
+                color : #FC4C5A ; 
+            }
+        }
+    }
+}
+.no-house{
+    text-align: center;
+    img{
+        margin:8.35rem 0 3rem 0 ;
+        display: inline-block ;
+        width: 22.25rem ;
+        height: 14.05rem ;
+    }
+    p{
+        color: #7C7C7C ;
+        font-size: 1.4rem ; 
+        text-align: center ;
+        &+p{
+            padding-bottom: 8.4rem ; 
+        }
+    }
+}

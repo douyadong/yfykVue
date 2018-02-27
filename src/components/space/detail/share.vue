@@ -1,75 +1,68 @@
 <template>
     <div id="spaceDetailShare">
-        <assistant :cityId="cityId" :agent="apiData.agentDetail" :callBigDataParams="getUvParamsString({ eventName : 2065008 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065009 })" />
+        <assistant :cityId="cityId" :headPortrait="headPortrait" :agent="apiData.agentDetail" :callBigDataParams="getUvParamsString({ eventName : 2065008 })" :wechatBigDataParams="getUvParamsString({ eventName : 2065009 })" />
         <div class="wk-panel card">
             <dl class="outline">
                 <dt><img :src="apiData.agentDetail.headRoundImgUrl" class="img-responsive"></dt>
                 <dd>
-                    <div class="agent-name">
+                    <div class="agent-name" :class="{center:!(apiData.agentDetail.agentCommentScore)}">
                         <span class="name">{{ apiData.agentDetail.agentName }}</span>
-                        <span class="good" v-if="apiData.agentDetail.isWellAgent">好</span>
-                    </div>
-                    <div class="volume" v-if="!!apiData.agentDetail.agentVolume">
-                        <img src="../../../assets/volume.png">
-                        <span>成交 {{ apiData.agentDetail.agentVolume }} 套</span>
+                        <span class="company">| {{apiData.agentDetail.agentBelongToCompanyName}}</span>
                     </div>
                 </dd>
-                <dd>{{ apiData.agentDetail.agentBelongToCompanyName }}</dd>
+                <dd class="score-comment">
+                    <div v-if="apiData.agentDetail.agentCommentScore" class="score">
+                        <i class="iconfont icon-star-10" v-for="(n ,index) in apiData.agentDetail.shi" :key="index"></i>
+                        <i class="iconfont icon-star-5" v-if="apiData.agentDetail.hasSmall"></i>
+                        <span class="number">{{ apiData.agentDetail.agentCommentScore }}</span>
+                    </div>
+                    <div class="comment" >
+                        <router-link :data-bigdata="getUvParamsString({eventName:'2065012'})" class="count" :to="'/space/rate/list/' + agentId" v-if="apiData.agentDetail.agentCommentCount>0">
+                            <span>全部评价</span>
+                            <span class="iconfont icon-arrowR"></span>
+                        </router-link>
+                    </div>
+                </dd>
             </dl>
             <hr>
-            <a href="javascript:;" class="more" @click="spreadOptional" v-show=" ! pageStates.optionsVisibility">查看更多</a>
-            <transition  name="slide-fade">
-                <div class="optional" v-show="pageStates.optionsVisibility">
-                  <template v-if="apiData.agentDetail.agentBizTown">
-                    <dl>
-                        <dt>熟悉商圈</dt>
-                        <dd>{{ apiData.agentDetail.agentBizTown }}</dd>
-                    </dl>
-                    <hr>
-                    </template>
-                    <template v-if="apiData.agentDetail.agentIntroduction">
-                    <dl>
-                        <dt>自我介绍</dt>
-                        <dd class="content" ref="introduce" :class="{ ellipsis : pageStates.introduceExtendable }">{{ apiData.agentDetail.agentIntroduction }}</dd>
-                        <dd class="switch" v-show="pageStates.introduceExtendable" @click="spreadIntroduceContent"><i class="iconfont icon-arrowDSS"></i></dd>
-                    </dl>
-                    <hr>
-                    </template>
-                    <dl v-if="apiData.agentDetail.agentStory">
-                        <dt>成交故事</dt>
-                        <dd class="content" ref="story" :class="{ ellipsis : pageStates.storyExtendable }">{{ apiData.agentDetail.agentStory }}</dd>
-                        <dd class="switch" v-show="pageStates.storyExtendable" @click="spreadStoryContent"><i class="iconfont icon-arrowDSS"></i></dd>
-                        <dd v-if="apiData.agentDetail.myBizStoryImgUrls !== null " class="picts">
-                            <img :src="pict" v-for="( pict , index ) in apiData.agentDetail.myBizStoryImgUrls">
-                        </dd>
-                    </dl>
+            <ul>
+                <li>
+                    <div class="title">房源数</div>
+                    <div class="title-info">{{ apiData.agentDetail.houseCount }}套</div>
+                </li>
+                <li>
+                    <div class="title">服务客户数</div>
+                    <div class="title-info">{{ apiData.agentDetail.customerCount }}人</div>
+                </li>
+                <li>
+                    <div class="title">入住悟空</div>
+                    <div class="title-info">{{ apiData.agentDetail.serviceYears }}</div>
+                </li>
+            </ul>
+            <hr>
+            <div class="business-area" v-if="apiData.agentDetail.agentBizTown">
+                <div class="know-area">
+                    <span>熟悉商圈</span>
+                    <div v-if="apiData.agentDetail.agentIntroduction||apiData.agentDetail.agentStory">
+                        <router-link :to="'/space/detail/hybrid/'+agentId">
+                            <span>查看更多</span>
+                            <span class="iconfont icon-arrowR"></span>
+                        </router-link>
+                    </div>
                 </div>
-            </transition>
-        </div>
-        <!--评价部分-->
-        <div class="wk-panel top-gap rates-panel">
-            <div class="panel-header">
-                <h2>用户评价</h2>
-                <router-link :data-bigdata="getUvParamsString({eventName:'2065012'})" class="count" :to="'/space/rate/list/' + agentId" v-if="apiData.agentDetail.agentCommentCount>0">
-                    <span>{{ apiData.agentDetail.agentCommentCount }}</span>
-                    <i class="iconfont icon-arrowR"></i>
-                </router-link>
-                <span class="count" v-else>暂无</span>
-            </div>
-            <div class="panel-body lr-padding">
-                <multi-rates :shi="apiData.agentDetail.shi" :hasSmall="apiData.agentDetail.hasSmall" :score="apiData.agentDetail.agentCommentScore" :tags="apiData.agentDetail.tags" />
-                <rate :score="rate.score" :content="rate.content" :rater="rate.customerName" :date="rate.createTimeStr"  :key="rate.id" v-for="( rate , index ) in apiData.rates"  />
-                <a class="wk-btn wk-btn-block rate-btn top-gap" :data-bigdata="getUvParamsString({eventName:'2065004'})" @click="redirectToRate">我来评价</a>
+                <div class="circle-info">
+                    {{ apiData.agentDetail.agentBizTown }}
+                </div>
             </div>
         </div>
         <!--三个tabs部分-->
         <div class="wk-tabs top-gap">
             <!--tabs-handle部分-->
-            <ul class="wk-panel tabs-handle">
-              <li v-if="pageStates.hasEsf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">二手房</a></li>
-              <li v-if="pageStates.hasXf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">新房</a></li>
-              <li v-if="pageStates.hasRent"><a href="javascript:;" :class="{ on : pageStates.activeTab=='rent' }" @click="swapToTab('rent');" :data-bigdata="getUvParamsString({ eventName : 2065014 })">租房</a></li>
-              <li v-if="pageStates.hasPress"><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>
+            <ul class="wk-panel tabs-handle" v-if="pageStates.hasEsf||pageStates.hasXf||pageStates.hasRent">
+              <li v-if="pageStates.hasEsf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='esf' }" @click="swapToTab('esf');" :data-bigdata="getUvParamsString({ eventName : 2065001 })">在售二手房</a></li>
+              <li v-if="pageStates.hasXf"><a href="javascript:;" :class="{ on : pageStates.activeTab=='xf' }" @click="swapToTab('xf');" :data-bigdata="getUvParamsString({ eventName : 2065002 })">在售新房</a></li>
+              <li v-if="pageStates.hasRent"><a href="javascript:;" :class="{ on : pageStates.activeTab=='rent' }" @click="swapToTab('rent');" :data-bigdata="getUvParamsString({ eventName : 2065014 })">在售租房</a></li>
+              <!--<li v-if="pageStates.hasPress"><a href="javascript:;" :class="{ on : pageStates.activeTab=='press' }" @click="swapToTab('press');" :data-bigdata="getUvParamsString({ eventName : 2065003 })">房产资讯</a></li>-->
             </ul>
             <!--tabs-frame部分-->
             <div class="wk-panel" v-if="pageStates.activeTab=='esf'">
@@ -103,7 +96,8 @@
               </div>
             </transition>
           </div>
-            <div class="wk-panel" v-if="pageStates.activeTab=='press'">
+            <!--房产资讯暂时隐藏-->
+            <!--<div class="wk-panel" v-if="pageStates.activeTab=='press'">
                 <transition  name="slide-fade">
                     <div  v-if="pageStates.activeTabContent=='press'">
                         <presses :items="apiData.presses" eventName="2065007" :otherParams="{ agent_id : apiData.agentDetail.agentId }" :agentId="agentId"/>
@@ -112,13 +106,15 @@
                         </infinite-loading>
                     </div>
                 </transition>
-            </div>
+            </div>-->
             <!--tabs内容结束-->
         </div>
-
-        <!-- <div :class="{overlay:true,hidden:previewImgHidden}">
-          <img :src="previewImgUrl">
-        </div> -->
+        <!--无房源-->
+        <div class="no-house wk-panel" v-if="!(pageStates.hasEsf||pageStates.hasXf||pageStates.hasRent)">
+            <img src="https://img.wkzf.com/7f5d84e32c6f4474b7f7d1b2b35669dc" alt="">
+            <p>房源正在录入中哦~</p>
+            <p>晚些再来看看吧</p>
+        </div>
     </div>
 </template>
 
@@ -154,7 +150,8 @@
               hasXf: true,
               hasRent: true
             },
-              shopId : "" ,
+              shopId : "",
+              headPortrait:false,//吸底条头像不显示
               pageConfs : {
                   pageSize : 10  //推荐信息每次加载多少条
               } ,
@@ -346,6 +343,7 @@
               successCallback : res => {
                   let agent = res.body.data.agentDetail ;
                   this.$data.apiData.agentDetail = agent ;
+                  console.log(agent);
                   //页面标题和分享内容设置
                   let generalTitle = "悟空找房" + agent.agentName ;
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
@@ -434,5 +432,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../../src/less/space/detail.less" ;
+    @import "../../../less/space/detail/share.less" ;
 </style>

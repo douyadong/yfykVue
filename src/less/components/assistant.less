@@ -10,6 +10,7 @@
      box-shadow : 0 -2px 6px 0 rgba( 0 , 0 , 0 , .1 ) ;
      bottom : 0 ;
      .clearfix() ;
+     display: flex ;
      height : 50px ;
      left : 0 ;    
      position : fixed ;
@@ -17,6 +18,7 @@
      z-index : 9900 ;
      &>li {
          // border-right : 1px solid @light-line-gray-color ;
+         flex:1 ; 
          float : left ;
          height : 50px ;
          text-align : center ;
@@ -26,7 +28,6 @@
      }
      .portrait {
          background-color : white ;
-         width:37.6%;
          a {
              color : @default-font-color ;
              display : block ;
@@ -77,17 +78,15 @@
          }
      }
      .phone-consult{
-        background-color:@primary-color;
-        width:31.2%;
+        background-color:#FC4C5A;
         a{
             color:white;
         }        
      }
      
      .wx{
-        background-color:#FC4C5A;
+        background-color:@primary-color;
         color: #fff;
-        width:31.2%;
         a{
             color:#fff
         }

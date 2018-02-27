@@ -1,10 +1,10 @@
 <template>
     <dl class="rate">
         <dt>
-            <i class="iconfont icon-star-10" v-for="n in score"></i>            
+            <i class="iconfont icon-star-10" v-for="(n ,index) in score" :key="index"></i>            
         </dt>
         <dd class="content">{{ content }}</dd>
-        <dd class="summary">买家 {{ rater }} | {{ date }}</dd> 
+        <dd class="summary">{{ rater }} | {{ date }}</dd> 
     </dl>
 </template>
 
