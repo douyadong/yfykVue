@@ -3,28 +3,54 @@
         <ul>
             <li>
                 <h1>熟悉商圈</h1>
-                <p>方位服务为方位服务为发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方</p>
+                <p>{{ apiData.agentBizTown }}</p>
             </li>
-            <li>
+            <li v-if="apiData.agentIntroduction">
                 <h1>自我介绍</h1>
-                <p>方位服务为发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方方位服务为发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方</p>
+                <p>{{apiData.agentIntroduction}}</p>
             </li>
-            <li>
+            <li v-if="apiData.agentStory">
                 <h1>成交故事</h1>
-                <p>方位服务为发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方方位服务为发额外附加为IE方位附近发了我及人工无五分文峰股份个人股刚刚非我方</p>
+                <p>{{apiData.agentStory}}</p>
             </li>
         </ul>
     </div>    
 </template>
 
-<script>   
+<script>
+    import apiDataFilter from "@/libraries/apiDataFilter" ;   
     export default {
-      name : "spaceDetailShare" ,
+      name : "spaceDetailHybrid" ,
       data () {
-          return {}
+          return {
+              apiData:{}
+          }
       },
       created () {
-          
+          //获取经纪人信息
+          let agentId=this.$route.params.agentId;
+          apiDataFilter.request({
+              apiPath : "space.detail" ,
+              data : { "agentId" : agentId } ,
+              successCallback : res => {
+                  let agent = res.body.data.agentDetail ;
+                  this.$data.apiData = agent ;
+                  console.log(agent);
+                  //页面标题和分享内容设置
+                  let generalTitle = "悟空找房" + agent.agentName ;
+                  let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
+                  document.title = generalTitle ;  //设置页面title
+                  //页面微信分享设置
+                  this.$wechatShare({
+                      "content" : shareContent ,
+                      "imgUrl" : agent.agentHeadImgUrl ,
+                      "success" : function() { console.log("分享成功！") ;  } ,
+                      "fail" : function() { console.log("分享失败！") ;  } ,
+                      "cancel" : function() { console.log("您取消了分享！") ; } ,
+                      "complete" : function() { console.log("分享完成！") ; }
+                  }) ;
+              }
+          }) ;
       } 
     }
 </script>

@@ -9,16 +9,6 @@
 
       <!--<div class="not-have" ><p>房源已下架</p></div>-->
         <download-app :downloadBigDataParams="getUvParamsString({ eventName : 2057003})"></download-app>
-       <!--相册内容-->
-       <!--3.6版本相册-->
-        <!--<swiper :options="pageConfs.swiperOption">
-            <swiper-slide v-for="(slide , index) in apiData.houseImages" :key="index">
-                <video :src="slide.videoSrc" :poster="slide.imageSrc" controls="controls" preload="none"  class="img-responsive" style="width:100%;height : 210px ; " v-if="slide.video"></video>
-                <img :src="slide" class="img-responsive" v-else>
-                <div class="pagination">{{ pageStates.swiperActiveIndex }} / {{ apiData.houseImages.length }}</div>
-            </swiper-slide>
-        </swiper> -->
-
         <!--3.7版本相册-->
         <swiper :options="pageConfs.swiperOption">
             <swiper-slide style="text-align:center" v-for="(slide , index) in houseImageAndVideoList" :key="slide.url">
@@ -45,11 +35,6 @@
                     <h1>{{ apiData.subEstateName }}</h1>
                     <div class="money">{{ apiData.rentPriceStr }} 元 / 月</div>
                 </div>
-                <!--<ul>
-                    <li><span>带看</span><span>20</span></li>
-                    <li><span>浏览</span><span>140</span></li>
-                    <li><span>分享</span><span>88</span></li>
-                </ul>-->
             </div>
         </div>
         <!--房子简介-->
