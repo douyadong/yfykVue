@@ -17,13 +17,18 @@
               </span>
             </div>         
         </div>
-        <div class="wk-panel article-comments">
+        <a v-if="openId&&(!login)" class="public-number wk-panel" href="javascript:;">
+          登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
+        </a>
+        <div v-if="!openId">
+          <div class="wk-panel article-comments">
             <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
             <comment class="panel" :items="comments"></comment>
-        </div>
-       <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
+          </div>
+          <infiniteLoading :onInfinite="onInfinite" ref="infiniteLoading">
             <span slot="no-more"></span>
-       </infiniteLoading>    
+          </infiniteLoading>
+       </div>    
     </div>
 </template>
 
@@ -41,7 +46,9 @@
           return { 
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId,  
+            agentId:this.$route.query.agentId, 
+            openId:false, //用来判断是否是公众号入口 
+            login:false,//用于判断公众号是否登录;
             agent:{
               agentVerifiedStatus: 1
             } ,         
@@ -51,7 +58,8 @@
               publishTime:"",
               viewNumStr:"",
               content:"",
-              coverUrl:""
+              coverUrl:"",
+              shareCountStr:""
             },          
             comments:[],
             pageInfo:{
@@ -73,7 +81,8 @@
       created() {       
           //window.document.title = "取经文章详情页";   
           this.fetchArticle();          
-
+          this.openId=this.$route.query.openId ;//是否是公众号 ;
+          this.login=this.$route.query.login ;//是否登录 ;
           //埋点
           this.$bigData({
             pageName:2061,
@@ -143,7 +152,6 @@
         },
         removeBlankAttr:function(){
           $('.article-content a[target=_blank]').removeAttr('target');
-          console.log('hahahahh');
         },
         onInfinite(){         
           this.fetchComments();          
@@ -204,6 +212,28 @@
                   self.convertVideo();
                   self.removeBlankAttr();
                 })
+                // 公众号入口页面是否可以分享到朋友圈或朋友;
+                if(self.openId){
+                  if(!self.login){
+                    wx.ready(function() {
+    		              wx.hideMenuItems({
+                        menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+                      }); 	                    		
+	                  });
+                  }else{
+                    // 已经登录可以分享
+                    self.$wechatShare({
+                      "title" : data.data.articleDetailModel.shareTitle ,
+                      "timelineTitle" : data.data.articleDetailModel.shareTitle ,
+                      "content" : data.data.articleDetailModel.shareContent ,
+                      "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                      "linkUrl": data.data.articleDetailModel.shareLinkUrl,
+                      "complete":function(){
+                    
+                      }
+                    });
+                  }
+                }
               }
           });
         },
@@ -239,4 +269,14 @@
   padding: 1.5rem;  
   color: maroon;
 } 
+.public-number{
+  // border-top: 1px solid @light-line-gray-color ;
+  box-shadow: 0 -2px 6px 0 rgba(0,0,0,0.10);
+  color:#FC4C5A ; 
+  display: block ;
+  font-size: 1.6rem ;
+  padding:1.7rem 0 ;
+  text-align: center ;
+
+}
 </style>
