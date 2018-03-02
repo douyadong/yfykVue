@@ -83,7 +83,7 @@
                         <dt>地铁</dt>
                         <dd>{{apiData.subwayName}}</dd>
                     </dl>
-                </li>
+                </li>                
                 <li>
                     <dl>
                         <dt>学校</dt>
@@ -140,43 +140,42 @@ export default {
                  } ,
                  apiData : {
                  }  
-            }
-        },
-        created(){
-            let subEstateId=this.$route.params.subEstateId;
-            document.title="小区详情";
-            apiDataFilter.request({
-                apiPath:"estate.detail",
-                data:{"subEstateId":subEstateId},
-                successCallback:res=>{
-                     this.apiData=Object.assign({},res.body.data);
-                     console.log(this.apiData);
-                    document.title = this.apiData.estateName;                    
-                    //定制页面微信分享参数
-                    let wechatShare = res.body.data.weChatShare ;
-                    this.$wechatShare({
-                      "title" : wechatShare.title ,
-                      "timelineTitle" : wechatShare.timelineTitle ,
-                      "content" : wechatShare.content ,
-                      "imgUrl" : wechatShare.picUrl ,
-                      "success" : function() { console.log("分享成功！") ;  } ,
-                      "fail" : function() { console.log("分享失败！") ;  } ,
-                      "cancel" : function() { console.log("您取消了分享！") ; } ,
-                      "complete" : function() { console.log("分享完成！") ; }
-                    }) ;
-                }
-            })
-        },
-        computed:{
-            mapUrl:function(){
-                return prefix + '/esf/map.html?longitude=' + this.apiData.longitude + '&latitude=' + this.apiData.latitude + '&houseName='+this.apiData.subEstateName + '&houseAddress=' + this.apiData.estateAddr;
-            }
-        },
-        components : {
-          swiper,
-          swiperSlide
         }
+    },
+    created(){
+        let subEstateId=this.$route.params.subEstateId;
+        document.title="小区详情";
+        apiDataFilter.request({
+            apiPath:"estate.detail",
+            data:{"subEstateId":subEstateId},
+            successCallback:res=>{
+                this.apiData=Object.assign({},res.body.data);
+                document.title = this.apiData.estateName;                    
+                //定制页面微信分享参数
+                let wechatShare = res.body.data.weChatShare ;
+                this.$wechatShare({
+                    "title" : wechatShare.title ,
+                    "timelineTitle" : wechatShare.timelineTitle ,
+                    "content" : wechatShare.content ,
+                    "imgUrl" : wechatShare.picUrl ,
+                    "success" : function() { console.log("分享成功！") ;  } ,
+                    "fail" : function() { console.log("分享失败！") ;  } ,
+                    "cancel" : function() { console.log("您取消了分享！") ; } ,
+                    "complete" : function() { console.log("分享完成！") ; }
+                }) ;
+            }
+        })
+    },
+    computed:{
+        mapUrl:function(){
+            return prefix + '/esf/map.html?longitude=' + this.apiData.longitude + '&latitude=' + this.apiData.latitude + '&houseName='+this.apiData.subEstateName + '&houseAddress=' + this.apiData.estateAddr;
+        }
+    },
+    components : {
+        swiper,
+        swiperSlide
     }
+}
 </script>
 
 <style lang="less" scoped>

@@ -204,7 +204,7 @@
 					<li><a :href="apiData.estate.moreCommentUrl"><span>小区评论</span> <span class="count">{{apiData.estate.comment&&apiData.estate.comment.amount || 0}} 条 <i class="iconfont icon-arrowR"></i></span></a></li>
 				</ul>
             </div>
-		</div>
+		</div> 
 
 		<a :href="mapUrl" class="location" :style="'background-image:url('+mapImgUrl+')'" v-if="apiData.estate.longitude" :data-bigdata="getUvParamsString({ eventName : 2055013,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agentId}})">
 			<span class="map-info">

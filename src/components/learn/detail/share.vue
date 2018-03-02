@@ -104,7 +104,6 @@
       created() {
         //window.document.title = "有房有客分享";        
         this.fetchArticle();          
-          
           //埋点
           this.$bigData({
             pageName:2063,
@@ -215,7 +214,6 @@
         },
         removeBlankAttr:function(){
           $('.article-content a[target=_blank]').removeAttr('target');
-          console.log('hahahahh');
         },
         onInfinite(){         
           this.fetchComments();        
