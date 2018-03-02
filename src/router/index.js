@@ -12,6 +12,7 @@ import Router from "vue-router" ;
 import learnDetailHybrid from "@/components/learn/detail/hybrid" ;
 import learnDetailShare from "@/components/learn/detail/share" ;
 import rentDetailHybrid from "@/components/rent/detail/hybrid" ;
+import learnIndex from "@/components/learn/index" ;
 import rentDetailShare from "@/components/rent/detail/share" ;
 import spaceDetailHybrid from "@/components/space/detail/hybrid" ;
 import spaceDetailShare from "@/components/space/detail/share" ;
@@ -69,6 +70,11 @@ export default new Router({
             path : "/learn/detail/share/:id" ,
             name : "learnDetailShare",
             component : learnDetailShare
+        } ,
+        {
+            path : "/learn" ,
+            name : "learnIndex",
+            component : learnIndex
         } ,
         {
             path : "/rent/detail/hybrid/:houseId/:agentId" ,
