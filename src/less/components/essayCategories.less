@@ -28,10 +28,13 @@
             }
         }
      }
-     .subcategory {
+     .oneTitle {
          display : none ;
-         padding : 10px 15px ;
-         overflow-x : scroll ; 
+         padding : 10px 15px 0 15px ;
+         overflow-x : scroll ;
+         &.visible {
+             display : block ;
+         } 
          div {
              .clearfix() ;         
              a {
@@ -47,4 +50,14 @@
              }
          }     
      }
+
+     .wk-tabs {
+        .tabs-handle {
+            display :flex ;
+            li {
+                flex : 1 ;
+                text-align : center ;
+            }
+        }
+    }
  }

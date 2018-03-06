@@ -9,7 +9,7 @@ export default {
     "successStatusCode" : 1 ,
     "prefix" : {
         "dev" : "//10.0.18.78:8107" ,
-        "test" : "//m.test.wkzf" ,
+        "test" : "//10.0.18.79:8107" ,
         "sim" : "//m.sim.wkzf" ,
         "prod" : "https://m.wkzf.com"
     } ,
@@ -27,7 +27,10 @@ export default {
             "detail" : "yfyk/quJingShareArticleDetail.rest",
             "comments": "article/queryArticleCommentList.rest",
             "commitComment":"yfyk/agentShareArticleComment.rest",
-            "up":"article/thumbUp.rest",
+            "up" : "article/thumbUp.rest",
+            "category" : "article/newsColumnList.action" ,
+            "recommend" : "article/recommendList.action" ,
+            "list" : "article/categoryArticleList.action"
         } ,
         "rent" : {
             // "detail" : "yfyk/getHouseRentDetailInfo.rest"

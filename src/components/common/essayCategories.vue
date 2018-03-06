@@ -3,21 +3,29 @@
         <!--第一级类别-->
         <div class="category">
             <div :style="'width:' + pageStates.categoriesWidth + 'px'">
-                <a href="/learn" class="on">推荐</a>
-                <a :href="category.url" :class="{ 'has-child' : category.firstSubTitleList && category.firstSubTitleList.length }" :data-id="category.categoryId" @click="spreadSubCategory" v-for="category in apiData.categoryList" :key="category.categoryId">{{ category.title }}</a>     
+                <router-link :class="{ 'on' : ! activecategoryid }" to="/learn">推荐</router-link>
+                <router-link :to="{ path : '/learn/' + category.categoryId }" :class="{ 'on' : activecategoryid == category.categoryId }" v-for="category in apiData.categoryList" :key="category.id">{{ category.title }}</router-link>
             </div>
         </div>
         <!--第二级类别-->
-        <div class="subcategory" :id="'essayCategory' + category.categoryId + 'ChildList'" v-for="category in apiData.hasChildCategoryList" :key="category.categoryId">
+        <div class="oneTitle" :class="{ 'visible' : activecategoryid == category.categoryId }" :id="'oneTitle' + category.categoryId" v-for="category in apiData.oneTitleList" :key="category.categoryId">
             <div>
-                <a :href="subCategory.url" v-for="subCategory in category.firstSubTitleList" :key="subCategory.categoryId">{{ subCategory.title }}</a>                    
+                <router-link :to="{ path : '/learn/' + category.categoryId + '/' + oneTitle.id }" v-for="oneTitle in category.oneTitles" :key="oneTitle.id">{{ oneTitle.title }}</router-link>                    
             </div>
         </div>
+        <!--第三级tabs菜单-->
+        <div class="wk-tabs twoTitle top-gap" v-for="oneTitle in apiData.twoTitleList" :id="'twoTitle' + oneTitle.oneTitleId" :key="oneTitle.oneTitleId" v-if="activeonetitleid == oneTitle.oneTitleId">
+            <ul class="tabs-handle">
+                <li v-for="twoTitle in oneTitle.twoTitles"><router-link :class="{ 'on' : activetwotitleid == twoTitle.id }" :to="{ path : '/learn/' + oneTitle.categoryId + '/' + oneTitle.oneTitleId + '/' + twoTitle.id }">{{ twoTitle.title }}</router-link></li>
+            </ul>
+        </div>
+
     </div>
 </template>
 
 <script>
-    import mockData from "../../../mock/essay/index" ;
+    import Vue from "vue" ;
+    import apiDataFilter from "@/libraries/apiDataFilter" ;
     import $ from "jquery" ;
     export default {
         name : "essayCategories" ,      
@@ -28,53 +36,89 @@
                 } ,
                 "apiData" : {
                     "categoryList" : [] ,
-                    "hasChildCategoryList" : []
+                    "oneTitleList" : [] ,
+                    "twoTitleList" : []
                 }
             }
-        } ,       
-        props : [] ,
-        methods : {
+        } ,
+        props : [ "activecategoryid" , "activeonetitleid" , "activetwotitleid" ] ,   
+        created() {            
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            点击一级菜单弹出子菜单
+            获取所有文章栏目
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
-            spreadSubCategory(event) {
-                if( ! $(event.target).hasClass("has-child")) return ;
-                $(".essay-categories .subcategory").hide() ;
-                let $subCategoryContainer = $("#essayCategory" + $(event.target).data("id") + "ChildList") ;
-                $subCategoryContainer.slideDown("200" , function(){
-                    //展开后要再计算二级类别总宽度，再赋予容器
-                    let subCategoriesWidth = 0 ;
-                    $subCategoryContainer.find("a").each(function(){                    
-                        subCategoriesWidth += ($(this).width() +40) ;
-                    }) ;
-                    $subCategoryContainer.find("div").css({ "width" : subCategoriesWidth + "px" }) ;
-                }) ;
-            }
-        } ,
-        created() {
-            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            将mock数据进行处理并赋予模块变量
-            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/            
-            this.apiData.categoryList = mockData.data.categoryList ;
-            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            整理出有二级类别的文章类别            
-            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-            let hasChildCategoryList = [] ;
-            mockData.data.categoryList.forEach(( category , index ) => {
-                let firstSubTitleList = category.firstSubTitleList ;
-                if( firstSubTitleList && firstSubTitleList !== undefined && firstSubTitleList.length > 0 ) hasChildCategoryList.push(category) ;
-            }) ;
-            this.apiData.hasChildCategoryList = hasChildCategoryList ;
-        } ,
-        mounted() {
-            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            计算出所有一级菜单的宽度
-            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-            let categoriesWidth = 0 ;            
-            $(".essay-categories .category div a").each(function() {                             
-                categoriesWidth += ($(this).width() * 2 + 35) ;  //35是什么概念：每个菜单有15px的左右margin，一起就是30，再放5px
-            }) ; 
-            this.pageStates.categoriesWidth = categoriesWidth ;
+            apiDataFilter.request({
+                apiPath : "learn.category" ,
+                method : "post" ,
+                data : { "cityId" : 43 } ,
+                contentType : "application/json" , 
+                successCallback : res => {
+                    let initData = res.body.data ;
+                    let categoryList = [] ;
+                    let oneTitleList = [] ;
+                    let twoTitleList = [] ;               
+                    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    按照以下格式要求整理出所有三个级别类别的文章类别数据
+                    categoryList的格式如下：
+                    [
+                        {"categoryId":22,"oneTitleCount":2,"title":"百科"},
+                        {"categoryId":23,"oneTitleCount":0,"title":"知乎"}
+                    ]
+                    oneTitleList的格式如下：
+                    [
+                        {"categoryId":22,oneTitles:[{"id":123,"title":"购房"},{"id":124,"title":"卖房"}] },
+                        {"categoryId":25,oneTitles:[{"id":125,"title":"装修"},{"id":126,"title":"物业"}] }
+                    ]
+                    twoTitleList的格式如下：
+                    [
+                        {"categoryId":22,"oneTitleId":22,twoTitles:[{"id":123,"title":"购房"},{"id":124,"title":"卖房"}] },
+                        {"categoryId":22,"oneTitleId":25,twoTitles:[{"id":125,"title":"装修"},{"id":126,"title":"物业"}] }
+                    ]
+                    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/                    
+                    initData && initData.forEach(( category ) => {
+                        let firstSubTitleList = category.firstSubTitleList && category.firstSubTitleList !== undefined ? category.firstSubTitleList : []  ;
+                        /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        重新组织categoryList和oneTitleList数据
+                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
+                        categoryList.push({
+                            "categoryId" : category.id ,
+                            "oneTitleCount" : firstSubTitleList.length ,
+                            "title" :  category.title
+                        }) ;
+                        oneTitleList.push({
+                            "categoryId" : category.id ,
+                            "oneTitles" : firstSubTitleList
+                        }) ;
+                        /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        重新组织twoTitleList数据
+                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+                        firstSubTitleList.forEach(( oneTitle ) => {
+                            twoTitleList.push({
+                                "categoryId" : category.id ,
+                                "oneTitleId" : oneTitle.id ,
+                                "twoTitles" : oneTitle.secondSubTitleList
+                            }) ;
+                        }) ;
+                        
+                    }) ;                    
+                    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    数据绑定
+                    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/            
+                    this.apiData.categoryList = categoryList ;
+                    this.apiData.oneTitleList = oneTitleList ;
+                    this.apiData.twoTitleList = twoTitleList ;
+                    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    下一次dom节点更新完后执行         
+                    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+                    Vue.nextTick(() => {
+                        let categoriesWidth = 0 ;                        
+                        $(".essay-categories .category div a , .essay-categories .category div span").each(function() {                                               
+                            categoriesWidth += ($(this).outerWidth(true) * 2 + 5) ;  //35是什么概念：每个菜单有15px的左右margin，一起就是30，再放5px
+                        }) ; 
+                        this.pageStates.categoriesWidth = categoriesWidth ;
+                    }) ;                    
+                    
+                }
+            }) ;            
         }
     }
 </script>
