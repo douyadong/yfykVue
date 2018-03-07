@@ -1,22 +1,22 @@
-<template>
-    <div class="essay-categories">
+<template>    
+    <div class="essay-categories">        
         <!--第一级类别-->
-        <div class="category">
+        <div class="category" v-if=" ! activeonetitleid">
             <div :style="'width:' + pageStates.categoriesWidth + 'px'">
                 <router-link :class="{ 'on' : ! activecategoryid }" to="/learn">推荐</router-link>
                 <router-link :to="{ path : '/learn/' + category.categoryId }" :class="{ 'on' : activecategoryid == category.categoryId }" v-for="category in apiData.categoryList" :key="category.id">{{ category.title }}</router-link>
             </div>
         </div>
         <!--第二级类别-->
-        <div class="oneTitle" :class="{ 'visible' : activecategoryid == category.categoryId }" :id="'oneTitle' + category.categoryId" v-for="category in apiData.oneTitleList" :key="category.categoryId">
+        <div class="oneTitle" :class="{ 'visible' : activecategoryid == category.categoryId }" :id="'oneTitle' + category.categoryId" v-for="category in apiData.oneTitleList" :key="category.categoryId" v-if=" ! activeonetitleid">
             <div>
                 <router-link :to="{ path : '/learn/' + category.categoryId + '/' + oneTitle.id }" v-for="oneTitle in category.oneTitles" :key="oneTitle.id">{{ oneTitle.title }}</router-link>                    
             </div>
         </div>
         <!--第三级tabs菜单-->
-        <div class="wk-tabs twoTitle top-gap" v-for="oneTitle in apiData.twoTitleList" :id="'twoTitle' + oneTitle.oneTitleId" :key="oneTitle.oneTitleId" v-if="activeonetitleid == oneTitle.oneTitleId">
+        <div class="wk-tabs twoTitle" v-for="oneTitle in apiData.twoTitleList" :id="'twoTitle' + oneTitle.oneTitleId" :key="oneTitle.oneTitleId" v-if="activeonetitleid == oneTitle.oneTitleId">
             <ul class="tabs-handle">
-                <li v-for="twoTitle in oneTitle.twoTitles"><router-link :class="{ 'on' : activetwotitleid == twoTitle.id }" :to="{ path : '/learn/' + oneTitle.categoryId + '/' + oneTitle.oneTitleId + '/' + twoTitle.id }">{{ twoTitle.title }}</router-link></li>
+                <li v-for="( twoTitle , index )  in oneTitle.twoTitles"><router-link :class="{ 'on' : activetwotitleid == twoTitle.id || ( index == 0 && ! activetwotitleid ) }" :to="{ path : '/learn/' + oneTitle.categoryId + '/' + oneTitle.oneTitleId + '/' + twoTitle.id }">{{ twoTitle.title }}</router-link></li>
             </ul>
         </div>
 
@@ -42,8 +42,8 @@
             }
         } ,
         props : [ "activecategoryid" , "activeonetitleid" , "activetwotitleid" ] ,   
-        created() {            
-            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        created() { 
+             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             获取所有文章栏目
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
             apiDataFilter.request({
@@ -87,11 +87,11 @@
                         oneTitleList.push({
                             "categoryId" : category.id ,
                             "oneTitles" : firstSubTitleList
-                        }) ;
-                        /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                        重新组织twoTitleList数据
-                        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-                        firstSubTitleList.forEach(( oneTitle ) => {
+                        }) ;                        
+                        firstSubTitleList.forEach(( oneTitle ) => {                            
+                            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                            重新组织twoTitleList数据
+                            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
                             twoTitleList.push({
                                 "categoryId" : category.id ,
                                 "oneTitleId" : oneTitle.id ,

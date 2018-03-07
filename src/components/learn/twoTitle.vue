@@ -56,7 +56,7 @@
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 请求参数处理
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
-                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "twoTitleId" : this.pageStates.twoTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize , "cityId" : 43 } ;                
+                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "twoTitleId" : this.pageStates.twoTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize } ;                
                if(this.pageStates.agentId) requestData.agentId = parseInt( this.pageStates.agentId , 10 ) ; 
                 if(this.pageStates.cityId) requestData.cityId = parseInt( this.pageStates.cityId , 10 ) ; 
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -86,6 +86,8 @@
             this.pageStates.categoryId = parseInt( to.params.categoryId , 10 ) ;
             this.pageStates.oneTitleId = parseInt( to.params.oneTitleId , 10 ) ;  
             this.pageStates.twoTitleId = parseInt( to.params.twoTitleId , 10 ) ; 
+            this.pageStates.agentId = this.$route.query.agentId  || null ;
+            this.pageStates.cityId = this.$route.query.cityId  || null ;
             this.apiData.essayItems = [] ;
             this.infiniteLoading() ; 
             next() ;

@@ -49,13 +49,13 @@
         }  ,        
         methods : {            
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            循环加载第二级类别文章列表
+            循环加载第二级类别文章列表，这里面比较搞的一点就是要查询这个oneTitleId下的第一个twoTitleId下的文章，这个经过协商由服务器端做兼容            
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
             infiniteLoading : function() {
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 请求参数处理
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
-                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize , "cityId" : 43 } ;                
+                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize } ;                
                if(this.pageStates.agentId) requestData.agentId = parseInt( this.pageStates.agentId , 10 ) ; 
                 if(this.pageStates.cityId) requestData.cityId = parseInt( this.pageStates.cityId , 10 ) ; 
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@
                     contentType : "application/json" , 
                     data : requestData ,
                     successCallback : res => {
-                        let result = res.body.data ;                        
+                        let result = res.body.data ;
                         if(result) {
                             this.$data.apiData.essayItems = this.$data.apiData.essayItems.concat(result) ;  //将推荐文章数据累加                            
                             this.$data.pageStates.startIndex += result.length ;  //将取数据指针累加，方便上拉加载调用
@@ -83,7 +83,9 @@
         beforeRouteUpdate( to , from , next ) {
             this.pageStates.startIndex = 0 ;                                   
             this.pageStates.categoryId = parseInt( to.params.categoryId , 10 ) ;
-            this.pageStates.oneTitleId = parseInt(  to.params.oneTitleId , 10 ) ;  
+            this.pageStates.oneTitleId = parseInt(  to.params.oneTitleId , 10 ) ; 
+            this.pageStates.agentId = this.$route.query.agentId  || null ;
+            this.pageStates.cityId = this.$route.query.cityId  || null ; 
             this.apiData.essayItems = [] ;
             this.infiniteLoading() ; 
             next() ;
