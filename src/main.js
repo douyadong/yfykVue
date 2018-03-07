@@ -13,15 +13,18 @@ import WechatShare from "@/plugins/wechatShare";
 import BigData from "@/plugins/bigData";
 import NativeBridge from "@/plugins/nativeBridge";
 import DeviceId from "@/plugins/deviceId";
+import VueCookie from "vue-cookie" ;  //cookie操作的插件
+
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 vue插件使用
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 Vue.use(VueResource) ;
 Vue.use(VueLazyload) ;
-Vue.use(WechatShare);
-Vue.use(DeviceId);
-Vue.use(BigData);
-Vue.use(NativeBridge);
+Vue.use(WechatShare) ;
+Vue.use(DeviceId) ;
+Vue.use(BigData) ;
+Vue.use(NativeBridge) ;
+Vue.use(VueCookie) ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 关闭生产模式下给出的提示
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/

@@ -34,6 +34,7 @@
             return {
                 "pageStates" : {
                     "startIndex" : 0 ,
+                    "openId" : this.$route.query.openId  || null ,  //微信pipV1.1版本里面需要这个
                     "agentId" : this.$route.query.agentId  || null ,
                     "cityId" : this.$route.query.cityId  || null
                 } ,
@@ -44,7 +45,15 @@
                     "essayItems" : []                 
                 }
             }
-        }  ,        
+        }  ,
+        created() {
+            /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            如果queryString参数中有openId和agentId , cityId，就将这些存在cookie中供使用
+            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
+            if(this.pageStates.agentId)  this.$cookie.set( "wxpipAgentId" , this.pageStates.agentId , { expires: "1D" , path : "/" }) ;
+            if(this.pageStates.openId)  this.$cookie.set( "wxpipOpenId" , this.pageStates.openId , { expires: "1D" , path : "/" }) ;
+            if(this.pageStates.cityId)  this.$cookie.set( "wxpipCityId" , this.pageStates.cityId , { expires: "1D" , path : "/" }) ;
+        } ,  
         methods : {            
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             循环加载推荐文章列表
