@@ -49,13 +49,14 @@
         }  ,        
         methods : {            
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            循环加载第二级类别文章列表，这里面比较搞的一点就是要查询这个oneTitleId下的第一个twoTitleId下的文章，这个经过协商由服务器端做兼容            
+            循环加载第二级类别文章列表，这里面比较搞的一点就是要查询这个oneTitleId下的第一个twoTitleId下的文章，这个经过协商由服务器端做兼容  ,入参里面有一个limit
+            参数，0 代表不限定第一个子类别，1代表限定第一个子类别，这里要传1         
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
             infiniteLoading : function() {
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 请求参数处理
                 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
-                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize } ;                
+                let requestData = { "categoryId" : this.pageStates.categoryId , "oneTitleId" : this.pageStates.oneTitleId , "startIndex" : this.pageStates.startIndex , "pageSize" : this.pageConfs.pageSize , "limit" : 1 } ;                
                if(this.pageStates.agentId) requestData.agentId = parseInt( this.pageStates.agentId , 10 ) ; 
                 if(this.pageStates.cityId) requestData.cityId = parseInt( this.pageStates.cityId , 10 ) ; 
                 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
