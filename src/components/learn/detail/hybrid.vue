@@ -17,7 +17,7 @@
               </span>
             </div>         
         </div>
-        <a v-if="openId&&(!login)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&reset=1&source=0&state=1'">
+        <a v-if="openId&&(!wxAgentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
         <div v-if="!openId">
@@ -48,7 +48,9 @@
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId, 
             openId:false, //用来判断是否是公众号入口 
-            login:false,//用于判断公众号是否登录;
+            wxAgentId:false,//用于判断公众号是否登录;
+            wxCityId:false,//公众号传递的城市Id;
+            articleUrl:window.location.href,//文章页面地址
             agent:{
               agentVerifiedStatus: 1
             } ,         
@@ -80,9 +82,16 @@
         },
       created() {       
           //window.document.title = "取经文章详情页";   
-          this.fetchArticle();          
-          this.openId=this.$route.query.openId ;//是否是公众号 ;
-          this.login=this.$route.query.login ;//是否登录 ;
+          this.fetchArticle();       
+          this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
+          this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
+          if(this.openID){
+              if(this.wxAgentId){
+                // 登录之后获取;
+                this.wxAgentId=this.$route.query.wxAgentId;
+              }
+          };
+          this.wxCityId=this.$cookie.get('wxpipCityId') ; //公众号传递的cityId;
           //埋点
           this.$bigData({
             pageName:2061,
@@ -213,9 +222,10 @@
                   self.convertVideo();
                   self.removeBlankAttr();
                 })
+                console.log(data.data.articleDetailModel.shareLinkUrl)
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
-                  if(!self.login){
+                  if(!self.wxAgentId){
                     wx.ready(function() {
     		              wx.hideMenuItems({
                         menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
@@ -228,12 +238,24 @@
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                      "linkUrl": data.data.articleDetailModel.shareLinkUrl,
+                      "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
                       "complete":function(){
                     
                       }
                     });
                   }
+                }else{
+                  // 不从公众号入口进来的分享;
+                  self.$wechatShare({
+                    "title" : data.data.articleDetailModel.shareTitle ,
+                    "timelineTitle" : data.data.articleDetailModel.shareTitle ,
+                    "content" : data.data.articleDetailModel.shareContent ,
+                    "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                    "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                    "complete":function(){
+                    
+                    }
+                  });
                 }
               }
           });

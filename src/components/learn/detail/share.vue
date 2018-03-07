@@ -262,7 +262,7 @@
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": data.data.articleDetailModel.shareLinkUrl,
+                  "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
                   "complete":function(){
                     
                   }
