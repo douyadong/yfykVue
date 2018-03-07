@@ -111,8 +111,9 @@
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
                     Vue.nextTick(() => {
                         let categoriesWidth = 0 ;                        
-                        $(".essay-categories .category div a , .essay-categories .category div span").each(function() {                                               
-                            categoriesWidth += ($(this).outerWidth(true) * 2 + 5) ;  //35是什么概念：每个菜单有15px的左右margin，一起就是30，再放5px
+                        $(".essay-categories .category div a").each(function() {
+                            let charCount = $(this).text().length ;                            
+                            categoriesWidth += ( charCount * 22 + 30 ) ; 
                         }) ; 
                         this.pageStates.categoriesWidth = categoriesWidth ;
                     }) ;                    

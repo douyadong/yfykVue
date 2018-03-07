@@ -49,7 +49,7 @@
         created() {
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             如果queryString参数中有openId和agentId , cityId，就将这些存在cookie中供使用
-            -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
+            ----------------------------------------------------------------------------------------------------------------------------- ------------------------------------------++*/ 
             if(this.pageStates.agentId)  this.$cookie.set( "wxpipAgentId" , this.pageStates.agentId , { expires: "1D" , path : "/" }) ;
             if(this.pageStates.openId)  this.$cookie.set( "wxpipOpenId" , this.pageStates.openId , { expires: "1D" , path : "/" }) ;
             if(this.pageStates.cityId)  this.$cookie.set( "wxpipCityId" , this.pageStates.cityId , { expires: "1D" , path : "/" }) ;
