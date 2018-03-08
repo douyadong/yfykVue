@@ -345,7 +345,7 @@
                   this.$data.apiData.agentDetail = agent ;
                   console.log(agent);
                   //页面标题和分享内容设置
-                  let generalTitle = "悟空找房" + agent.agentName ;
+                  let generalTitle = agent.agentName + "的名片";
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
                   document.title = generalTitle ;  //设置页面title
                   //页面微信分享设置
