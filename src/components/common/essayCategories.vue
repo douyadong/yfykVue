@@ -113,7 +113,7 @@
                         let categoriesWidth = 0 ;                        
                         $(".essay-categories .category div a").each(function() {
                             let charCount = $(this).text().length ;                            
-                            categoriesWidth += ( charCount * 22 + 30 ) ; 
+                            categoriesWidth += ( charCount * 16 + 30 + 2 ) ; 
                         }) ; 
                         this.pageStates.categoriesWidth = categoriesWidth ;
                     }) ;                    
