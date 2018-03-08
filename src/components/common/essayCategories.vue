@@ -32,7 +32,7 @@
         data () {            
             return {
                 "pageStates" : {
-                    "categoriesWidth" : 0  //以及菜单的总宽度
+                    "categoriesWidth" : 2000  //以及菜单的总宽度
                 } ,
                 "apiData" : {
                     "categoryList" : [] ,
