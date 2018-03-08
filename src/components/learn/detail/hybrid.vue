@@ -81,17 +81,17 @@
           }
         },
       created() {       
-          //window.document.title = "取经文章详情页";   
-          this.fetchArticle();       
+          //window.document.title = "取经文章详情页";         
           this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
           this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
           if(this.openID){
-              if(this.wxAgentId){
+              if(this.$route.query.wxAgentId){
                 // 登录之后获取;
                 this.wxAgentId=this.$route.query.wxAgentId;
               }
           };
           this.wxCityId=this.$cookie.get('wxpipCityId') ; //公众号传递的cityId;
+          this.fetchArticle(); 
           //埋点
           this.$bigData({
             pageName:2061,
