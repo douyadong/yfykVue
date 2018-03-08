@@ -5,7 +5,7 @@
             var articleCoverShowOrder:Int = 0 // 板式二图文或与视频显示顺序 1纯图 2纯文 3纯视频 4纯语音 5文+图 6图+文 7文+视频 8视频+文
             var articleCoverType:Int = 0 //文章封面图展示类型 1:单张小图，2:单张大图，3:三张j'图片(3.6新增)
         -->
-        <router-link :to="{ path : '/learn/detail/share/' + essay.articleId , query : { openId : pageStates.openId } }" class="essay-item top-gap" v-for="( essay , index ) in items" :key="essay.articleId">             
+        <router-link :to="{ path : '/learn/detail/share/' + essay.articleId , query : { openId : pageStates.openId , agentId : pageStates.agentId , cityId : pageStates.cityId } }" class="essay-item top-gap" v-for="( essay , index ) in items" :key="essay.articleId">             
             <div class="cover" v-if="[ 1 , 3 , 6 , 8 ].indexOf(essay.articleCoverShowOrder) !== -1 && essay.articleCoverType === 2">
                 <img :src="essay.articleCoverUrlList[0] + '?x-oss-process=image/resize,w_450'" class="img-responsive">
                 <div class="play"><i></i></div>
@@ -44,7 +44,9 @@
         data () {            
             return {
                 "pageStates" : {
-                    "openId" : this.$route.query.openId 
+                    "openId" : this.$route.query.openId,
+                    "agentId":this.$route.query.agentId,
+                    "cityId":this.$route.query.cityId 
                 }      
             }
         } ,       
