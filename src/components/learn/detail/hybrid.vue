@@ -222,7 +222,6 @@
                   self.convertVideo();
                   self.removeBlankAttr();
                 })
-                console.log(data.data.articleDetailModel.shareLinkUrl)
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
                   if(!self.wxAgentId){

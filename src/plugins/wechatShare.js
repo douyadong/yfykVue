@@ -63,7 +63,6 @@ export default {
 		            }) ;
 		            
 		            wx.ready(function(){
-						console.log('config成功');
 		            	wx.onMenuShareTimeline({
 					        title : options.timelineTitle || window.document.title,
 					        /*link : options.linkUrl|| window.location.href,*/

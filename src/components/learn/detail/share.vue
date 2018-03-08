@@ -19,8 +19,26 @@
       <div class="wk-panel">
           <spread :title="article.title" :articleId="articleId" :shareTitle="article.shareTitle" :shareContent="article.shareContent" :shareImageUrl="article.shareImageUrl"/>
       </div>
+      <!--推荐阅读-->
+      <div class="wk-panel read">
+          <div class="hd">推荐阅读</div>
+          <ul>
+            <li v-for="(item,index) in recommendArticleList" :key="index">
+              <router-link :to="{ path : '/learn/detail/hybrid/' + item.articleId}">
+                <div class="clear-float">
+                  <img :src="item.articleCoverUrl " >
+                  <div class="read-info">
+                    <p class="read-title">{{item.articleTitle}}</p>
+                    <p class="read-source">{{item.articleIntro}}</p>
+                  </div>
+                </div>
+              </router-link>
+            </li>
+          </ul>
+            
+      </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
+          <h1 class="panel-header">评论 {{pageInfo.total}}</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
             <input type="text" placeholder="写下你的评论..." v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0;padding-left:.4rem"> 
             <div class="operate">
@@ -79,7 +97,8 @@
               shareTitle: "",
               shareContent: "",
               shareImageUrl: "",
-            },            
+            },  
+            recommendArticleList:[],  //推荐阅读        
             comments:[],
             commiting:false,
             pageInfo:{
@@ -232,6 +251,7 @@
               },
               successCallback:function(res){
                 let data = res.body;
+                self.recommendArticleList=data.data.recommendArticleList;
                 if(data.data.articleDetailModel.contentType == 1) {
                   $('body').empty().html('<style>html, body, iframe{margin: 0; padding: 0; width: 100%; height: 100%;}</style><iframe frameborder="0" src="'+data.data.articleDetailModel.content+'"></iframe>');
 
