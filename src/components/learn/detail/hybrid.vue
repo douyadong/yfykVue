@@ -226,6 +226,17 @@
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
                   if(!self.wxAgentId){
+                    self.$wechatShare({
+                      "title" : data.data.articleDetailModel.shareTitle ,
+                      "timelineTitle" : data.data.articleDetailModel.shareTitle ,
+                      "content" : data.data.articleDetailModel.shareContent ,
+                      "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                      "share" :true,//隐藏分享朋友圈该项
+                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
+                      "complete":function(){
+                    
+                      }
+                    });
                     wx.ready(function() {
     		              wx.hideMenuItems({
                         menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
@@ -238,6 +249,7 @@
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                      "share" :false,//不隐藏分享朋友圈该项
                       "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
                       "complete":function(){
                     

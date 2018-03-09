@@ -49,11 +49,9 @@
             }
         }  , 
         created (){
-            wx.ready(function() {
-    		    wx.hideMenuItems({
-                    menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-                }); 	                    		
-	        });
+            this.$wechatShare({
+                "share":true//隐藏分享朋友圈；
+            })
         },       
         methods : {            
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
