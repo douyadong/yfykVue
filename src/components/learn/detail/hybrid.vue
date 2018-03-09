@@ -46,7 +46,8 @@
           return { 
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId, 
+            agentId:this.$route.query.agentId,
+            domain:'',//截取域名为了测试分享走通 
             openId:false, //用来判断是否是公众号入口 
             wxAgentId:false,//用于判断公众号是否登录;
             wxCityId:false,//公众号传递的城市Id;
@@ -81,7 +82,8 @@
           }
         },
       created() {       
-          //window.document.title = "取经文章详情页";         
+          //window.document.title = "取经文章详情页";  
+          this.domain=window.location.hostname ;
           this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
           this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
           if(this.openID){
@@ -180,7 +182,6 @@
               },
               successCallback:function(res){
                 let data = res.body;
-                console.log(data)
                 /*if(data.data.articleDetailModel.contentType == 1) {
                   window.location.href = data.data.articleDetailModel.content;
                   return;
@@ -237,7 +238,7 @@
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                      "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
+                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
                       "complete":function(){
                     
                       }

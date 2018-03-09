@@ -81,7 +81,8 @@
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,  
-            isShowCall:false,          
+            isShowCall:false, 
+            domain:"",//获取域名         
             agent:{
 
             },
@@ -121,7 +122,8 @@
         
       },
       created() {
-        //window.document.title = "有房有客分享";        
+        //window.document.title = "有房有客分享";  
+        this.domain=window.location.hostname ;      
         this.fetchArticle();          
           //埋点
           this.$bigData({
@@ -282,8 +284,8 @@
                   "title" : data.data.articleDetailModel.shareTitle ,
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
-                  // "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": "http://cmkwechat-test.yfyk365.com/learn/detail/share/406?"+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                  "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                  "linkUrl": self.domain+"/article/app-share."+self.articleId+".html?cityId="+self.cityId+"?agentId="+self.agentId,
                   "complete":function(){
                     
                   }
