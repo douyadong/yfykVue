@@ -243,18 +243,6 @@
                       }
                     });
                   }
-                }else{
-                  // 不从公众号入口进来的分享;
-                  self.$wechatShare({
-                    "title" : data.data.articleDetailModel.shareTitle ,
-                    "timelineTitle" : data.data.articleDetailModel.shareTitle ,
-                    "content" : data.data.articleDetailModel.shareContent ,
-                    "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                    "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
-                    "complete":function(){
-                    
-                    }
-                  });
                 }
               }
           });
