@@ -151,7 +151,7 @@
               hasRent: true
             },
               shopId : "",
-              headPortrait:false,//吸底条头像不显示
+              headPortrait:true,//吸底条头像(!headPortrait)不显示
               pageConfs : {
                   pageSize : 10  //推荐信息每次加载多少条
               } ,

@@ -7,7 +7,7 @@
             <div class="triangle">
             </div>
         </li>
-        <li class="portrait" v-if="headPortrait">
+        <li class="portrait" v-if="!headPortrait">
             <router-link :to="'/space/detail/share/' + agent.agentId+'?cityId='+cityId" :data-bigdata="portraitBigDataParams">
                 <dl>
                     <dt><img :src="agent.headRoundImgUrl + '?x-oss-process=image/resize,w_40'"></dt>

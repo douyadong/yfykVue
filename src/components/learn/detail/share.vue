@@ -251,6 +251,7 @@
               },
               successCallback:function(res){
                 let data = res.body;
+                console.log(data)
                 self.recommendArticleList=data.data.recommendArticleList;
                 if(data.data.articleDetailModel.contentType == 1) {
                   $('body').empty().html('<style>html, body, iframe{margin: 0; padding: 0; width: 100%; height: 100%;}</style><iframe frameborder="0" src="'+data.data.articleDetailModel.content+'"></iframe>');
@@ -281,8 +282,8 @@
                   "title" : data.data.articleDetailModel.shareTitle ,
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
-                  "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                  // "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                  "linkUrl": "http://cmkwechat-test.yfyk365.com/learn/detail/share/406?"+"?agentId="+self.agentId+"&cityId="+self.cityId,
                   "complete":function(){
                     
                   }
