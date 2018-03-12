@@ -254,7 +254,7 @@
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :false,//不隐藏分享朋友圈该项
-                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.wxCityId,
+                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
                       "complete":function(){
                     
                       }
