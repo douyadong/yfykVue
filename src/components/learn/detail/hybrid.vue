@@ -87,6 +87,7 @@
           this.domain=window.location.hostname ;
           this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
           this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
+          console.log(this.openId,this.wxAgentId);
           if(this.openID){
               if(this.$route.query.wxAgentId){
                 // 登录之后获取;
