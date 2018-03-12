@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <p class="not-verified" v-if="agent.agentVerifiedStatus != 1">
+        <p class="not-verified" v-if="agent.agentModel&&(agent.agentVerifiedStatus != 1)">
           请完善实名认证，分享文章将可带有您的个人名片及联系方式
         </p>
         <div class="wk-panel">
@@ -53,6 +53,7 @@
             wxCityId:false,//公众号传递的城市Id;
             articleUrl:window.location.href,//文章页面地址
             agent:{
+              agentModel:'',
               agentVerifiedStatus: 1
             } ,         
             article:{
@@ -173,7 +174,7 @@
           apiDataFilter.request({
             apiPath:"learn.detail",
               data:{
-                cityId:this.cityId,
+                cityId:this.cityId||0,
                 articleId:this.articleId,
                 agentId:this.agentId
               }, 
@@ -186,7 +187,6 @@
                   window.location.href = data.data.articleDetailModel.content;
                   return;
                 }*/
-
                 self.article = {
                   title:data.data.articleDetailModel.title,
                   articleSource:data.data.articleDetailModel.articleSource,
@@ -211,7 +211,8 @@
                   content:data.data.articleDetailModel.content,
                   coverUrl:data.data.articleDetailModel.coverUrl
                 };
-                self.agent.agentVerifiedStatus = data.data.agentModel.agentVerifiedStatus;
+                self.agent.agentVerifiedStatus = (data.data.agentModel&&data.data.agentModel.agentVerifiedStatus)||'';
+                self.agent.agentModel=data.data.agentModel||'' ;
                 if(data.data.articleDetailModel.title){
                   window.document.title = data.data.articleDetailModel.title;
                   self.$nativeBridge.invokeMethod('updateTitle',[data.data.articleDetailModel.title],function(){

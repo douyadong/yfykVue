@@ -244,7 +244,7 @@
           apiDataFilter.request({
             apiPath:"learn.detail",
               data:{
-                cityId:this.cityId,
+                cityId:this.cityId||0,
                 articleId:this.articleId,
                 agentId:this.agentId
               }, 
