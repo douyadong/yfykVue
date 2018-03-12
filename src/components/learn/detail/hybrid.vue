@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <p class="not-verified" v-if="agent.agentModel&&(agent.agentVerifiedStatus != 1)">
+        <p class="not-verified" v-if="(!openId)&&(agent.agentVerifiedStatus != 1)">
           请完善实名认证，分享文章将可带有您的个人名片及联系方式
         </p>
         <div class="wk-panel">
@@ -87,11 +87,11 @@
           this.domain=window.location.hostname ;
           this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
           this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
-          console.log(this.openId,this.wxAgentId);
+          console.log(this.openId);
           if(this.openID){
-              if(this.$route.query.wxAgentId){
+              if(this.$route.query.agentId){
                 // 登录之后获取;
-                this.wxAgentId=this.$route.query.wxAgentId;
+                this.wxAgentId=this.$route.query.agentId;
               }
           };
           this.wxCityId=this.$cookie.get('wxpipCityId') ; //公众号传递的cityId;
