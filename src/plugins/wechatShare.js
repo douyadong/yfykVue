@@ -69,6 +69,7 @@ export default {
 	                    });
 					}else{
 						wx.ready(function(){
+							console.log(options.linkUrl);
 		            		wx.onMenuShareTimeline({
 					        	title : options.timelineTitle || window.document.title,
 					        	link : options.linkUrl|| window.location.href,

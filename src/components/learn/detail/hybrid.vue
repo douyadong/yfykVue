@@ -235,7 +235,7 @@
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :true,//隐藏分享朋友圈该项
-                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
+                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.wxCityId,
                       "complete":function(){
                     
                       }
@@ -247,13 +247,14 @@
 	                  });
                   }else{
                     // 已经登录可以分享
+                    console.log(self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.wxCityId);
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :false,//不隐藏分享朋友圈该项
-                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
+                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.wxCityId,
                       "complete":function(){
                     
                       }
