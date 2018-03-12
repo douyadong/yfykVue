@@ -73,7 +73,7 @@ export default {
 							console.log(options);
 		            		wx.onMenuShareTimeline({
 					        	title : options.timelineTitle || window.document.title,
-					        	link : "cmkwechat-test.yfyk365.com/learn/detail/share/430?agentId=101481&cityId=43",
+					        	link : "http://cmkwechat-test.yfyk365.com/learn/detail/share/430?agentId=101481&cityId=43",
 					        	imgUrl : "https://cdn.wkzf.com/wkwap_fe/img/source/down/logo.jpg" ,
 					        	//trigger : options.trigger ,
 					        	//success : options.success ,
