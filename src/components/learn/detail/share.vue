@@ -254,7 +254,6 @@
               },
               successCallback:function(res){
                 let data = res.body;
-                console.log(data)
                 self.recommendArticleList=data.data.recommendArticleList;
                 if(data.data.articleDetailModel.contentType == 1) {
                   $('body').empty().html('<style>html, body, iframe{margin: 0; padding: 0; width: 100%; height: 100%;}</style><iframe frameborder="0" src="'+data.data.articleDetailModel.content+'"></iframe>');
@@ -286,7 +285,7 @@
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": self.domain+"/article/app-share."+self.articleId+".html?cityId="+self.cityId+"?agentId="+self.agentId,
+                  "linkUrl": "http://"+self.domain+"/article/app-share."+self.articleId+".html?cityId="+self.cityId+"?agentId="+self.agentId,
                   "complete":function(){
                     
                   }

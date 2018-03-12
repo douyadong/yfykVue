@@ -111,7 +111,6 @@
         convertVideo: function() {
 
           let videos = $('.article-content').find('embed')
-          console.log('convertvideo...',videos)
           if (!videos || !videos.length) return false
           let self = this;
           $.each(videos, function(index, item) {
@@ -235,7 +234,7 @@
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :true,//隐藏分享朋友圈该项
-                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
                       "complete":function(){
                     
                       }
@@ -254,7 +253,7 @@
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :false,//不隐藏分享朋友圈该项
-                      "linkUrl": self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
                       "complete":function(){
                     
                       }

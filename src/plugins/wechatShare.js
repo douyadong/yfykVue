@@ -54,7 +54,7 @@ export default {
 	        	success : function(result) {	        		
 	            	var data = result.data ;
 		            wx.config({
-		                debug : true , // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		                debug : false , // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 		                appId : data.appid , // 必填，企业号的唯一标识，此处填写企业号corpid
 		                timestamp : data.timestamp , // 必填，生成签名的时间戳
 		                nonceStr : data.nonce_str , // 必填，生成签名的随机串
@@ -69,31 +69,29 @@ export default {
 	                    });
 					}else{
 						wx.ready(function(){
-							console.log(options.linkUrl);
-							console.log(options);
 		            		wx.onMenuShareTimeline({
 					        	title : options.timelineTitle || window.document.title,
-					        	link : "http://cmkwechat-test.yfyk365.com/learn/detail/share/430?agentId=101481&cityId=43",
-					        	imgUrl : "https://cdn.wkzf.com/wkwap_fe/img/source/down/logo.jpg" ,
-					        	//trigger : options.trigger ,
-					        	//success : options.success ,
-					        	//cancel : options.cancel ,
-					        	//fail : options.fail,
-					        	//complete:options.complete
+					        	link : options.linkUrl || window.location.href,
+					        	imgUrl : options.imgUrl ,
+					        	trigger : options.trigger ,
+					        	success : options.success ,
+					        	cancel : options.cancel ,
+					        	fail : options.fail,
+					        	complete:options.complete
 					    	});
 
 					    	wx.onMenuShareAppMessage({
-					        	// title : options.title || window.document.title, // 分享标题
-					        	//desc : options.content , // 分享描述
-					        	// link : options.linkUrl || window.location.href, // 分享链接
-					        	imgUrl : options.imgUrl  // 分享图标
-					        	//type : '' , // 分享类型,music、video或link，不填默认为link
-					        	//dataUrl : '' , // 如果type是music或video，则要提供数据链接，默认为空
-					        	//trigger : options.trigger ,
-					        	//success : options.success ,
-					        	//cancel : options.cancel ,
-					        	//fail : options.fail,
-					        	//complete:options.complete
+					        	title : options.title || window.document.title, // 分享标题
+					        	desc : options.content , // 分享描述
+					        	link : options.linkUrl || window.location.href, // 分享链接
+					        	imgUrl : options.imgUrl , // 分享图标
+					        	type : '' , // 分享类型,music、video或link，不填默认为link
+					        	dataUrl : '' , // 如果type是music或video，则要提供数据链接，默认为空
+					        	trigger : options.trigger ,
+					        	success : options.success ,
+					        	cancel : options.cancel ,
+					        	fail : options.fail,
+					        	complete:options.complete
 					    	});
 		            	});
 					}
