@@ -54,7 +54,7 @@
         </span>
        </infiniteLoading>
 
-       <assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
+       <assistant :showBubble="true" :headPortrait="headPortrait" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
        <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>
        
     </div>   
@@ -82,6 +82,7 @@
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,  
             isShowCall:false, 
+            headPortrait:true,//吸底条头像(!headPortrait)不显示
             domain:"",//获取域名         
             agent:{
 
