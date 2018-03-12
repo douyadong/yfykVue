@@ -17,7 +17,7 @@
               </span>
             </div>         
         </div>
-        <a v-if="openId&&(!wxAgentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
+        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
         <div v-if="!openId">
@@ -85,8 +85,9 @@
       created() {       
           //window.document.title = "取经文章详情页";  
           this.domain=window.location.hostname ;
-          this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
-          this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
+          this.openId=this.$route.query.openId ;//通过地址栏获取openId;
+          //this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
+          //this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
           console.log(this.openId);
           if(this.openID){
               if(this.$route.query.agentId){
@@ -227,7 +228,7 @@
                 })
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
-                  if(!self.wxAgentId){
+                  if(!self.agentId){
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
