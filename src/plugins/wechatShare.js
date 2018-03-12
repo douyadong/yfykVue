@@ -62,10 +62,13 @@ export default {
 		                jsApiList : ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 		            }) ;
 		            if(options.share){
+						console.log('禁止分享');
 						wx.ready(function() {
+							console.log('ready函数内部');
     		              wx.hideMenuItems({
                         	menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-                      	  }); 	                    		
+                      	  }); 
+							console.log('hide隐藏之后');	                    		
 	                    });
 					}else{
 						wx.ready(function(){
