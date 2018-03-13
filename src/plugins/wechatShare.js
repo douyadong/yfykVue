@@ -14,7 +14,7 @@ export default {
     	else if (env === "beta") apiPrefix = "//wechat-beta.wkzf.com/" ;
     	else if (env === "sim") apiPrefix = "//wechat.sim.wkzf/" ;
     	else if (env === "prod") apiPrefix = "//wechat.wkzf.com/" ;
-    	let apiUrl = apiPrefix + "wx_js_sdk_sign.rest?wechatCode=1000021";
+    	let apiUrl = apiPrefix + "wx_js_sdk_sign.rest?wechatCode=1000001";
 
     	let initial = true;
     	wx.ready(function() {
