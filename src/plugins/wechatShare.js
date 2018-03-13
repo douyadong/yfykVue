@@ -69,6 +69,7 @@ export default {
 	                    });
 					}else{
 						wx.ready(function(){
+							console.log(options.linkUrl+'插件中');
 		            		wx.onMenuShareTimeline({
 					        	title : options.timelineTitle || window.document.title,
 					        	link : options.linkUrl || window.location.href,

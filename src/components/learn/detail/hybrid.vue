@@ -228,6 +228,7 @@
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
                   if(!self.agentId){
+                    console.log('不可以分享');
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
@@ -247,6 +248,7 @@
                   }else{
                     // 已经登录可以分享
                     console.log(self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId);
+                    console.log('可以分享') ;
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
