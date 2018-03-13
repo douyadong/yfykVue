@@ -248,14 +248,14 @@
                   }else{
                     // 已经登录可以分享
                     console.log(self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId);
-                    console.log(data.data.articleDetailModel.shareTitle,data.data.articleDetailModel.shareImageUrl)
+                    console.log(data.data.articleDetailModel.shareTitle,data.data.articleDetailModel.shareImageUrl,self.domain)
                     self.$wechatShare({
                       // "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       // "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : "https://img.wkzf.com/8d4db9f8f59a40ef90ab22c03c1bd7c8" ,
                       "share" :false,//不隐藏分享朋友圈该项
-                      // "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
+                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
                       "complete":function(){
                     
                       }
