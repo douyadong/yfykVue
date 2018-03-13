@@ -17,7 +17,7 @@
               </span>
             </div>         
         </div>
-        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'https://erp.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
+        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'https://erp.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
         <div v-if="!openId">
@@ -88,7 +88,7 @@
           this.openId=this.$route.query.openId ;//通过地址栏获取openId;
           //this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
           //this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
-          console.log(this.openId);
+          console.log(this.openId);   
           if(this.openID){
               if(this.$route.query.agentId){
                 // 登录之后获取;
