@@ -44,7 +44,7 @@
                 <div class="know-area">
                     <span>熟悉商圈</span>
                     <div v-if="apiData.agentDetail.agentIntroduction||apiData.agentDetail.agentStory">
-                        <router-link :to="'/space/detail/hybrid/'+agentId">
+                        <router-link :to="'/space/detail/hybrid/'+agentId" :data-bigdata="getUvParamsString({eventName:'2065016',otherParams:{shop_id :apiData.agentDetail.storeId,agent_id:apiData.agentDetail.agentId}})">
                             <span>查看更多</span>
                             <span class="iconfont icon-arrowR"></span>
                         </router-link>
@@ -151,7 +151,7 @@
               hasRent: true
             },
               shopId : "",
-              headPortrait:false,//吸底条头像不显示
+              headPortrait:true,//吸底条头像(!headPortrait)不显示
               pageConfs : {
                   pageSize : 10  //推荐信息每次加载多少条
               } ,
@@ -298,7 +298,6 @@
           calcTab(){
             this.readyTabCount++;
             if(this.readyTabCount == 4){
-              console.log('ready 333');
               if(this.pageStates.hasEsf){
                 this.pageStates.activeTab = this.pageStates.activeTabContent = "esf";
                 return;
@@ -345,7 +344,7 @@
                   this.$data.apiData.agentDetail = agent ;
                   console.log(agent);
                   //页面标题和分享内容设置
-                  let generalTitle = "悟空找房" + agent.agentName ;
+                  let generalTitle = agent.agentName + "的名片";
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
                   document.title = generalTitle ;  //设置页面title
                   //页面微信分享设置

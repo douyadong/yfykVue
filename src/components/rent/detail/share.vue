@@ -224,6 +224,7 @@
                 data : { "houseId" : houseId , "agentId" : agentId } ,
                 successCallback : res => {
                     this.apiData=Object.assign({}, res.body.data) ;
+                    console.log(this.apiData.houseAgent)
                     document.title = "租房详情" ;
                     this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
                         console.log('更新标题成功');

@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <p class="not-verified" v-if="agent.agentVerifiedStatus != 1">
+        <p class="not-verified" v-if="(!openId)&&(agent.agentVerifiedStatus != 1)">
           请完善实名认证，分享文章将可带有您的个人名片及联系方式
         </p>
         <div class="wk-panel">
@@ -17,7 +17,7 @@
               </span>
             </div>         
         </div>
-        <a v-if="openId&&(!wxAgentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
+        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
         <div v-if="!openId">
@@ -46,12 +46,14 @@
           return { 
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
-            agentId:this.$route.query.agentId, 
+            agentId:this.$route.query.agentId,
+            domain:'',//截取域名为了测试分享走通 
             openId:false, //用来判断是否是公众号入口 
             wxAgentId:false,//用于判断公众号是否登录;
             wxCityId:false,//公众号传递的城市Id;
             articleUrl:window.location.href,//文章页面地址
             agent:{
+              agentModel:'',
               agentVerifiedStatus: 1
             } ,         
             article:{
@@ -81,17 +83,20 @@
           }
         },
       created() {       
-          //window.document.title = "取经文章详情页";   
-          this.fetchArticle();       
-          this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
-          this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
+          //window.document.title = "取经文章详情页";  
+          this.domain=window.location.hostname ;
+          this.openId=this.$route.query.openId ;//通过地址栏获取openId;
+          //this.openId=this.$cookie.get('wxpipOpenId') ; //公众号的openId 
+          //this.wxAgentId=this.$cookie.get('wxpipAgentId') ;  //公众号agentId，从取经列表页存储cookie获取用来判断是否登录
+          console.log(this.openId);
           if(this.openID){
-              if(this.wxAgentId){
+              if(this.$route.query.agentId){
                 // 登录之后获取;
-                this.wxAgentId=this.$route.query.wxAgentId;
+                this.wxAgentId=this.$route.query.agentId;
               }
           };
           this.wxCityId=this.$cookie.get('wxpipCityId') ; //公众号传递的cityId;
+          this.fetchArticle(); 
           //埋点
           this.$bigData({
             pageName:2061,
@@ -106,7 +111,6 @@
         convertVideo: function() {
 
           let videos = $('.article-content').find('embed')
-          console.log('convertvideo...',videos)
           if (!videos || !videos.length) return false
           let self = this;
           $.each(videos, function(index, item) {
@@ -171,21 +175,19 @@
           apiDataFilter.request({
             apiPath:"learn.detail",
               data:{
-                cityId:this.cityId,
+                cityId:this.cityId||0,
                 articleId:this.articleId,
                 agentId:this.agentId
               }, 
               errorCallback:function(){
-
+                
               },
               successCallback:function(res){
                 let data = res.body;
-                console.log(data)
                 /*if(data.data.articleDetailModel.contentType == 1) {
                   window.location.href = data.data.articleDetailModel.content;
                   return;
                 }*/
-
                 self.article = {
                   title:data.data.articleDetailModel.title,
                   articleSource:data.data.articleDetailModel.articleSource,
@@ -210,7 +212,8 @@
                   content:data.data.articleDetailModel.content,
                   coverUrl:data.data.articleDetailModel.coverUrl
                 };
-                self.agent.agentVerifiedStatus = data.data.agentModel.agentVerifiedStatus;
+                self.agent.agentVerifiedStatus = (data.data.agentModel&&data.data.agentModel.agentVerifiedStatus)||'';
+                self.agent.agentModel=data.data.agentModel||'' ;
                 if(data.data.articleDetailModel.title){
                   window.document.title = data.data.articleDetailModel.title;
                   self.$nativeBridge.invokeMethod('updateTitle',[data.data.articleDetailModel.title],function(){
@@ -222,10 +225,20 @@
                   self.convertVideo();
                   self.removeBlankAttr();
                 })
-                console.log(data.data.articleDetailModel.shareLinkUrl)
                 // 公众号入口页面是否可以分享到朋友圈或朋友;
                 if(self.openId){
-                  if(!self.wxAgentId){
+                  if(!self.agentId){
+                    self.$wechatShare({
+                      "title" : data.data.articleDetailModel.shareTitle ,
+                      "timelineTitle" : data.data.articleDetailModel.shareTitle ,
+                      "content" : data.data.articleDetailModel.shareContent ,
+                      "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
+                      "share" :true,//隐藏分享朋友圈该项
+                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                      "complete":function(){
+                    
+                      }
+                    });
                     wx.ready(function() {
     		              wx.hideMenuItems({
                         menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
@@ -233,29 +246,19 @@
 	                  });
                   }else{
                     // 已经登录可以分享
+                    console.log(self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId);
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                       "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                      "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.wxAgentId+"&cityId="+self.wxCityId,
+                      "share" :false,//不隐藏分享朋友圈该项
+                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
                       "complete":function(){
                     
                       }
                     });
                   }
-                }else{
-                  // 不从公众号入口进来的分享;
-                  self.$wechatShare({
-                    "title" : data.data.articleDetailModel.shareTitle ,
-                    "timelineTitle" : data.data.articleDetailModel.shareTitle ,
-                    "content" : data.data.articleDetailModel.shareContent ,
-                    "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                    "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
-                    "complete":function(){
-                    
-                    }
-                  });
                 }
               }
           });

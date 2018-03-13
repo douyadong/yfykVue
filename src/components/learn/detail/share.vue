@@ -19,8 +19,26 @@
       <div class="wk-panel">
           <spread :title="article.title" :articleId="articleId" :shareTitle="article.shareTitle" :shareContent="article.shareContent" :shareImageUrl="article.shareImageUrl"/>
       </div>
+      <!--推荐阅读-->
+      <div class="wk-panel read">
+          <div class="hd">推荐阅读</div>
+          <ul>
+            <li v-for="(item,index) in recommendArticleList" :key="index">
+              <router-link :to="{ path : '/learn/detail/hybrid/' + item.articleId}">
+                <div class="clear-float">
+                  <img :src="item.articleCoverUrl " >
+                  <div class="read-info">
+                    <p class="read-title">{{item.articleTitle}}</p>
+                    <p class="read-source">{{item.articleIntro}}</p>
+                  </div>
+                </div>
+              </router-link>
+            </li>
+          </ul>
+            
+      </div>
        <div class="wk-panel article-comments">
-          <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
+          <h1 class="panel-header">评论 {{pageInfo.total}}</h1>
           <div style="padding-left:1.5rem;padding-right:1.5rem;">
             <input type="text" placeholder="写下你的评论..." v-model="commentText" style="width:100%;font-size:1.8rem;line-height:2.0;padding-left:.4rem"> 
             <div class="operate">
@@ -36,7 +54,7 @@
         </span>
        </infiniteLoading>
 
-       <assistant :showBubble="true" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
+       <assistant :showBubble="true" :headPortrait="headPortrait" :cityId="cityId" :agent="agent" :houseId="null" :eventName="null" :portraitBigDataParams='getBigDataParamStr(2063002,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :callBigDataParams='getBigDataParamStr(2063003,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :wechatBigDataParams='getBigDataParamStr(2063004,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})' :copyWechatBigDataParams='getBigDataParamStr(2063005,{"c_agent_id":agentId,"agent_id":agentId,"article_id":articleId})'></assistant>       
        <a v-if="isShowCall" :href="'tel:'+article.phoneNum" class="float-call"><span><i style="color:#4081D6" class="iconfont icon-kefurexian"></i></span> <span>电话咨询</span></a>
        
     </div>   
@@ -63,7 +81,9 @@
             articleId:this.$route.params.id,
             cityId:this.$route.query.cityId,
             agentId:this.$route.query.agentId,  
-            isShowCall:false,          
+            isShowCall:false, 
+            headPortrait:true,//吸底条头像(!headPortrait)不显示
+            domain:"",//获取域名         
             agent:{
 
             },
@@ -79,7 +99,8 @@
               shareTitle: "",
               shareContent: "",
               shareImageUrl: "",
-            },            
+            },  
+            recommendArticleList:[],  //推荐阅读        
             comments:[],
             commiting:false,
             pageInfo:{
@@ -102,7 +123,8 @@
         
       },
       created() {
-        //window.document.title = "有房有客分享";        
+        //window.document.title = "有房有客分享";  
+        this.domain=window.location.hostname ;      
         this.fetchArticle();          
           //埋点
           this.$bigData({
@@ -223,7 +245,7 @@
           apiDataFilter.request({
             apiPath:"learn.detail",
               data:{
-                cityId:this.cityId,
+                cityId:this.cityId||0,
                 articleId:this.articleId,
                 agentId:this.agentId
               }, 
@@ -232,6 +254,7 @@
               },
               successCallback:function(res){
                 let data = res.body;
+                self.recommendArticleList=data.data.recommendArticleList;
                 if(data.data.articleDetailModel.contentType == 1) {
                   $('body').empty().html('<style>html, body, iframe{margin: 0; padding: 0; width: 100%; height: 100%;}</style><iframe frameborder="0" src="'+data.data.articleDetailModel.content+'"></iframe>');
 
@@ -262,7 +285,7 @@
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": data.data.articleDetailModel.shareLinkUrl+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                  "linkUrl": "http://"+self.domain+"/article/app-share."+self.articleId+".html?cityId="+self.cityId+"?agentId="+self.agentId,
                   "complete":function(){
                     
                   }

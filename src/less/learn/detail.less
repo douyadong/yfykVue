@@ -1,4 +1,5 @@
 @import "../variables.less";
+@import "../mixins.less" ;
 .article{    
     background-color:@light-gay-background-color;
     padding-bottom : 50px ;
@@ -43,6 +44,11 @@
     .article-content{      
       background-color:white; 
       color: black;
+      span{
+        color: black !important;
+        font-size: 1.6rem !important; 
+        line-height: 1.75 !important;
+      }
       // font-size: 1.6rem; 
       // line-height: 1.75;       
       padding:0 1.5rem 1.0rem 1.5rem;
@@ -106,6 +112,44 @@
           }
         }
         
+      }
+    }
+    .read{
+      margin-top: 1rem ;
+      .hd{
+        border-bottom: 1px solid @light-line-gray-color ;
+        color: #000 ;
+        font-size: 1.6rem ;
+        padding:1.1rem 1.5rem ;
+      }
+      ul{
+        padding: 0 1.5rem ;
+        li{
+          padding: 1rem 0 ;
+        }
+        li+li{
+          border-top: 1px solid @light-line-gray-color ;
+        }
+      }
+      .clear-float{
+        .clearfix() ;
+      }
+      img{
+        float:left ;
+        height: 5rem ;
+        width:5rem ;
+      }
+      .read-info{
+        color: #000 ;
+        padding-left: 6rem; 
+        p{
+          .text-ellipsis() ;
+          font-size: 1.4rem ;
+          line-height: 2.5rem ;
+        }
+        .read-source{
+          color: #7C7C7C ;
+        }
       }
     }
   }
