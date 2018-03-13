@@ -248,14 +248,13 @@
                   }else{
                     // 已经登录可以分享
                     console.log(self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId);
-                    console.log('可以分享') ;
                     self.$wechatShare({
                       "title" : data.data.articleDetailModel.shareTitle ,
                       "timelineTitle" : data.data.articleDetailModel.shareTitle ,
-                      "content" : data.data.articleDetailModel.shareContent ,
+                      // "content" : data.data.articleDetailModel.shareContent ,
                       "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
                       "share" :false,//不隐藏分享朋友圈该项
-                      "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
+                      // "linkUrl": "http://"+self.domain+"/learn/detail/share/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,//要由http或https协议
                       "complete":function(){
                     
                       }
