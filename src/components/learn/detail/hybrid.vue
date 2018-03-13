@@ -17,7 +17,7 @@
               </span>
             </div>         
         </div>
-        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'http://wechatsoatest.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
+        <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'https://erp.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&source=0&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
         <div v-if="!openId">
