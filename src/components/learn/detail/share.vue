@@ -285,7 +285,7 @@
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": "http://"+self.domain+"/article/app-share."+self.articleId+".html?cityId="+self.cityId+"&agentId="+self.agentId,
+                  "linkUrl": data.data.articleDetailModel.shareLinkUr,
                   "complete":function(){
                     
                   }
