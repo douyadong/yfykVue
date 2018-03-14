@@ -47,6 +47,7 @@
             }
         }  ,
         created() {
+            window.document.title = "取经";
             // 禁止分享；
             this.$wechatShare({
                 "share":true//隐藏分享朋友圈；

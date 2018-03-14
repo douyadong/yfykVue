@@ -9,14 +9,14 @@
         </div>
         <!--第二级类别-->
         <div class="oneTitle" :class="{ 'visible' : activecategoryid == category.categoryId }" :id="'oneTitle' + category.categoryId" v-for="category in apiData.oneTitleList" :key="category.categoryId" v-if=" ! activeonetitleid">
-            <div>
-                <router-link :to="{ path : '/learn/' + category.categoryId + '/' + oneTitle.id }" v-for="oneTitle in category.oneTitles" :key="oneTitle.id">{{ oneTitle.title }}</router-link>                    
+            <div :style="'width:' + pageStates.oneTitleWidth + 'px'">
+                <router-link :to="{ path : '/learn/' + category.categoryId + '/' + oneTitle.id }" v-for="oneTitle in category.oneTitles" :key="oneTitle.id">{{ oneTitle.title }}</router-link>
             </div>
         </div>
         <!--第三级tabs菜单-->
         <div class="wk-tabs twoTitle" v-for="oneTitle in apiData.twoTitleList" :id="'twoTitle' + oneTitle.oneTitleId" :key="oneTitle.oneTitleId" v-if="activeonetitleid == oneTitle.oneTitleId">
             <ul class="tabs-handle">
-                <li v-for="( twoTitle , index )  in oneTitle.twoTitles"><router-link :class="{ 'on' : activetwotitleid == twoTitle.id || ( index == 0 && ! activetwotitleid ) }" :to="{ path : '/learn/' + oneTitle.categoryId + '/' + oneTitle.oneTitleId + '/' + twoTitle.id }">{{ twoTitle.title }}</router-link></li>
+                <li v-for="( twoTitle , index )  in oneTitle.twoTitles" :key="index"><router-link :class="{ 'on' : activetwotitleid == twoTitle.id || ( index == 0 && ! activetwotitleid ) }" :to="{ path : '/learn/' + oneTitle.categoryId + '/' + oneTitle.oneTitleId + '/' + twoTitle.id }">{{ twoTitle.title }}</router-link></li>
             </ul>
         </div>
 
@@ -32,7 +32,8 @@
         data () {            
             return {
                 "pageStates" : {
-                    "categoriesWidth" : 2000  //以及菜单的总宽度
+                    "categoriesWidth" : 2000 , //第一级菜单的总宽度
+                    "oneTitleWidth" :''//第二级菜单宽度;
                 } ,
                 "apiData" : {
                     "categoryList" : [] ,
@@ -110,12 +111,18 @@
                     下一次dom节点更新完后执行         
                     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
                     Vue.nextTick(() => {
-                        let categoriesWidth = 0 ;                        
+                        let categoriesWidth = 0 ;   //第一级类别;
+                        let oneTitleWidth = 0 ;//第二级类别;                   
                         $(".essay-categories .category div a").each(function() {
-                            let charCount = $(this).text().length ;                            
+                            let charCount = $(this).text().length ;                           
                             categoriesWidth += ( charCount * 16 + 30 + 1 ) ; 
                         }) ; 
+                        $(".essay-categories .oneTitle.visible a").each(function() {
+                            let seedCount = $(this).text().length ;                          
+                            oneTitleWidth += ( seedCount * 14 + 30 + 1 ) ; 
+                        }) ; 
                         this.pageStates.categoriesWidth = categoriesWidth ;
+                        this.pageStates.oneTitleWidth = oneTitleWidth ;
                     }) ;                    
                     
                 }
