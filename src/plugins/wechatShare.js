@@ -59,7 +59,7 @@ export default {
 		                timestamp : data.timestamp , // 必填，生成签名的时间戳
 		                nonceStr : data.nonce_str , // 必填，生成签名的随机串
 		                signature : data.signature , // 必填，签名，见附录1
-		                jsApiList : ['onMenuShareAppMessage', 'onMenuShareTimeline','hideMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		                jsApiList : ['onMenuShareAppMessage', 'onMenuShareTimeline','hideMenuItems','showMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 		            }) ;
 		            if(options.share){
 						wx.ready(function() {
@@ -69,7 +69,10 @@ export default {
 	                    });
 					}else{
 						wx.ready(function(){
-							console.log(options.linkUrl+'插件中');
+							console.log('验证分享按钮是否打开') ;
+							wx.showMenuItems({
+                        		menuList: ["menuItem:share:appMessage","menuItem:share:timeline"] 
+                      	  	});
 		            		wx.onMenuShareTimeline({
 					        	title : options.timelineTitle || window.document.title,
 					        	link : options.linkUrl || window.location.href,
