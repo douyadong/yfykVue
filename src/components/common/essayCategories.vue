@@ -121,7 +121,7 @@
                             }) ; 
                             $(".essay-categories .oneTitle.visible a").each(function() {
                                 let seedCount = $(this).text().length ;                          
-                                oneTitleWidth += ( seedCount * 14 + 30 + 5 ) ; 
+                                oneTitleWidth += ( seedCount * 14 + 30 + 10 ) ; 
                             }) ; 
                             this.pageStates.categoriesWidth = categoriesWidth ;
                             this.pageStates.oneTitleWidth = oneTitleWidth ;
