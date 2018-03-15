@@ -125,6 +125,7 @@
                             }) ; 
                             this.pageStates.categoriesWidth = categoriesWidth ;
                             this.pageStates.oneTitleWidth = oneTitleWidth ;
+                            console.log(this.pageStates.oneTitleWidth);
                         }) ;                    
                     
                     }
