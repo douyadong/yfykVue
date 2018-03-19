@@ -20,6 +20,23 @@
         <a v-if="openId&&(!agentId)" class="public-number wk-panel" :href="'https://erp.wkzf.com/agent/weChat/verifyPlatform.action?openId='+openId+'&articleUrl='+articleUrl+'&reset=1&state=1'">
           登录后可分享文章,立即登录<span class="iconfont icon-arrowR"></span>
         </a>
+        <!--推荐阅读-->
+        <div class="wk-panel read" v-if="!openId">
+          <div class="hd">推荐阅读</div>
+          <ul>
+            <li v-for="(item,index) in recommendArticleList" :key="index">
+              <a  :href="'/learn/detail/hybrid/'+item.articleId+'?agentId='+agentId+'&cityId='+cityId" >
+                <div class="clear-float">
+                  <img :src="item.articleCoverUrl " >
+                  <div class="read-info">
+                    <p class="read-title">{{item.articleTitle}}</p>
+                    <p class="read-source">{{item.articleIntro}}</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>    
+        </div>
         <div v-if="!openId">
           <div class="wk-panel article-comments">
             <h1 class="panel-header">评论 ({{pageInfo.total}})</h1>
@@ -64,7 +81,8 @@
               content:"",
               coverUrl:"",
               shareCountStr:""
-            },          
+            }, 
+            recommendArticleList:[],  //推荐阅读         
             comments:[],
             pageInfo:{
               pageIndex:0,
@@ -188,6 +206,7 @@
                   window.location.href = data.data.articleDetailModel.content;
                   return;
                 }*/
+                self.recommendArticleList=data.data.recommendArticleList;
                 self.article = {
                   title:data.data.articleDetailModel.title,
                   articleSource:data.data.articleDetailModel.articleSource,
