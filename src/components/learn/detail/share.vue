@@ -24,7 +24,7 @@
           <div class="hd">推荐阅读</div>
           <ul>
             <li v-for="(item,index) in recommendArticleList" :key="index">
-              <router-link :to="{ path : '/learn/detail/hybrid/' + item.articleId}">
+              <a  :href="'/learn/detail/share/'+item.articleId+'?agentId='+agentId+'&cityId='+cityId" >
                 <div class="clear-float">
                   <img :src="item.articleCoverUrl " >
                   <div class="read-info">
@@ -32,7 +32,7 @@
                     <p class="read-source">{{item.articleIntro}}</p>
                   </div>
                 </div>
-              </router-link>
+              </a>
             </li>
           </ul>
             
@@ -279,13 +279,12 @@
                 if(data.data.articleDetailModel.title){
                   window.document.title = data.data.articleDetailModel.title;                  
                 }                
-
                 self.$wechatShare({
                   "title" : data.data.articleDetailModel.shareTitle ,
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": data.data.articleDetailModel.shareLinkUr,
+                  "linkUrl": data.data.articleDetailModel.shareLinkUrl,
                   "complete":function(){
                     
                   }
