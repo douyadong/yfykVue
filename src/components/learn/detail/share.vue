@@ -284,7 +284,7 @@
                   "timelineTitle" : data.data.articleDetailModel.shareTitle ,
                   "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : data.data.articleDetailModel.shareImageUrl ,
-                  "linkUrl": data.data.articleDetailModel.shareLinkUrl,
+                  "linkUrl": 'https://m.wkzf.com/article/app-share.8221.html?cityId=43',
                   "complete":function(){
                     
                   }
