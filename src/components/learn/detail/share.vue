@@ -284,7 +284,7 @@
                   // "timelineTitle" :' data.data.articleDetailModel.shareTitle' ,
                   // "content" : data.data.articleDetailModel.shareContent ,
                   "imgUrl" : 'https://imgwater-test.wkzf.com/54e77b8ab28c4996b7f55b642283a992' ,
-                  "linkUrl": "http://"+self.domain+"/learn/detail/hybrid/"+self.articleId+"?agentId="+self.agentId+"&cityId="+self.cityId,
+                  "linkUrl": 'https://m.wkzf.com/article/app-share.8221.html?cityId=43',
                   "complete":function(){
                     
                   }
