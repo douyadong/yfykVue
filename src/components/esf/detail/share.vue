@@ -3,8 +3,8 @@
     <div v-if="apiData.house.houseState">
       <assistant v-if="apiData.house.houseState == 2" :cityId="cityId" :agent="apiData.agent"
       :callBigDataParams="getUvParamsString({ eventName : 2055004,otherParams:{house_id :apiData.house.houseId}})"
-      :wechatBigDataParams="getUvParamsString({ eventName : 2055009,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId} })"
-      :portraitBigDataParams="getUvParamsString({ eventName : 2055003,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agnetId} })"/>
+      :wechatBigDataParams="getUvParamsString({ eventName : 2055009,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agentId} })"
+      :portraitBigDataParams="getUvParamsString({ eventName : 2055003,otherParams:{house_id :apiData.house.houseId,agent_id:apiData.agent.agentId} })"/>
       <offDown v-else></offDown>
     </div>
 		<download-app :downloadBigDataParams="getUvParamsString({ eventName : 2055006})"/>

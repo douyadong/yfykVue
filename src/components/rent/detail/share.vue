@@ -2,8 +2,8 @@
     <div id="rentDetailShare">
       <div v-if="apiData.houseState">
         <assistant  v-if="apiData.houseState == 2" :cityId="cityId" :agent="apiData.houseAgent" :callBigDataParams="getUvParamsString({ eventName : 2057002,otherParams:{rent_house_id :apiData.houseId}})"
-                    :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"
-                    :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agnetId} })"/>
+                    :wechatBigDataParams="getUvParamsString({ eventName : 2057008,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agentId} })"
+                    :portraitBigDataParams="getUvParamsString({ eventName : 2057007,otherParams:{rent_house_id :apiData.houseId,agent_id:apiData.houseAgent.agentId} })"/>
         <offDown v-else></offDown>
       </div>
 
@@ -138,7 +138,7 @@
         <!--相似房源推荐-->
         <div class="alike-house top-gap wk-panel" v-if="apiData.similarHouses.length!=0">
             <div class="house-recommend panel-header">相似房源推荐</div>
-            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId" :eventName="2057005" :otherParams="{ agent_id : apiData.houseAgent.agnetId }"></rent-sources>
+            <rent-sources :statusStyle="styleStatus" :dataItems="apiData.similarHouses" :agentId="agentId" :eventName="2057005" :otherParams="{ agent_id : apiData.houseAgent.agentId }"></rent-sources>
         </div>
         <!--结束-->
     </div>
