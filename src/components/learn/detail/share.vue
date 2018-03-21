@@ -9,6 +9,9 @@
        <div class="article-content" v-html="article.content">
       
        </div>
+       <div class="wk-panel wxcode">
+        <img src="../../../assets/wxcode.jpg" alt="">
+       </div>
        <p style="font-size:1.4rem;margin-left:1.5rem;">
         <span class="visit-number"><span class="num">{{article.viewNumStr}}</span> <span>浏览</span></span>
         <span>
