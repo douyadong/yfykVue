@@ -225,12 +225,12 @@
                 successCallback : res => {
                     this.apiData=Object.assign({}, res.body.data) ;
                     console.log(this.apiData.houseAgent)
-                    document.title = "租房详情" ;
-                    // this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
-                    //     console.log('更新标题成功');
-                    // },function(){
-                    //     console.log('更新标题失败');
-                    // });
+                    // document.title = "租房详情" ;
+                    this.$nativeBridge.invokeMethod('updateTitle',['租房详情'],function(){
+                        console.log('更新标题成功');
+                    },function(){
+                        console.log('更新标题失败');
+                    });
                     this.$nextTick(()=>{
                         // 为了不报错clientHeight的错，需要加上判断;此为爬取房源;
                         if(this.apiData.isWKhouse==2&&this.apiData.sellPoint&&this.apiData.sellPoint.length>30){
@@ -267,6 +267,7 @@
          }
       } ,
       created() {
+          document.title = "租房详情" ;
          this.watchRoute()
       } ,
       watch:{
