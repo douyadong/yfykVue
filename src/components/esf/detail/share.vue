@@ -414,12 +414,12 @@
                 data.data.house.similarListUrl = prefix + "/esf/similarList.html?enCryptHouseId="+self.houseId;
 
 
-                //document.title = data.data.house.houseTitle;
-                self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
-                    console.log("更新标题成功");
-                },function(){
-                    console.log("更新标题失败");
-                })
+                document.title = "二手房详情";
+                // self.$nativeBridge.invokeMethod('updateTitle',[data.data.house.houseTitle],function(){
+                //     console.log("更新标题成功");
+                // },function(){
+                //     console.log("更新标题失败");
+                // })
 
 
                 self.$wechatShare({
