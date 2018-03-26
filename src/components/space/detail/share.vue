@@ -44,7 +44,7 @@
                 <div class="know-area">
                     <span>熟悉商圈</span>
                     <div v-if="apiData.agentDetail.agentIntroduction||apiData.agentDetail.agentStory">
-                        <router-link :to="'/space/detail/hybrid/'+agentId" :data-bigdata="getUvParamsString({eventName:'2065016',otherParams:{shop_id :apiData.agentDetail.storeId,agent_id:apiData.agentDetail.agentId}})">
+                        <router-link :to="'/space/detail/selfInfo/'+agentId" :data-bigdata="getUvParamsString({eventName:'2065016',otherParams:{shop_id :apiData.agentDetail.storeId,agent_id:apiData.agentDetail.agentId}})">
                             <span>查看更多</span>
                             <span class="iconfont icon-arrowR"></span>
                         </router-link>
@@ -347,6 +347,11 @@
                   let generalTitle = agent.agentName + "的名片";
                   let shareContent = agent.agentIntroduction || "我已收到80%客户的好评，欢迎随时联系" ;
                   document.title = generalTitle ;  //设置页面title
+                  self.$nativeBridge.invokeMethod('updateTitle',[generalTitle],function(){
+                    console.log("更新标题成功");
+                  },function(){
+                    console.log("更新标题失败");
+                  })
                   //页面微信分享设置
                   this.$wechatShare({
                       "content" : shareContent ,
