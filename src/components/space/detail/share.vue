@@ -6,8 +6,8 @@
                 <dt><img :src="apiData.agentDetail.headRoundImgUrl" class="img-responsive"></dt>
                 <dd>
                     <div class="agent-name" :class="{center:!(apiData.agentDetail.agentCommentScore)}">
-                        <span class="name">{{ apiData.agentDetail.agentName }}</span>
-                        <span class="company">| {{apiData.agentDetail.agentBelongToCompanyName}}</span>
+                        <div class="name">{{ apiData.agentDetail.agentName }}</div>
+                        <div class="company">| {{apiData.agentDetail.agentBelongToCompanyName}}</div>
                     </div>
                 </dd>
                 <dd class="score-comment">
