@@ -44,7 +44,7 @@
                 <div class="know-area">
                     <span>熟悉商圈</span>
                     <div v-if="apiData.agentDetail.agentIntroduction||apiData.agentDetail.agentStory">
-                        <router-link :to="'/space/detail/selfInfo/'+agentId" :data-bigdata="getUvParamsString({eventName:'2065016',otherParams:{shop_id :apiData.agentDetail.storeId,agent_id:apiData.agentDetail.agentId}})">
+                        <router-link :to="'/space/detail/hybrid/'+agentId" :data-bigdata="getUvParamsString({eventName:'2065016',otherParams:{shop_id :apiData.agentDetail.storeId,agent_id:apiData.agentDetail.agentId}})">
                             <span>查看更多</span>
                             <span class="iconfont icon-arrowR"></span>
                         </router-link>
